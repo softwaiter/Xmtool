@@ -3,10 +3,10 @@
 
 ## CryptoUtils
 ---
-###加密相关类<br/><br/>
+### 加密相关类<br/><br/>
 
 
-#####Base64编码方法<br/>
+##### Base64编码方法<br/>
 string Base64Encode(string text, string encoding = "utf-8")<br/>
 
 参数： <br/>
@@ -16,7 +16,7 @@ encoding:指定字符编码格式，默认utf-8<br/>
 返回：经过Base64编码后的字符串<br/><br/><br/>
 
 
-#####Base64解码方法<br/>
+##### Base64解码方法<br/>
 string Base64Decode(string base64Text, string encoding = "utf-8")<br/>
 
 参数：<br/>
@@ -26,7 +26,7 @@ encoding:指定字符编码格式，默认utf-8<br/>
 返回：经过Base64解码后的字符串<br/><br/><br/>
 
 
-#####AES加密方法<br/>
+##### AES加密方法<br/>
 string AESEncode(string text, string key, string encoding = "utf-8")<br/>
 
 参数：<br/>
@@ -37,7 +37,7 @@ encoding:指定字符编码格式，默认utf-8<br/>
 返回：加密后的字符串<br/><br/><br/>
 
 
-#####AES解密方法<br/>
+##### AES解密方法<br/>
 string AESDecode(string aesText, string key, string encoding = "utf-8")<br/>
 
 参数：<br/>
@@ -50,9 +50,9 @@ encoding:指定字符编码格式，默认utf-8<br/>
 
 ## HashUtils
 ---
-###重用Hash算法类<br/><br/>
+### 重用Hash算法类<br/><br/>
 
-#####MD5哈希计算<br/>
+##### MD5哈希计算<br/>
 string MD5(string text, string encoding = "utf-8")<br/>
 
 参数：<br/>
@@ -62,7 +62,7 @@ encoding:指定字符编码格式，默认utf-8<br/>
 返回：经过MD5哈希计算的字符串<br/><br/><br/>
 
 
-#####SHA1哈希计算<br/>
+##### SHA1哈希计算<br/>
 string SHA1(string text, string encoding = "utf-8")<br/>
 
 参数：<br/>
@@ -72,7 +72,7 @@ encoding:指定字符编码格式，默认utf-8<br/>
 返回：经过SHA1哈希计算的字符串<br/><br/><br/>
 
 
-#####SHA256计算<br/>
+##### SHA256计算<br/>
 string SHA256(string text, string encoding = "utf-8")<br/>
 
 参数：<br/>
@@ -82,7 +82,7 @@ encoding:指定字符编码格式，默认utf-8<br/>
 返回：经过SHA256哈希计算的字符串<br/><br/><br/>
 
 
-#####SHA384计算<br/>
+##### SHA384计算<br/>
 string SHA384(string text, string encoding = "utf-8")<br/>
 
 参数：<br/>
@@ -92,7 +92,7 @@ encoding:指定字符编码格式，默认utf-8<br/>
 返回：经过SHA384哈希计算的字符串<br/><br/><br/>
 
 
-#####SHA512计算<br/>
+##### SHA512计算<br/>
 string SHA512(string text, string encoding = "utf-8")<br/>
 
 参数：<br/>
@@ -104,9 +104,9 @@ encoding:指定字符编码格式，默认utf-8<br/>
 
 ## XmlUtils
 ---
-###Xml文件遍历类<br/><br/>
+### Xml文件遍历类<br/><br/>
 
-#####节点遍历方法<br/>
+##### 节点遍历方法<br/>
 void Iterate(string file, XmlNodeInfoGetter callback = null)<br/>
 
 参数：<br/>
@@ -114,7 +114,7 @@ file:待遍历的XML文件绝对路径<br/>
 callback:回调函数，可在回调函数中进行节点信息解析和收集<br/><br/><br/>
 
 
-#####XmlNodeInfoGetter回调方法定义<br/>
+##### XmlNodeInfoGetter回调方法定义<br/>
 bool XmlNodeInfoGetter(XmlNodeInfo nodeInfo);<br/>
 
 参数：<br/>
@@ -123,7 +123,7 @@ nodeInfo:当前遍历到的节点对象<br/>
 返回：返回true，程序继续向下遍历；否则，停止遍历。<br/><br/><br/>
 
 
-#####XmlNodeInfo对象<br/>
+##### XmlNodeInfo对象<br/>
 属性：<br/>
 Path:返回当前节点路径，如：/root/person<br/>
 LocalName:返回当前节点的本地名称<br/>
