@@ -50,7 +50,7 @@ encoding:指定字符编码格式，默认utf-8<br/>
 
 ## HashUtils
 ---
-### 重用Hash算法类<br/><br/>
+### Hash算法类<br/><br/>
 
 ##### MD5哈希计算<br/>
 string MD5(string text, string encoding = "utf-8")<br/>
