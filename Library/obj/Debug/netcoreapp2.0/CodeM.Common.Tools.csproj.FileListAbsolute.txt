@@ -1,0 +1,9 @@
+C:\Users\wangxm\source\repos\github\netcoreTools\Library\bin\Debug\netcoreapp2.0\CodeM.Common.Tools.deps.json
+C:\Users\wangxm\source\repos\github\netcoreTools\Library\bin\Debug\netcoreapp2.0\CodeM.Common.Tools.dll
+C:\Users\wangxm\source\repos\github\netcoreTools\Library\bin\Debug\netcoreapp2.0\CodeM.Common.Tools.pdb
+C:\Users\wangxm\source\repos\github\netcoreTools\Library\obj\Debug\netcoreapp2.0\CodeM.Common.Tools.csprojAssemblyReference.cache
+C:\Users\wangxm\source\repos\github\netcoreTools\Library\obj\Debug\netcoreapp2.0\CodeM.Common.Tools.csproj.CoreCompileInputs.cache
+C:\Users\wangxm\source\repos\github\netcoreTools\Library\obj\Debug\netcoreapp2.0\CodeM.Common.Tools.AssemblyInfoInputs.cache
+C:\Users\wangxm\source\repos\github\netcoreTools\Library\obj\Debug\netcoreapp2.0\CodeM.Common.Tools.AssemblyInfo.cs
+C:\Users\wangxm\source\repos\github\netcoreTools\Library\obj\Debug\netcoreapp2.0\CodeM.Common.Tools.dll
+C:\Users\wangxm\source\repos\github\netcoreTools\Library\obj\Debug\netcoreapp2.0\CodeM.Common.Tools.pdb
