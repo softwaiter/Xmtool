@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<objects>
+    <object id="aaa" class="TestLibrary.Person">
+        <constructor-arg>"wangxm"</constructor-arg>
+    </object>
+
+    <object id="bbb" class="TestLibrary.Person">
+        <constructor-arg>"softwaiter"</constructor-arg>
+        <constructor-arg>true</constructor-arg>
+    </object>
+
+    <object id="ccc" class="TestLibrary.Person">
+        <constructor-arg>"xiaoming"</constructor-arg>
+        <constructor-arg type="Int16">18</constructor-arg>
+        <constructor-arg>true</constructor-arg>
+    </object>
+
+    <object id="ddd" class="TestLibrary.Person">
+        <constructor-arg>"mingming"</constructor-arg>
+        <constructor-arg type="TestLibrary.Sex">Female</constructor-arg>
+    </object>
+
+    <object id="eee" class="TestLibrary.Person">
+        <constructor-arg>
+            <list type="string">
+                <value>"张三"</value>
+                <value>李四</value>
+            </list>
+        </constructor-arg>
+    </object>
+
+    <object id="fff" class="TestLibrary.Person">
+        <constructor-arg>
+            <array>
+                <value>"王平"</value>
+                <value>"周仓"</value>
+            </array>
+        </constructor-arg>
+    </object>
+
+    <object id="ctc" class="TestLibrary.Chinese">
+        <constructor-arg>"孙悟空"</constructor-arg>
+    </object>
+
+    <object id="ggg" class="TestLibrary.Person">
+        <constructor-arg ref="ctc"></constructor-arg>
+    </object>
+
+    <object id="ctc2" class="TestLibrary.Chinese">
+        <constructor-arg>"唐三藏"</constructor-arg>
+    </object>
+
+    <object id="hhh" class="TestLibrary.Person">
+        <constructor-arg>
+            <array type="TestLibrary.Chinese">
+                <value ref="ctc2"/>
+            </array>
+        </constructor-arg>
+    </object>
+
+    <object id="iii" class="TestLibrary.Person">
+        <property name="name">王小明</property>
+        <property name="age">18</property>
+        <property name="isperson">true</property>
+    </object>
+
+</objects>

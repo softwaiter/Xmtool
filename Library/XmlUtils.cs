@@ -7,6 +7,8 @@ namespace CodeM.Common.Tools.Xml
     {
         private XmlTextReader mReader;
 
+        private bool mIsEmptyNodeEnd = false;
+
         public XmlNodeInfo(XmlTextReader reader)
         {
             mReader = reader;
@@ -55,7 +57,18 @@ namespace CodeM.Common.Tools.Xml
         {
             get
             {
-                return mReader.NodeType == XmlNodeType.EndElement;
+                if (mIsEmptyNodeEnd)
+                {
+                    return true;
+                }
+                else
+                {
+                    return mReader.NodeType == XmlNodeType.EndElement;
+                }
+            }
+            set
+            {
+                mIsEmptyNodeEnd = value;
             }
         }
 
@@ -200,6 +213,33 @@ namespace CodeM.Common.Tools.Xml
                                     {
                                         break;
                                     }
+                                    nodeHasText.TryAdd(currentFullPath, true);
+
+                                    nodeInfo.Path = currentPath;
+                                    nodeInfo.FullPath = currentFullPath;
+                                    nodeInfo.IsEndNode = true;
+                                    if (!callback(nodeInfo))
+                                    {
+                                        break;
+                                    }
+
+                                    if (pathItems.Count > 0)
+                                    {
+                                        pathItems.RemoveAt(pathItems.Count - 1);
+                                    }
+                                    if (fullPathItems.Count > 0)
+                                    {
+                                        fullPathItems.RemoveAt(fullPathItems.Count - 1);
+                                    }
+
+                                    if (!nodeIndexes.ContainsKey(indexPath))
+                                    {
+                                        nodeIndexes.Add(indexPath, 1);
+                                    }
+                                    else
+                                    {
+                                        nodeIndexes[indexPath] += 1;
+                                    }
                                 }
                             }
                             else if (nodeType == XmlNodeType.Text)
@@ -251,7 +291,6 @@ namespace CodeM.Common.Tools.Xml
                                     {
                                         nodeIndexes[indexPath] += 1;
                                     }
-                                    
 
                                     bool hasChild = false;
                                     nodeHasChild.TryGetValue(currentFullPath, out hasChild);

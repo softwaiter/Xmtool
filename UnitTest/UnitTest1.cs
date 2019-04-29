@@ -1,4 +1,7 @@
 using CodeM.Common.Tools.Security;
+using CodeM.Common.Tools.Xml;
+using System;
+using System.IO;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -50,6 +53,16 @@ namespace UnitTest
             output.WriteLine("wangxiaoming aes: " + aesEncypted);
             string aesDecrypted = CryptoUtils.AESDecode(aesEncypted, "test");
             Assert.Equal(aesDecrypted, source);
+        }
+
+        [Fact]
+        public void XmlInterate() {
+            string path = Path.Combine(Environment.CurrentDirectory, "..\\..\\..\\ioc.xml");
+            XmlUtils.Iterate(path, (XmlNodeInfo node) =>
+            {
+                output.WriteLine(node.FullPath);
+                return true;
+            });
         }
     }
 }
