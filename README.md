@@ -1,6 +1,25 @@
 # netcoreTools
 .netcore常用工具类集合<br/><br/><br/>
 
+
+## Install
+
+### 依赖安装
+#### Package Manager
+Install-Package CodeM.Common.Tools -Version 1.0.1
+
+#### .NET CLI
+dotnet add package CodeM.Common.Tools --version 1.0.1
+
+#### PackageReference
+<PackageReference Include="CodeM.Common.Tools" Version="1.0.1" />
+
+#### Paket CLI
+paket add CodeM.Common.Tools --version 1.0.1
+
+<br/>
+<br/>
+
 ## CryptoUtils
 ---
 ### 加密相关类<br/><br/>
