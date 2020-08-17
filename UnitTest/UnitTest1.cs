@@ -57,7 +57,7 @@ namespace UnitTest
 
         [Fact]
         public void XmlInterate() {
-            string path = Path.Combine(Environment.CurrentDirectory, "..\\..\\..\\ioc.xml");
+            string path = Path.Combine(Environment.CurrentDirectory, "ioc.xml");
             XmlUtils.Iterate(path, (XmlNodeInfo node) =>
             {
                 output.WriteLine(node.FullPath);
