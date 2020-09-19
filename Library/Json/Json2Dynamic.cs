@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace CodeM.Common.Tools.Config
+namespace CodeM.Common.Tools.Json
 {
-    public class JsonConfigParser
+    public class Json2Dynamic
     {
         private List<string> mJsonFiles = new List<string>();
 
-        public JsonConfigParser AddJsonFile(string path)
+        public Json2Dynamic AddJsonFile(string path)
         {
             if (!File.Exists(path))
             {
@@ -20,9 +20,9 @@ namespace CodeM.Common.Tools.Config
             return this;
         }
 
-        public dynamic Parse()
+        public dynamic Parse(string jsonStr = null)
         {
-            ConfigObject result = new ConfigObject();
+            JsonDynamicObject result = new JsonDynamicObject();
             foreach (string file in mJsonFiles)
             {
                 using (StreamReader sr = new StreamReader(file, Encoding.UTF8))
@@ -31,17 +31,22 @@ namespace CodeM.Common.Tools.Config
                     BindConfigObject(result, jsonObj);
                 }
             }
+            if (!string.IsNullOrEmpty(jsonStr))
+            {
+                dynamic jsonObj = JsonFormatter.DeserializeObject<dynamic>(jsonStr);
+                BindConfigObject(result, jsonObj);
+            }
             return result;
         }
 
-        private void BindConfigObject(ConfigObject configObj, dynamic jsonObj, string key = null)
+        private void BindConfigObject(JsonDynamicObject configObj, dynamic jsonObj, string key = null)
         {
             Type _typ = jsonObj.GetType();
             if (_typ == typeof(Dictionary<string, object>))
             {
                 if (!string.IsNullOrWhiteSpace(key))
                 {
-                    ConfigObject subConfigObj = new ConfigObject();
+                    JsonDynamicObject subConfigObj = new JsonDynamicObject();
                     BindConfigObject(subConfigObj, jsonObj);
                     configObj.TrySetValue(key, subConfigObj);
                 }
@@ -65,7 +70,7 @@ namespace CodeM.Common.Tools.Config
                         if (_itemTyp == typeof(Dictionary<string, object>) ||
                             _itemTyp == typeof(List<object>))
                         {
-                            ConfigObject itemObj = new ConfigObject();
+                            JsonDynamicObject itemObj = new JsonDynamicObject();
                             BindConfigObject(itemObj, item);
                             _list.Add(itemObj);
                         }

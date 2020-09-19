@@ -2,9 +2,9 @@
 using System.Dynamic;
 using System.Reflection;
 
-namespace CodeM.Common.Tools.Config
+namespace CodeM.Common.Tools.Json
 {
-    internal class ConfigObject : DynamicObject
+    internal class JsonDynamicObject : DynamicObject
     {
         Dictionary<string, object> mValues = new Dictionary<string, object>();
 

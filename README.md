@@ -1,5 +1,7 @@
 # netcoreTools
-.netcore常用工具类集合<br/><br/><br/>
+.netcore常用工具类集合
+
+
 
 
 ## Install
@@ -7,22 +9,22 @@
 ### 依赖安装
 #### Package Manager
 ```shell
-Install-Package CodeM.Common.Tools -Version 1.0.2
+Install-Package CodeM.Common.Tools -Version 1.0.3
 ```
 
 #### .NET CLI
 ```shell
-dotnet add package CodeM.Common.Tools --version 1.0.2
+dotnet add package CodeM.Common.Tools --version 1.0.3
 ```
 
 #### PackageReference
 ```xml
-<PackageReference Include="CodeM.Common.Tools" Version="1.0.2" />
+<PackageReference Include="CodeM.Common.Tools" Version="1.0.3" />
 ```
 
 #### Paket CLI
 ```shell
-paket add CodeM.Common.Tools --version 1.0.2
+paket add CodeM.Common.Tools --version 1.0.3
 ```
 
 
@@ -229,9 +231,9 @@ namespaceURI:指定属性的命名空间URI
 
 
 
-## JsonConfigParser
+## Json2Dynamic
 
-### Json配置文件解析器
+### Json动态对象转换器
 
 
 
@@ -249,6 +251,10 @@ path:Json配置文件全路径
 
 ##### 将添加的Json配置文件内容解析为动态对象
 
-public dynamic Parse()
+public dynamic Parse(string jsonStr=null)
+
+参数：
+
+jsonStr:除了可以通过添加配置文件转换动态对象，还可以直接传递一个Json字符串来转换动态对象；可选。
 
 返回：将Json配置文件的内容转换为DynamicObject对象并返回。

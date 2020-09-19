@@ -19,7 +19,7 @@ namespace UnitTest
         public void LoadOneConfig()
         {
             string path = Path.Combine(Environment.CurrentDirectory, "appsettings.json");
-            JsonConfigParser parser = new JsonConfigParser();
+            Json2Dynamic parser = new Json2Dynamic();
             dynamic configObj = parser.AddJsonFile(path).Parse();
             Assert.True(configObj.Has("User"));
         }
@@ -29,7 +29,7 @@ namespace UnitTest
         {
             string path = Path.Combine(Environment.CurrentDirectory, "appsettings.json");
             string path2 = Path.Combine(Environment.CurrentDirectory, "appsettings.Development.json");
-            JsonConfigParser parser = new JsonConfigParser();
+            Json2Dynamic parser = new Json2Dynamic();
             dynamic configObj = parser.AddJsonFile(path).AddJsonFile(path2).Parse();
             Assert.Equal(configObj.Test, "This is a example.");
         }
