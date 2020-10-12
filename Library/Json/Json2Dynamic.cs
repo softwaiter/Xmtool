@@ -41,6 +41,20 @@ namespace CodeM.Common.Tools.Json
 
         private void BindConfigObject(JsonDynamicObject configObj, dynamic jsonObj, string key = null)
         {
+            if (configObj == null)
+            {
+                return;
+            }
+
+            if (jsonObj == null)
+            {
+                if (!string.IsNullOrWhiteSpace(key))
+                {
+                    configObj.TrySetValue(key, null);
+                }
+                return;
+            }
+
             Type _typ = jsonObj.GetType();
             if (_typ == typeof(Dictionary<string, object>))
             {

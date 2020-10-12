@@ -1,4 +1,4 @@
-﻿using CodeM.Common.Tools.Config;
+﻿using CodeM.Common.Tools.Json;
 using System;
 using System.IO;
 using Xunit;
