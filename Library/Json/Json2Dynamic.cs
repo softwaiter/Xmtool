@@ -9,6 +9,10 @@ namespace CodeM.Common.Tools.Json
     public class Json2Dynamic
     {
         private List<string> mJsonFiles = new List<string>();
+        public dynamic CreateObject()
+        {
+            return new JsonDynamicObject();
+        }
 
         public Json2Dynamic AddJsonFile(string path)
         {
