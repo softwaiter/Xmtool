@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace CodeM.Common.Tools.Json
 {
@@ -24,6 +25,7 @@ namespace CodeM.Common.Tools.Json
             return this;
         }
 
+        Regex reAnnotation = new Regex("(//[\\s\\S]*?)\n", RegexOptions.Multiline);
         public dynamic Parse(string jsonStr = null)
         {
             JsonDynamicObject result = new JsonDynamicObject();
@@ -31,7 +33,9 @@ namespace CodeM.Common.Tools.Json
             {
                 using (StreamReader sr = new StreamReader(file, Encoding.UTF8))
                 {
-                    dynamic jsonObj = JsonFormatter.DeserializeObject<dynamic>(sr.ReadToEnd());
+                    string content = sr.ReadToEnd();
+                    content = reAnnotation.Replace(content, "");
+                    dynamic jsonObj = JsonFormatter.DeserializeObject<dynamic>(content);
                     BindConfigObject(result, jsonObj);
                 }
             }
