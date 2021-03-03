@@ -1,9 +1,8 @@
-﻿using Swifter.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using System.Text.RegularExpressions;
+using System.Text.Json;
 
 namespace CodeM.Common.Tools.Json
 {
@@ -25,91 +24,155 @@ namespace CodeM.Common.Tools.Json
             return this;
         }
 
-        Regex reAnnotation = new Regex("(//[\\s\\S]*?)\n", RegexOptions.Multiline);
         public dynamic Parse(string jsonStr = null)
         {
+            JsonDocumentOptions jdo = new JsonDocumentOptions();
+            jdo.AllowTrailingCommas = true;
+            jdo.CommentHandling = JsonCommentHandling.Skip;
+
             JsonDynamicObject result = new JsonDynamicObject();
             foreach (string file in mJsonFiles)
             {
                 using (StreamReader sr = new StreamReader(file, Encoding.UTF8))
                 {
                     string content = sr.ReadToEnd();
-                    content = reAnnotation.Replace(content, "");
-                    dynamic jsonObj = JsonFormatter.DeserializeObject<dynamic>(content);
-                    BindConfigObject(result, jsonObj);
+                    JsonDocument doc = JsonDocument.Parse(content, jdo);
+                    JsonElement rootEl = doc.RootElement;
+                    BindConfigObject(result, rootEl);
                 }
             }
             if (!string.IsNullOrEmpty(jsonStr))
             {
-                dynamic jsonObj = JsonFormatter.DeserializeObject<dynamic>(jsonStr);
-                BindConfigObject(result, jsonObj);
+                JsonDocument doc = JsonDocument.Parse(jsonStr, jdo);
+                JsonElement rootEl = doc.RootElement;
+                BindConfigObject(result, rootEl);
             }
             return result;
         }
 
-        private void BindConfigObject(JsonDynamicObject configObj, dynamic jsonObj, string key = null)
+        private void BindConfigObject(JsonDynamicObject configObj, JsonElement element, string key = null)
         {
             if (configObj == null)
             {
                 return;
             }
 
-            if (jsonObj == null)
+            switch (element.ValueKind)
             {
-                if (!string.IsNullOrWhiteSpace(key))
-                {
-                    configObj.TrySetValue(key, null);
-                }
-                return;
-            }
-
-            Type _typ = jsonObj.GetType();
-            if (_typ == typeof(Dictionary<string, object>))
-            {
-                if (!string.IsNullOrWhiteSpace(key))
-                {
-                    JsonDynamicObject subConfigObj = new JsonDynamicObject();
-                    BindConfigObject(subConfigObj, jsonObj);
-                    configObj.TrySetValue(key, subConfigObj);
-                }
-                else
-                {
-                    foreach (string jsonKey in jsonObj.Keys)
+                case JsonValueKind.Object:
+                    if (!string.IsNullOrWhiteSpace(key))
                     {
-                        dynamic value = jsonObj[jsonKey];
-                        BindConfigObject(configObj, value, jsonKey);
+                        JsonDynamicObject subConfigObj = new JsonDynamicObject();
+                        BindConfigObject(subConfigObj, element);
+                        configObj.TrySetValue(key, subConfigObj);
                     }
-                }
-            }
-            else if (_typ == typeof(List<object>))
-            {
-                if (!string.IsNullOrWhiteSpace(key))
-                {
-                    List<object> _list = new List<object>();
-                    foreach (dynamic item in jsonObj)
+                    else
                     {
-                        Type _itemTyp = item.GetType();
-                        if (_itemTyp == typeof(Dictionary<string, object>) ||
-                            _itemTyp == typeof(List<object>))
+                        JsonElement.ObjectEnumerator oe = element.EnumerateObject();
+                        while (oe.MoveNext())
                         {
-                            JsonDynamicObject itemObj = new JsonDynamicObject();
-                            BindConfigObject(itemObj, item);
-                            _list.Add(itemObj);
+                            BindConfigObject(configObj, oe.Current.Value, oe.Current.Name);
+                        }
+                    }
+                    break;
+                case JsonValueKind.Array:
+                    if (!string.IsNullOrWhiteSpace(key))
+                    {
+                        List<object> _list = new List<object>();
+
+                        JsonElement.ArrayEnumerator ae = element.EnumerateArray();
+                        while (ae.MoveNext())
+                        {
+                            switch (ae.Current.ValueKind)
+                            {
+                                case JsonValueKind.String:
+                                    _list.Add(ae.Current.GetString());
+                                    break;
+                                case JsonValueKind.Number:
+                                    long value;
+                                    if (ae.Current.TryGetInt64(out value))
+                                    {
+                                        if (value > Int32.MaxValue)
+                                        {
+                                            _list.Add(value);
+                                        }
+                                        else if (value > Int16.MaxValue)
+                                        {
+                                            _list.Add((Int32)value);
+                                        }
+                                        else
+                                        {
+                                            _list.Add((Int16)value);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        _list.Add(ae.Current.GetDouble());
+                                    }
+                                    break;
+                                case JsonValueKind.True:
+                                case JsonValueKind.False:
+                                    _list.Add(ae.Current.GetBoolean());
+                                    break;
+                                case JsonValueKind.Null:
+                                    _list.Add(null);
+                                    break;
+                                case JsonValueKind.Object:
+                                case JsonValueKind.Array:
+                                    JsonDynamicObject itemObj = new JsonDynamicObject();
+                                    BindConfigObject(itemObj, ae.Current);
+                                    _list.Add(itemObj);
+                                    break;
+                            }
+                        }
+
+                        configObj.TrySetValue(key, _list);
+                    }
+                    break;
+                case JsonValueKind.String:
+                    if (!string.IsNullOrWhiteSpace(key))
+                    {
+                        configObj.TrySetValue(key, element.GetString());
+                    }
+                    break;
+                case JsonValueKind.Number:
+                    if (!string.IsNullOrWhiteSpace(key))
+                    {
+                        long value;
+                        if (element.TryGetInt64(out value))
+                        {
+                            if (value > Int32.MaxValue)
+                            {
+                                configObj.TrySetValue(key, value);
+                            }
+                            else if (value > Int16.MaxValue)
+                            {
+                                configObj.TrySetValue(key, (Int32)value);
+                            }
+                            else
+                            {
+                                configObj.TrySetValue(key, (Int16)value);
+                            }
                         }
                         else
                         {
-                            _list.Add(item);
+                            configObj.TrySetValue(key, element.GetDouble());
                         }
                     }
-                    configObj.TrySetValue(key, _list);
-                }
-            }
-            else
-            {
-                if (!string.IsNullOrWhiteSpace(key))
-                {
-                    configObj.TrySetValue(key, jsonObj);
-                }
+                    break;
+                case JsonValueKind.True:
+                case JsonValueKind.False:
+                    if (!string.IsNullOrWhiteSpace(key))
+                    {
+                        configObj.TrySetValue(key, element.GetBoolean());
+                    }
+                    break;
+                case JsonValueKind.Null:
+                    if (!string.IsNullOrWhiteSpace(key))
+                    {
+                        configObj.TrySetValue(key, null);
+                    }
+                    break;
             }
         }
     }
