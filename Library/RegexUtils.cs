@@ -58,11 +58,21 @@ namespace CodeM.Common.Tools
         private static Regex rePositiveInt = new Regex("^[1-9][0-9]*$");
         private static Regex reDecimal = new Regex("^-?\\d+\\.\\d+$");
 
+        /// <summary>
+        /// 是否数值
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static bool IsNumber(string value)
         {
             return reNumber.IsMatch(value);
         }
 
+        /// <summary>
+        /// 是否整数
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static bool IsInteger(string value)
         {
             return reInt.IsMatch(value);

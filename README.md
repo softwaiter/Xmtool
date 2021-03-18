@@ -9,22 +9,22 @@
 ### 依赖安装
 #### Package Manager
 ```shell
-Install-Package CodeM.Common.Tools -Version 1.0.7
+Install-Package CodeM.Common.Tools -Version 1.1.1
 ```
 
 #### .NET CLI
 ```shell
-dotnet add package CodeM.Common.Tools --version 1.0.7
+dotnet add package CodeM.Common.Tools --version 1.1.1
 ```
 
 #### PackageReference
 ```xml
-<PackageReference Include="CodeM.Common.Tools" Version="1.0.7" />
+<PackageReference Include="CodeM.Common.Tools" Version="1.1.1" />
 ```
 
 #### Paket CLI
 ```shell
-paket add CodeM.Common.Tools --version 1.0.7
+paket add CodeM.Common.Tools --version 1.1.1
 ```
 
 
@@ -258,3 +258,118 @@ public dynamic Parse(string jsonStr=null)
 jsonStr:除了可以通过添加配置文件转换动态对象，还可以直接传递一个Json字符串来转换动态对象；可选。
 
 返回：将Json配置文件的内容转换为DynamicObject对象并返回。
+
+
+
+## RegexUtils
+
+### 常用正则表达式匹配方法
+
+
+
+##### 判断手机号
+
+bool IsMobile(string value)
+
+参数：
+
+value:要判断的字符串内容。
+
+返回：是有效手机号返回true，否则返回false。
+
+
+
+##### 判断电子邮箱
+
+bool IsEmail(string value)
+
+参数：
+
+value:要判断的字符串内容。
+
+返回：是有效电子邮箱返回true，否则返回false。
+
+
+
+##### 判断网址
+
+bool IsUrl(string value)
+
+参数：
+
+value:要判断的字符串内容。
+
+返回：是有效网址返回true，否则返回false。
+
+
+
+##### 判断IPv4地址
+
+bool IsIP(string value)
+
+参数：
+
+value:要判断的字符串内容。
+
+返回：是有效IPv4地址返回true，否则返回false。
+
+
+
+##### 判断数值
+
+bool IsNumber(string value)
+
+参数：
+
+value:要判断的字符串内容。
+
+返回：是有效数值返回true，否则返回false。
+
+
+
+##### 判断整数
+
+bool IsInteger(string value)
+
+参数：
+
+value:要判断的字符串内容。
+
+返回：是有效整数返回true，否则返回false。
+
+
+
+##### 判断正整数
+
+bool IsPositiveInteger(string value)
+
+参数：
+
+value:要判断的字符串内容。
+
+返回：是有效正整数返回true，否则返回false。
+
+
+
+##### 判断自然数
+
+bool IsNaturalInteger(string value)
+
+参数：
+
+value:要判断的字符串内容。
+
+返回：是有效自然数返回true，否则返回false。
+
+
+
+##### 判断小数
+
+bool IsDecimal(string value)
+
+参数：
+
+value:要判断的字符串内容。
+
+返回：是有效小数返回true，否则返回false。
+
