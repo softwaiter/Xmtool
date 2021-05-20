@@ -83,6 +83,9 @@ namespace UnitTest
 
             configObj.SetValueByPath("User.Name", "Huxy");
             Assert.Equal(configObj.User.Name, "Huxy");
+
+            configObj.SetValueByPath("Company.Name", "MYWS");
+            Assert.Equal(configObj.Company.Name, "MYWS");
         }
     }
 }

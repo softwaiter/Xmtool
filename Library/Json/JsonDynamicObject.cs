@@ -43,6 +43,7 @@ namespace CodeM.Common.Tools.Json
             }
             return true;
         }
+
         public bool TrySetValue(string name, object value)
         {
             mValues[name] = value;
@@ -70,27 +71,31 @@ namespace CodeM.Common.Tools.Json
             for (int i = 0; i < pathItems.Length; i++)
             {
                 string item = pathItems[i];
-                if (currObj.Has(item))
+
+                if (i == pathItems.Length - 1)
                 {
-                    if (i == pathItems.Length - 1)
-                    {
-                        bRet = currObj.TrySetValue(item, value);
-                        break;
-                    }
+                    bRet = currObj.TrySetValue(item, value);
+                    break;
+                }
 
-                    if (!currObj.TryGetValue(item, out currObj))
-                    {
-                        bRet = false;
-                        break;
-                    }
-
-                    if (!(currObj is JsonDynamicObject))
-                    {
-                        bRet = false;
-                        break;
-                    }
+                dynamic subObj = null;
+                if (!currObj.TryGetValue(item, out subObj))
+                {
+                    subObj = new JsonDynamicObject();
+                    currObj.TrySetValue(item, subObj);
+                    currObj = subObj;
                 }
                 else
+                {
+                    if (subObj == null)
+                    {
+                        subObj = new JsonDynamicObject();
+                        currObj.TrySetValue(item, subObj);
+                    }
+                    currObj = subObj;
+                }
+
+                if (!(currObj is JsonDynamicObject))
                 {
                     bRet = false;
                     break;
@@ -216,6 +221,10 @@ namespace CodeM.Common.Tools.Json
                     _typ.GetGenericTypeDefinition() == typeof(List<>))
                 {
                     sbResult.Append(SerializeList(value));
+                }
+                else if (_typ == typeof(bool))
+                {
+                    sbResult.Append(value.ToString().ToLower());
                 }
                 else
                 {
