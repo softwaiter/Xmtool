@@ -9,22 +9,22 @@
 ### 依赖安装
 #### Package Manager
 ```shell
-Install-Package CodeM.Common.Tools -Version 1.1.1
+Install-Package CodeM.Common.Tools -Version 1.1.3
 ```
 
 #### .NET CLI
 ```shell
-dotnet add package CodeM.Common.Tools --version 1.1.1
+dotnet add package CodeM.Common.Tools --version 1.1.3
 ```
 
 #### PackageReference
 ```xml
-<PackageReference Include="CodeM.Common.Tools" Version="1.1.1" />
+<PackageReference Include="CodeM.Common.Tools" Version="1.1.3" />
 ```
 
 #### Paket CLI
 ```shell
-paket add CodeM.Common.Tools --version 1.1.1
+paket add CodeM.Common.Tools --version 1.1.3
 ```
 
 
