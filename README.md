@@ -257,7 +257,115 @@ public dynamic Parse(string jsonStr=null)
 
 jsonStr:除了可以通过添加配置文件转换动态对象，还可以直接传递一个Json字符串来转换动态对象；可选。
 
-返回：将Json配置文件的内容转换为DynamicObject对象并返回。
+返回：将Json配置文件的内容转换为DynamicObject实例并返回。
+
+
+
+##### 创建一个Json动态对象
+
+public dynamic CreateObject()
+
+参数：
+
+无
+
+返回：返回创建好的JsonDynamicObject实例。
+
+
+
+## JsonDynamicObject
+
+### Json动态对象
+
+
+
+##### 尝试设置属性内容
+
+public bool TrySetValue(string name, object value)
+
+参数：
+
+name: 要设置的属性名
+
+value: 属性值
+
+返回：设置成功返回true；否则，返回false。
+
+
+
+##### 尝试读取属性内容
+
+public bool TryGetValue(string name, out object result)
+
+参数：
+
+name: 要读取的属性名
+
+result: 读取成功后数据的内容
+
+返回：读取成功返回true；否则，返回false。
+
+
+
+##### 根据路径设置属性内容
+
+public bool SetValueByPath(string path, object value)
+
+参数：
+
+path: 属性完整路径，用点连接；如User.Name。
+
+value: 属性值
+
+返回：设置成功返回true；否则，返回false。
+
+
+
+##### 判断属性是否存在
+
+public bool Has(string key)
+
+参数：
+
+key: 要判断的属性
+
+返回：属性存在返回true；否则，返回false。
+
+
+
+##### 判断路径是否存在
+
+public bool HasPath(string path)
+
+参数：
+
+path： 要判断的路径，多个由点分隔。
+
+返回：路径存在返回true；否则，返回false。
+
+
+
+##### 删除指定属性
+
+public bool Remove(string key)
+
+参数：
+
+key: 要删除的属性
+
+返回：删除成功返回true；否则，返回false。
+
+
+
+##### 删除指定路径
+
+public bool RemovePath(string path)
+
+参数：
+
+path: 要删除的路径，多个由点分隔。
+
+返回：删除成功返回true；否则，返回false。
 
 
 
