@@ -9,22 +9,22 @@
 ### 依赖安装
 #### Package Manager
 ```shell
-Install-Package CodeM.Common.Tools -Version 1.1.3
+Install-Package CodeM.Common.Tools -Version 1.1.5
 ```
 
 #### .NET CLI
 ```shell
-dotnet add package CodeM.Common.Tools --version 1.1.3
+dotnet add package CodeM.Common.Tools --version 1.1.5
 ```
 
 #### PackageReference
 ```xml
-<PackageReference Include="CodeM.Common.Tools" Version="1.1.3" />
+<PackageReference Include="CodeM.Common.Tools" Version="1.1.5" />
 ```
 
 #### Paket CLI
 ```shell
-paket add CodeM.Common.Tools --version 1.1.3
+paket add CodeM.Common.Tools --version 1.1.5
 ```
 
 
@@ -481,3 +481,20 @@ value:要判断的字符串内容。
 
 返回：是有效小数返回true，否则返回false。
 
+
+
+## WebUtils
+
+### Web常用操作库
+
+
+
+##### 获取HttpClientExt对象实例
+
+HttpClientExt Client(string name="default")
+
+参数：
+
+name:实例标识，同一标识不会反复实例化对象。
+
+返回：返回HttpClientExt对象实例。
