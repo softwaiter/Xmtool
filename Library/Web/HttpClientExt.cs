@@ -39,6 +39,18 @@ namespace CodeM.Common.Tools.Web
             }
         }
 
+        public Uri BaseAddress
+        {
+            get
+            {
+                return mClient.BaseAddress;
+            }
+            set
+            {
+                mClient.BaseAddress = value;
+            }
+        }
+
         public HttpClientExt AddDefaultHeader(string name, string value)
         {
             mClient.DefaultRequestHeaders.Add(name, value);
@@ -69,7 +81,7 @@ namespace CodeM.Common.Tools.Web
         private async Task<dynamic> SendJsonAsync(string requestUri)
         {
             InitRequest();
-            mRequest.RequestUri = new Uri(requestUri);
+            mRequest.RequestUri = new Uri(mClient.BaseAddress, requestUri);
 
             HttpResponseMessage resp = await mClient.SendAsync(mRequest);
             
@@ -83,9 +95,9 @@ namespace CodeM.Common.Tools.Web
                 {
                     return mParser.Parse(result);
                 }
-                catch (Exception exp)
+                catch
                 {
-                    throw new Exception("请求结果不是有效JSON格式。");
+                    throw new Exception("请求结果不是合法JSON格式。");
                 }
             }
             return null;
@@ -98,11 +110,21 @@ namespace CodeM.Common.Tools.Web
             return await SendJsonAsync(requestUri);
         }
 
+        public dynamic GetJson(string requestUri)
+        {
+            return GetJsonAsync(requestUri).GetAwaiter().GetResult();
+        }
+
         public async Task<dynamic> PostJsonAsync(string requestUri)
         {
             InitRequest();
             mRequest.Method = HttpMethod.Post;
             return await SendJsonAsync(requestUri);
+        }
+
+        public dynamic PostJson(string requestUri)
+        {
+            return PostJsonAsync(requestUri).GetAwaiter().GetResult();
         }
 
         public async Task<dynamic> PutJsonAsync(string requestUri)
@@ -112,11 +134,21 @@ namespace CodeM.Common.Tools.Web
             return await SendJsonAsync(requestUri);
         }
 
+        public dynamic PutJson(string requestUri)
+        {
+            return PutJsonAsync(requestUri).GetAwaiter().GetResult();
+        }
+
         public async Task<dynamic> DeleteJsonAsync(string requestUri)
         {
             InitRequest();
             mRequest.Method = HttpMethod.Delete;
             return await SendJsonAsync(requestUri);
+        }
+
+        public dynamic DeleteJson(string requestUri)
+        {
+            return DeleteJsonAsync(requestUri).GetAwaiter().GetResult();
         }
 
         public async Task<dynamic> PatchJsonAsync(string requestUri)
@@ -126,6 +158,11 @@ namespace CodeM.Common.Tools.Web
             return await SendJsonAsync(requestUri);
         }
 
+        public dynamic PatchJson(string requestUri)
+        {
+            return PatchJsonAsync(requestUri).GetAwaiter().GetResult();
+        }
+
         public async Task<dynamic> HeadJsonAsync(string requestUri)
         {
             InitRequest();
@@ -133,11 +170,21 @@ namespace CodeM.Common.Tools.Web
             return await SendJsonAsync(requestUri);
         }
 
+        public dynamic HeadJson(string requestUri)
+        {
+            return HeadJsonAsync(requestUri).GetAwaiter().GetResult();
+        }
+
         public async Task<dynamic> OptionsJsonAsync(string requestUri)
         {
             InitRequest();
             mRequest.Method = HttpMethod.Options;
             return await SendJsonAsync(requestUri);
+        }
+
+        public dynamic OptionsJson(string requestUri)
+        {
+            return OptionsJsonAsync(requestUri).GetAwaiter().GetResult();
         }
     }
 }
