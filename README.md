@@ -9,22 +9,22 @@
 ### 依赖安装
 #### Package Manager
 ```shell
-Install-Package CodeM.Common.Tools -Version 1.1.6
+Install-Package CodeM.Common.Tools -Version 1.1.7
 ```
 
 #### .NET CLI
 ```shell
-dotnet add package CodeM.Common.Tools --version 1.1.6
+dotnet add package CodeM.Common.Tools --version 1.1.7
 ```
 
 #### PackageReference
 ```xml
-<PackageReference Include="CodeM.Common.Tools" Version="1.1.6" />
+<PackageReference Include="CodeM.Common.Tools" Version="1.1.7" />
 ```
 
 #### Paket CLI
 ```shell
-paket add CodeM.Common.Tools --version 1.1.6
+paket add CodeM.Common.Tools --version 1.1.7
 ```
 
 
@@ -670,3 +670,66 @@ requestUri：请求地址
 
 
 ##### <font color="red">注：</font>Post、Put、Delete、Head、Options相关请求方法请参照GetJsonAsync、GetJson。
+
+
+
+## DateTimeUtils
+
+### 日期时间常用方法库
+
+
+
+##### 获取10位UTC时间戳
+
+long GetUtcTimestamp10()
+
+###### 参数：
+
+无
+
+###### 返回：
+
+返回10位当前Utc时间戳。
+
+
+
+##### 获取13位UTC时间戳
+
+long GetUtcTimestamp13()
+
+###### 参数：
+
+无
+
+###### 返回：
+
+返回10位当前Utc时间戳。
+
+
+
+##### 根据10位UTC时间戳得到本地日期时间对象
+
+DateTime GetLocalDateTimeFromUtcTimestamp10(long ts)
+
+###### 参数：
+
+ts：10位UTC时间戳
+
+###### 返回：
+
+返回时间戳转换后的本地日期时间对象。
+
+
+
+##### 根据13位UTC时间戳得到本地日期时间对象
+
+DateTime GetLocalDateTimeFromUtcTimestamp13(long ts)
+
+###### 参数：
+
+ts：13位UTC时间戳
+
+###### 返回：
+
+返回时间戳转换后的本地日期时间对象。
+
