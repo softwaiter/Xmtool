@@ -81,7 +81,14 @@ namespace CodeM.Common.Tools.Web
         private async Task<dynamic> SendJsonAsync(string requestUri)
         {
             InitRequest();
-            mRequest.RequestUri = new Uri(mClient.BaseAddress, requestUri);
+            if (mClient.BaseAddress == null)
+            {
+                mRequest.RequestUri = new Uri(requestUri);
+            }
+            else
+            {
+                mRequest.RequestUri = new Uri(mClient.BaseAddress, requestUri);
+            }
 
             HttpResponseMessage resp = await mClient.SendAsync(mRequest);
             
