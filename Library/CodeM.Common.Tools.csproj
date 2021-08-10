@@ -8,8 +8,8 @@
     <AssemblyName>CodeM.Common.Tools</AssemblyName>
     <RootNamespace>CodeM.Common.Tools</RootNamespace>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Version>1.1.9</Version>
-    <AssemblyVersion>1.1.9.0</AssemblyVersion>
+    <Version>1.1.10</Version>
+    <AssemblyVersion>1.1.10.0</AssemblyVersion>
     <FileVersion>1.1.9.0</FileVersion>
     <Authors>softwaiter</Authors>
     <Description>.netcore 常用工具库（加密解密、XML遍历解析、常用正则表达式、Json配置文件解析为dynamic对象）、Http请求库、日期时间常用方法</Description>

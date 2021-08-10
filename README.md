@@ -735,9 +735,21 @@ ts：13位UTC时间戳
 
 
 
-##### 根据时间范围字符串转换为时间段对象
-TimeSpan GetTimeSpanFromString(string timespan)
+##### 检查字符串时间范围格式是否合法
+bool CheckStringTimeSpan(string timespan,  bool throwError = true)
 ###### 参数：
 timespan：时间范围字符串，单位支持ms, s, m, h, d；如：1s，代表1秒
+throwError：格式不合法时是否抛出错误，默认true，抛出
+###### 返回：
+合法返回true；否则，返回false。
+
+
+
+##### 根据时间范围字符串转换为时间段对象
+TimeSpan GetTimeSpanFromString(string timespan，bool throwError = true)
+###### 参数：
+timespan：时间范围字符串，单位支持ms, s, m, h, d；如：1s，代表1秒
+throwError：格式不合法时是否抛出错误，默认true，抛出
+
 ###### 返回：
 返回转换后的时间段对象。
