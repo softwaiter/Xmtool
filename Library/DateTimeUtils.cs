@@ -28,7 +28,7 @@ namespace CodeM.Common.Tools
             return st.AddMilliseconds(ts);
         }
 
-        public static TimeSpan GetTimeSpanFromString(string timespan)
+        public static TimeSpan? GetTimeSpanFromString(string timespan, bool throwError = true)
         {
             if (!string.IsNullOrWhiteSpace(timespan))
             {
@@ -83,7 +83,75 @@ namespace CodeM.Common.Tools
                 }
             }
 
-            throw new Exception("不识别的时间范围：" + timespan);
+            if (throwError)
+            {
+                throw new Exception("不识别的时间范围：" + timespan);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public static bool CheckStringTimeSpan(string timespan, bool throwError = true)
+        {
+            bool result = true;
+
+            if (!string.IsNullOrWhiteSpace(timespan))
+            {
+                int value;
+                string trimedTime = timespan.Trim().ToLower();
+                if (trimedTime.EndsWith("ms"))
+                {
+                    trimedTime = trimedTime.Substring(0, trimedTime.Length - 2);
+                    result = int.TryParse(trimedTime, out value);
+                }
+                else if (trimedTime.EndsWith("s") || trimedTime.EndsWith("m") ||
+                    trimedTime.EndsWith("h") || trimedTime.EndsWith("d"))
+                {
+                    trimedTime = trimedTime.Substring(0, trimedTime.Length - 1);
+                    result = int.TryParse(trimedTime, out value);
+                }
+                else
+                {
+                    result = int.TryParse(trimedTime, out value);
+                }
+
+                if (!result)
+                {
+                    if (throwError)
+                    {
+                        throw new Exception(string.Concat("错误的时间段格式，单位仅支持ms、s、m、h、d：", timespan));
+                    }
+                }
+                else
+                {
+                    if (value < 0)
+                    {
+                        if (throwError)
+                        {
+                            throw new Exception(string.Concat("时间段必须大于等于0：", timespan));
+                        }
+                        else
+                        {
+                            result = false;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (throwError)
+                {
+                    throw new Exception("时间段不能设置空值。");
+                }
+                else
+                {
+                    result = false;
+                }
+            }
+
+            return result;
         }
     }
 }
