@@ -9,22 +9,22 @@
 ### 依赖安装
 #### Package Manager
 ```shell
-Install-Package CodeM.Common.Tools -Version 1.1.8
+Install-Package CodeM.Common.Tools -Version 1.1.9
 ```
 
 #### .NET CLI
 ```shell
-dotnet add package CodeM.Common.Tools --version 1.1.8
+dotnet add package CodeM.Common.Tools --version 1.1.9
 ```
 
 #### PackageReference
 ```xml
-<PackageReference Include="CodeM.Common.Tools" Version="1.1.8" />
+<PackageReference Include="CodeM.Common.Tools" Version="1.1.9" />
 ```
 
 #### Paket CLI
 ```shell
-paket add CodeM.Common.Tools --version 1.1.8
+paket add CodeM.Common.Tools --version 1.1.9
 ```
 
 
@@ -733,3 +733,11 @@ ts：13位UTC时间戳
 
 返回时间戳转换后的本地日期时间对象。
 
+
+
+##### 根据时间范围字符串转换为时间段对象
+TimeSpan GetTimeSpanFromString(string timespan)
+###### 参数：
+timespan：时间范围字符串，单位支持ms, s, m, h, d；如：1s，代表1秒
+###### 返回：
+返回转换后的时间段对象。
