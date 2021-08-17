@@ -8,7 +8,7 @@ namespace CodeM.Common.Tools.Web
         private static ConcurrentDictionary<string, HttpClient> sClients = new ConcurrentDictionary<string, HttpClient>();
 
         /// <summary>
-        /// 使用时，切记不要保存返回对象和单例化操作
+        /// 使用时，切记不要保存返回对象进行单例化
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
