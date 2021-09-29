@@ -17,5 +17,22 @@ namespace CodeM.Common.Tools.Web
             HttpClient client = sClients.GetOrAdd(name, new HttpClient());
             return new HttpClientExt(client);
         }
+
+        private static HttpSecurity sInst;
+        private static object sLock = new object();
+        public static HttpSecurity Security()
+        {
+            if (sInst == null)
+            {
+                lock (sLock)
+                {
+                    if (sInst == null)
+                    {
+                        sInst = new HttpSecurity();
+                    }
+                }
+            }
+            return sInst;
+        }
     }
 }
