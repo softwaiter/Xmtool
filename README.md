@@ -9,22 +9,22 @@
 ### 依赖安装
 #### Package Manager
 ```shell
-Install-Package CodeM.Common.Tools -Version 1.1.9
+Install-Package CodeM.Common.Tools -Version 1.1.12
 ```
 
 #### .NET CLI
 ```shell
-dotnet add package CodeM.Common.Tools --version 1.1.9
+dotnet add package CodeM.Common.Tools --version 1.1.12
 ```
 
 #### PackageReference
 ```xml
-<PackageReference Include="CodeM.Common.Tools" Version="1.1.9" />
+<PackageReference Include="CodeM.Common.Tools" Version="1.1.12" />
 ```
 
 #### Paket CLI
 ```shell
-paket add CodeM.Common.Tools --version 1.1.9
+paket add CodeM.Common.Tools --version 1.1.12
 ```
 
 
@@ -559,6 +559,27 @@ value:要判断的字符串内容。
 
 
 
+## TypeUtils
+
+### 类型常用操作库
+
+
+
+##### 判断指定对象是否为List类型
+
+bool IsList(object obj)
+
+###### 参数：
+
+obj: 待判断类型的对象。
+
+###### 返回：
+
+是返回true；否则，返回false。
+
+
+
+
 ## WebUtils
 
 ### Web常用操作库
@@ -576,6 +597,20 @@ name:实例标识，同一标识不会反复实例化对象。
 ###### 返回：
 
 返回HttpClientExt对象实例。
+
+
+
+##### 获取Web安全操作对象
+
+HttpSecurity Security()
+
+###### 参数：
+
+无。
+
+###### 返回：
+
+返回HttpSecurity对象实例。
 
 
 
@@ -670,6 +705,26 @@ requestUri：请求地址
 
 
 ##### <font color="red">注：</font>Post、Put、Delete、Head、Options相关请求方法请参照GetJsonAsync、GetJson。
+
+
+
+## HttpSecurity
+
+### HttpSecurity安全对象
+
+
+
+##### XSS安全过滤方法
+
+string Xss(string str)
+
+###### 参数：
+
+str：要进行XSS处理的字符串。
+
+###### 返回：
+
+按照规则处理后的字符串。
 
 
 
