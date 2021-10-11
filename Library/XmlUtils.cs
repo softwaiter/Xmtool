@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Xml;
 
 namespace CodeM.Common.Tools.Xml
@@ -156,171 +157,192 @@ namespace CodeM.Common.Tools.Xml
 
     public class XmlUtils
     {
-        public static void Iterate(string file, XmlNodeInfoGetter callback = null)
-		{
-            if (callback != null) {
-                Dictionary<string, int> nodeIndexes = new Dictionary<string, int>();
-                Dictionary<string, bool> nodeHasChild = new Dictionary<string, bool>();
-                Dictionary<string, bool> nodeHasText = new Dictionary<string, bool>();
-                Dictionary<string, bool> nodeHasCData = new Dictionary<string, bool>();
+        private static void IterateXmlNode(XmlTextReader xr, XmlNodeInfoGetter callback)
+        {
+            Dictionary<string, int> nodeIndexes = new Dictionary<string, int>();
+            Dictionary<string, bool> nodeHasChild = new Dictionary<string, bool>();
+            Dictionary<string, bool> nodeHasText = new Dictionary<string, bool>();
+            Dictionary<string, bool> nodeHasCData = new Dictionary<string, bool>();
 
-                XmlNodeInfo nodeInfo = null;
-                using (XmlTextReader xr = new XmlTextReader(file))
+            XmlNodeInfo nodeInfo = null;
+
+            List<string> pathItems = new List<string>();
+            List<string> fullPathItems = new List<string>();
+            while (xr.Read())
+            {
+                XmlNodeType nodeType = xr.NodeType;
+                if (nodeType != XmlNodeType.XmlDeclaration &&
+                    nodeType != XmlNodeType.Whitespace &&
+                    nodeType != XmlNodeType.Comment)
                 {
-                    List<string> pathItems = new List<string>();
-                    List<string> fullPathItems = new List<string>();
-                    while (xr.Read())
+                    if (nodeType == XmlNodeType.Element)
                     {
-                        XmlNodeType nodeType = xr.NodeType;
-                        if (nodeType != XmlNodeType.XmlDeclaration &&
-                            nodeType != XmlNodeType.Whitespace &&
-                            nodeType != XmlNodeType.Comment)
+                        string localName = xr.LocalName;
+                        pathItems.Add(localName);
+
+                        string currentPath = string.Concat("/", string.Join("/", pathItems));
+
+                        string parentFullPath = fullPathItems.Count > 0 ? string.Concat("/", string.Join("/", fullPathItems)) : "/";
+                        nodeHasChild.TryAdd(parentFullPath, true);
+
+                        string indexPath = "/".Equals(parentFullPath) ? string.Concat("/", localName) : string.Concat(parentFullPath, "/", localName);
+                        int currentIndex = nodeIndexes.GetValueOrDefault(indexPath, 0);
+
+                        fullPathItems.Add(string.Concat(localName, "[", currentIndex, "]"));
+                        string currentFullPath = string.Concat("/", string.Join("/", fullPathItems));
+
+                        nodeInfo = new XmlNodeInfo(xr);
+                        nodeInfo.Path = currentPath;
+                        nodeInfo.FullPath = currentFullPath;
+                        nodeInfo.LocalName = localName;
+                        nodeInfo.NamespaceURI = xr.NamespaceURI;
+                        nodeInfo.FullName = xr.Name;
+                        nodeInfo.Line = xr.LineNumber;
+
+                        if (!callback(nodeInfo))
                         {
-                            if (nodeType == XmlNodeType.Element)
+                            break;
+                        }
+
+                        if (xr.IsEmptyElement)
+                        {
+                            nodeInfo.Path += "/@text";
+                            nodeInfo.FullPath += "/@text";
+                            if (!callback(nodeInfo))
                             {
-                                string localName = xr.LocalName;
-                                pathItems.Add(localName);
+                                break;
+                            }
+                            nodeHasText.TryAdd(currentFullPath, true);
 
-                                string currentPath = string.Concat("/", string.Join("/", pathItems));
+                            nodeInfo.Path = currentPath;
+                            nodeInfo.FullPath = currentFullPath;
+                            nodeInfo.IsEndNode = true;
+                            if (!callback(nodeInfo))
+                            {
+                                break;
+                            }
 
-                                string parentFullPath = fullPathItems.Count > 0 ? string.Concat("/", string.Join("/", fullPathItems)) : "/";
-                                nodeHasChild.TryAdd(parentFullPath, true);
+                            if (pathItems.Count > 0)
+                            {
+                                pathItems.RemoveAt(pathItems.Count - 1);
+                            }
+                            if (fullPathItems.Count > 0)
+                            {
+                                fullPathItems.RemoveAt(fullPathItems.Count - 1);
+                            }
 
-                                string indexPath = "/".Equals(parentFullPath) ? string.Concat("/", localName) : string.Concat(parentFullPath, "/", localName);
-                                int currentIndex = nodeIndexes.GetValueOrDefault(indexPath, 0);
+                            if (!nodeIndexes.ContainsKey(indexPath))
+                            {
+                                nodeIndexes.Add(indexPath, 1);
+                            }
+                            else
+                            {
+                                nodeIndexes[indexPath] += 1;
+                            }
+                        }
+                    }
+                    else if (nodeType == XmlNodeType.Text)
+                    {
+                        nodeHasText.TryAdd(nodeInfo.FullPath, true);
 
-                                fullPathItems.Add(string.Concat(localName, "[", currentIndex, "]"));
-                                string currentFullPath = string.Concat("/", string.Join("/", fullPathItems));
+                        nodeInfo.Path += "/@text";
+                        nodeInfo.FullPath += "/@text";
+                        if (!callback(nodeInfo))
+                        {
+                            break;
+                        }
+                    }
+                    else if (nodeType == XmlNodeType.CDATA)
+                    {
+                        nodeHasCData.TryAdd(nodeInfo.FullPath, true);
 
-                                nodeInfo = new XmlNodeInfo(xr);
-                                nodeInfo.Path = currentPath;
-                                nodeInfo.FullPath = currentFullPath;
-                                nodeInfo.LocalName = localName;
-                                nodeInfo.NamespaceURI = xr.NamespaceURI;
-                                nodeInfo.FullName = xr.Name;
-                                nodeInfo.Line = xr.LineNumber;
+                        nodeInfo.Path += "/@cdata";
+                        nodeInfo.FullPath += "/@cdata";
+                        if (!callback(nodeInfo))
+                        {
+                            break;
+                        }
+                    }
+                    else if (nodeType == XmlNodeType.EndElement)
+                    {
+                        if (nodeInfo != null)
+                        {
+                            string currentPath = string.Concat("/", string.Join("/", pathItems));
+                            string currentFullPath = string.Concat("/", string.Join("/", fullPathItems));
 
+                            if (pathItems.Count > 0)
+                            {
+                                pathItems.RemoveAt(pathItems.Count - 1);
+                            }
+                            if (fullPathItems.Count > 0)
+                            {
+                                fullPathItems.RemoveAt(fullPathItems.Count - 1);
+                            }
+
+                            string parentFullPath = fullPathItems.Count > 0 ? string.Concat("/", string.Join("/", fullPathItems)) : "/";
+                            string indexPath = "/".Equals(parentFullPath) ? string.Concat("/", xr.LocalName) : string.Concat(parentFullPath, "/", xr.LocalName);
+
+                            if (!nodeIndexes.ContainsKey(indexPath))
+                            {
+                                nodeIndexes.Add(indexPath, 1);
+                            }
+                            else
+                            {
+                                nodeIndexes[indexPath] += 1;
+                            }
+
+                            bool hasChild = false;
+                            nodeHasChild.TryGetValue(currentFullPath, out hasChild);
+                            bool hasText = false;
+                            nodeHasText.TryGetValue(currentFullPath, out hasText);
+                            bool hasCData = false;
+                            nodeHasCData.TryGetValue(currentFullPath, out hasCData);
+                            if (!hasChild && !hasText && !hasCData)
+                            {
+                                nodeInfo.Path = string.Concat(currentPath, "/@text");
+                                nodeInfo.FullPath = string.Concat(currentFullPath, "/@text");
                                 if (!callback(nodeInfo))
                                 {
                                     break;
                                 }
-
-                                if (xr.IsEmptyElement)
-                                {
-                                    nodeInfo.Path += "/@text";
-                                    nodeInfo.FullPath += "/@text";
-                                    if (!callback(nodeInfo))
-                                    {
-                                        break;
-                                    }
-                                    nodeHasText.TryAdd(currentFullPath, true);
-
-                                    nodeInfo.Path = currentPath;
-                                    nodeInfo.FullPath = currentFullPath;
-                                    nodeInfo.IsEndNode = true;
-                                    if (!callback(nodeInfo))
-                                    {
-                                        break;
-                                    }
-
-                                    if (pathItems.Count > 0)
-                                    {
-                                        pathItems.RemoveAt(pathItems.Count - 1);
-                                    }
-                                    if (fullPathItems.Count > 0)
-                                    {
-                                        fullPathItems.RemoveAt(fullPathItems.Count - 1);
-                                    }
-
-                                    if (!nodeIndexes.ContainsKey(indexPath))
-                                    {
-                                        nodeIndexes.Add(indexPath, 1);
-                                    }
-                                    else
-                                    {
-                                        nodeIndexes[indexPath] += 1;
-                                    }
-                                }
                             }
-                            else if (nodeType == XmlNodeType.Text)
+
+                            nodeInfo.Path = currentPath;
+                            nodeInfo.FullPath = currentFullPath;
+                            nodeInfo.Line = xr.LineNumber;
+                            if (!callback(nodeInfo))
                             {
-                                nodeHasText.TryAdd(nodeInfo.FullPath, true);
-
-                                nodeInfo.Path += "/@text";
-                                nodeInfo.FullPath += "/@text";
-                                if (!callback(nodeInfo))
-                                {
-                                    break;
-                                }
-                            }
-                            else if (nodeType == XmlNodeType.CDATA)
-                            {
-                                nodeHasCData.TryAdd(nodeInfo.FullPath, true);
-
-                                nodeInfo.Path += "/@cdata";
-                                nodeInfo.FullPath += "/@cdata";
-                                if (!callback(nodeInfo))
-                                {
-                                    break;
-                                }
-                            }
-                            else if (nodeType == XmlNodeType.EndElement)
-                            {
-                                if (nodeInfo != null)
-                                {
-                                    string currentPath = string.Concat("/", string.Join("/", pathItems));
-                                    string currentFullPath = string.Concat("/", string.Join("/", fullPathItems));
-
-                                    if (pathItems.Count > 0)
-                                    {
-                                        pathItems.RemoveAt(pathItems.Count - 1);
-                                    }
-                                    if (fullPathItems.Count > 0)
-                                    {
-                                        fullPathItems.RemoveAt(fullPathItems.Count - 1);
-                                    }
-
-                                    string parentFullPath = fullPathItems.Count > 0 ? string.Concat("/", string.Join("/", fullPathItems)) : "/";
-                                    string indexPath = "/".Equals(parentFullPath) ? string.Concat("/", xr.LocalName) : string.Concat(parentFullPath, "/", xr.LocalName);
-
-                                    if (!nodeIndexes.ContainsKey(indexPath))
-                                    {
-                                        nodeIndexes.Add(indexPath, 1);
-                                    }
-                                    else
-                                    {
-                                        nodeIndexes[indexPath] += 1;
-                                    }
-
-                                    bool hasChild = false;
-                                    nodeHasChild.TryGetValue(currentFullPath, out hasChild);
-                                    bool hasText = false;
-                                    nodeHasText.TryGetValue(currentFullPath, out hasText);
-                                    bool hasCData = false;
-                                    nodeHasCData.TryGetValue(currentFullPath, out hasCData);
-                                    if (!hasChild && !hasText && !hasCData)
-                                    {
-                                        nodeInfo.Path = string.Concat(currentPath, "/@text");
-                                        nodeInfo.FullPath = string.Concat(currentFullPath, "/@text");
-                                        if (!callback(nodeInfo))
-                                        {
-                                            break;
-                                        }
-                                    }
-
-                                    nodeInfo.Path = currentPath;
-                                    nodeInfo.FullPath = currentFullPath;
-                                    nodeInfo.Line = xr.LineNumber;
-                                    if (!callback(nodeInfo))
-                                    {
-                                        break;
-                                    }
-                                }
+                                break;
                             }
                         }
                     }
                 }
             }
-		}
+        }
+
+        public static void Iterate(string file, XmlNodeInfoGetter callback = null)
+        {
+            if (callback != null)
+            {
+                using (XmlTextReader xr = new XmlTextReader(file))
+                {
+                    IterateXmlNode(xr, callback);
+                }
+            }
+        }
+
+        public static void IterateFromString(string content, XmlNodeInfoGetter callback = null)
+        {
+            if (callback != null)
+            {
+                using (StringReader sr = new StringReader(content))
+                {
+                    using (XmlTextReader xr = new XmlTextReader(sr))
+                    {
+                        IterateXmlNode(xr, callback);
+                    }
+                }
+            }
+        }
     }
 }

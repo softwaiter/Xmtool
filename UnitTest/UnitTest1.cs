@@ -57,12 +57,56 @@ namespace UnitTest
 
         [Fact]
         public void XmlInterate() {
+            string aaaArg = string.Empty;
+
             string path = Path.Combine(Environment.CurrentDirectory, "ioc.xml");
+            bool isObj = false;
             XmlUtils.Iterate(path, (XmlNodeInfo node) =>
             {
-                output.WriteLine(node.FullPath);
+                if (!node.IsEndNode)
+                {
+                    if (node.Path == "/objects/object")
+                    {
+                        isObj = node.GetAttribute("id") == "aaa";
+                    }
+                    else if (node.Path == "/objects/object/constructor-arg/@text")
+                    {
+                        if (isObj)
+                        {
+                            aaaArg = node.Text;
+                        }
+                    }
+
+                    output.WriteLine(node.FullPath);
+                }
                 return true;
             });
+
+            Assert.Equal("\"wangxm\"", aaaArg);
+        }
+
+        [Fact]
+        public void XmlIterateFromString() {
+            int age = 0;
+
+            string xml = @"<xml>
+                <name>ÕÅÈý</name>
+                <age>18</age>
+                <gender>ÄÐ</gender>
+            </xml>";
+            XmlUtils.IterateFromString(xml, (XmlNodeInfo node) =>
+            {
+                if (!node.IsEndNode)
+                {
+                    if (node.Path == "/xml/age/@text")
+                    {
+                        age = int.Parse(node.Text);
+                    }
+                }
+                return true;
+            });
+
+            Assert.Equal(18, age);
         }
     }
 }
