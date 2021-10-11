@@ -1,3 +1,4 @@
+using CodeM.Common.Tools.Json;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
@@ -43,6 +44,14 @@ namespace CodeM.Common.Tools.Xml
         {
             get;
             set;
+        }
+
+        public bool IsRoot
+        {
+            get
+            {
+                return mReader.Depth == 0;
+            }
         }
 
         public bool IsNode
@@ -110,6 +119,17 @@ namespace CodeM.Common.Tools.Xml
             get
             {
                 return mReader.Value;
+            }
+        }
+
+        /// <summary>
+        /// 节点级别，根节点为1级
+        /// </summary>
+        public int Level
+        {
+            get
+            {
+                return mReader.Depth + 1;
             }
         }
 
@@ -344,5 +364,6 @@ namespace CodeM.Common.Tools.Xml
                 }
             }
         }
+
     }
 }
