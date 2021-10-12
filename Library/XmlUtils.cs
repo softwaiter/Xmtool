@@ -58,8 +58,9 @@ namespace CodeM.Common.Tools.Xml
         {
             get
             {
-                return mReader.NodeType == XmlNodeType.Element || 
-                    mReader.NodeType == XmlNodeType.EndElement;
+                return (mReader.NodeType == XmlNodeType.Element || 
+                    mReader.NodeType == XmlNodeType.EndElement) &&
+                    !mIsEmptyTextNode;
             }
         }
 
@@ -90,11 +91,16 @@ namespace CodeM.Common.Tools.Xml
             }
         }
 
+        private bool mIsEmptyTextNode = false;
         public bool IsTextNode
         {
             get
             {
-                return mReader.NodeType == XmlNodeType.Text;
+                return (mReader.NodeType == XmlNodeType.Text) || mIsEmptyTextNode;
+            }
+            internal set
+            {
+                mIsEmptyTextNode = value;
             }
         }
 
@@ -228,6 +234,7 @@ namespace CodeM.Common.Tools.Xml
                         {
                             nodeInfo.Path += "/@text";
                             nodeInfo.FullPath += "/@text";
+                            nodeInfo.IsTextNode = true;
                             if (!callback(nodeInfo))
                             {
                                 break;
@@ -236,6 +243,7 @@ namespace CodeM.Common.Tools.Xml
 
                             nodeInfo.Path = currentPath;
                             nodeInfo.FullPath = currentFullPath;
+                            nodeInfo.IsTextNode = false;
                             nodeInfo.IsEndNode = true;
                             if (!callback(nodeInfo))
                             {
@@ -365,5 +373,62 @@ namespace CodeM.Common.Tools.Xml
             }
         }
 
+        private static void SerializeXmlNode(Stack<JsonDynamicObject> s,
+            XmlNodeInfo node, bool includeRoot)
+        {
+            if (!node.IsEndNode)
+            {
+                if (!node.IsRoot || includeRoot)
+                {
+                    JsonDynamicObject p = s.Peek();
+                    if (node.IsNode)
+                    {
+                        JsonDynamicObject newObj = new JsonDynamicObject();
+                        p.TrySetValue(node.LocalName, newObj);
+                        s.Push(newObj);
+                    }
+                    else if (node.IsTextNode)
+                    {
+                        p.TrySetValue("Value", node.Text);
+                    }
+                    else if (node.IsCDATANode)
+                    {
+                        p.TrySetValue("Value", node.CData);
+                    }
+                }
+            }
+            else if (node.IsEndNode && node.IsNode)
+            {
+                s.Pop();
+            }
+        }
+
+        public static dynamic Serialize(string file, bool includeRoot = false)
+        {
+            JsonDynamicObject r = new JsonDynamicObject();
+            Stack<JsonDynamicObject> s = new Stack<JsonDynamicObject>();
+            s.Push(r);
+
+            Iterate(file, (XmlNodeInfo node) =>
+            {
+                SerializeXmlNode(s, node, includeRoot);
+                return true;
+            });
+            return r;
+        }
+
+        public static dynamic SerializeFromString(string xml, bool includeRoot = false)
+        {
+            JsonDynamicObject r = new JsonDynamicObject();
+            Stack<JsonDynamicObject> s = new Stack<JsonDynamicObject>();
+            s.Push(r);
+
+            IterateFromString(xml, (XmlNodeInfo node) =>
+            {
+                SerializeXmlNode(s, node, includeRoot);
+                return true;
+            });
+            return r;
+        }
     }
 }

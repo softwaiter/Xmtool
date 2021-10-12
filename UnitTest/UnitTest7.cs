@@ -63,5 +63,22 @@ namespace UnitTest
             });
             Assert.Equal(2, nameLevel);
         }
+
+        [Fact]
+        public void XmlSerialize()
+        {
+            string xml = @"<xml>
+                <test id='demo'>
+                    <null id='aaa' />
+                    <hello>123</hello>
+                </test>
+                <name><![CDATA[张三]]></name>
+                <age>18</age>
+                <gender>男</gender>
+            </xml>";
+            dynamic obj = XmlUtils.SerializeFromString(xml);
+            Assert.NotNull(obj);
+            Assert.Equal("张三", obj.name.Value);
+        }
     }
 }
