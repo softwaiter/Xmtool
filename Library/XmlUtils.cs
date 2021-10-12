@@ -9,11 +9,23 @@ namespace CodeM.Common.Tools.Xml
     {
         private XmlTextReader mReader;
 
-        private bool mIsEmptyNodeEnd = false;
+        private XmlNodeType mNodeType;
+        private bool mIsRoot = false;
+        private bool mIsEmptyNode = false;
+        private string mValue = string.Empty;
+        private int mDepth = 0;
+        private int mAttrCount = 0;
 
         public XmlNodeInfo(XmlTextReader reader)
         {
             mReader = reader;
+
+            mNodeType = mReader.NodeType;
+            mIsRoot = mReader.Depth == 0;
+            mIsEmptyNode = mReader.IsEmptyElement;
+            mValue = mReader.Value;
+            mDepth = mReader.Depth;
+            mAttrCount = mReader.AttributeCount;
         }
 
         public string Path
@@ -64,6 +76,7 @@ namespace CodeM.Common.Tools.Xml
             }
         }
 
+        private bool mIsEmptyNodeEnd = false;
         public bool IsEndNode
         {
             get
@@ -129,7 +142,7 @@ namespace CodeM.Common.Tools.Xml
         }
 
         /// <summary>
-        /// 节点级别，根节点为1级
+        /// 锟节点级锟金，革拷锟节碉拷为1锟斤拷
         /// </summary>
         public int Level
         {
@@ -169,6 +182,18 @@ namespace CodeM.Common.Tools.Xml
         public string GetAttribute(string localName, string namespaceURI)
         {
             return mReader.GetAttribute(localName, namespaceURI);
+        }
+
+        public string GetAttributeName(int index)
+        {
+            if (index >= 0 && index < mReader.AttributeCount)
+            {
+                mReader.MoveToAttribute(index);
+                string attrName = mReader.Name;
+                mReader.MoveToElement();
+                return attrName;
+            }
+            return string.Empty;
         }
 
         public int Line
@@ -386,6 +411,12 @@ namespace CodeM.Common.Tools.Xml
                         JsonDynamicObject newObj = new JsonDynamicObject();
                         p.TrySetValue(node.LocalName, newObj);
                         s.Push(newObj);
+
+                        for (int i = 0; i < node.AttributeCount; i++)
+                        {
+                            string attrName = node.GetAttributeName(i);
+                            newObj.TrySetValue(attrName, node.GetAttribute(i));
+                        }
                     }
                     else if (node.IsTextNode)
                     {

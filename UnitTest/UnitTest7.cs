@@ -22,7 +22,6 @@ namespace UnitTest
             Assert.True(TypeUtils.IsList(lst));
         }
 
-        [Fact]
         public void XmlRootNode()
         {
             string xml = @"<xml>
@@ -43,7 +42,6 @@ namespace UnitTest
             Assert.True(xmlIsRoot);
         }
 
-        [Fact]
         public void XmlNodeLevel()
         {
             string xml = @"<xml>
@@ -69,8 +67,8 @@ namespace UnitTest
         {
             string xml = @"<xml>
                 <test id='demo'>
-                    <null id='aaa' />
-                    <hello>123</hello>
+                    <hello id='aaa' />
+                    <world>123</world>
                 </test>
                 <name><![CDATA[张三]]></name>
                 <age>18</age>
@@ -79,6 +77,7 @@ namespace UnitTest
             dynamic obj = XmlUtils.SerializeFromString(xml);
             Assert.NotNull(obj);
             Assert.Equal("张三", obj.name.Value);
+            Assert.Equal("aaa", obj.test.hello.id);
         }
     }
 }
