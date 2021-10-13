@@ -21,6 +21,10 @@ namespace CodeM.Common.Tools.Json
             MethodInfo mi = GetType().GetMethod(binder.Name);
             if (mi != null)
             {
+                if ("ToXMLString".Equals(binder.Name) && args.Length == 0)
+                {
+                    args = new object[] { "" };
+                }
                 result = mi.Invoke(this, args);
                 return true;
             }
@@ -262,5 +266,99 @@ namespace CodeM.Common.Tools.Json
             return sbResult.ToString();
         }
 
+        internal string SerializeXMLAttributes()
+        {
+            StringBuilder sbResult = new StringBuilder();
+
+            Dictionary<string, object>.Enumerator e = mValues.GetEnumerator();
+            while (e.MoveNext())
+            {
+                if (!"Value".Equals(e.Current.Key))
+                {
+                    if (e.Current.Value != null)
+                    {
+                        Type _typ = e.Current.Value.GetType();
+                        if (_typ == typeof(string) || _typ.IsValueType)
+                        {
+                            sbResult.Append(" " + e.Current.Key + "=\"" + e.Current.Value + "\"");
+                        }
+                    }
+                    else
+                    {
+                        sbResult.Append(" " + e.Current.Key + "=\"\"");
+                    }
+                }
+            }
+
+            return sbResult.ToString();
+        }
+
+        internal string SerializeXMLNode(bool isRootNode = true)
+        {
+            StringBuilder sbResult = new StringBuilder();
+
+            Dictionary<string, object>.Enumerator e = mValues.GetEnumerator();
+            while (e.MoveNext())
+            {
+                if (e.Current.Value != null)
+                {
+                    if (e.Current.Value is JsonDynamicObject)
+                    {
+                        dynamic objValue = (JsonDynamicObject)e.Current.Value;
+
+                        sbResult.Append("<" + e.Current.Key);
+                        sbResult.Append(objValue.SerializeXMLAttributes());
+                        sbResult.Append(">");
+
+                        if (objValue.Has("Value"))
+                        {
+                            sbResult.Append(objValue.Value);
+                        }
+                        else
+                        {
+                            sbResult.Append(objValue.SerializeXMLNode(false));
+                        }
+
+                        sbResult.Append("</" + e.Current.Key + ">");
+                    }
+                    else
+                    {
+                        if (isRootNode)
+                        {
+                            sbResult.Append("<" + e.Current.Key + ">");
+                            sbResult.Append(e.Current.Value.ToString());
+                            sbResult.Append("</" + e.Current.Key + ">");
+                        }
+                    }
+                }
+                else
+                {
+                    if (isRootNode)
+                    {
+                        sbResult.Append("<" + e.Current.Key + " />");
+                    }
+                }
+            }
+
+            return sbResult.ToString();
+        }
+
+        public string ToXMLString(string defaultNS = "")
+        {
+            StringBuilder sbResult = new StringBuilder();
+
+            sbResult.Append("<xml");
+            if (!string.IsNullOrWhiteSpace(defaultNS))
+            {
+                sbResult.Append(" xmlns=\"" + defaultNS + "\"");
+            }
+            sbResult.Append(">");
+
+            sbResult.Append(SerializeXMLNode());
+
+            sbResult.Append("</xml>");
+
+            return sbResult.ToString();
+        }
     }
 }
