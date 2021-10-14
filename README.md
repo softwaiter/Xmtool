@@ -9,22 +9,22 @@
 ### 依赖安装
 #### Package Manager
 ```shell
-Install-Package CodeM.Common.Tools -Version 1.1.12
+Install-Package CodeM.Common.Tools -Version 1.1.15
 ```
 
 #### .NET CLI
 ```shell
-dotnet add package CodeM.Common.Tools --version 1.1.12
+dotnet add package CodeM.Common.Tools --version 1.1.15
 ```
 
 #### PackageReference
 ```xml
-<PackageReference Include="CodeM.Common.Tools" Version="1.1.12" />
+<PackageReference Include="CodeM.Common.Tools" Version="1.1.15" />
 ```
 
 #### Paket CLI
 ```shell
-paket add CodeM.Common.Tools --version 1.1.12
+paket add CodeM.Common.Tools --version 1.1.15
 ```
 
 
@@ -189,11 +189,21 @@ encoding:指定字符编码格式，默认utf-8
 
 
 
-##### 节点遍历方法
+##### 节点遍历方法（从文件加载内容）
 void Iterate(string file, XmlNodeInfoGetter callback = null)
 
 ###### 参数：
 file:待遍历的XML文件绝对路径
+callback:回调函数，可在回调函数中进行节点信息解析和收集
+
+
+
+
+##### 节点遍历方法（从字符串加载内容）
+void IterateFromString(string content, XmlNodeInfoGetter callback = null)
+
+###### 参数：
+content:待遍历的XML文件内容
 callback:回调函数，可在回调函数中进行节点信息解析和收集
 
 
@@ -219,10 +229,12 @@ Path:返回当前节点路径，如：/root/person
 LocalName:返回当前节点的本地名称
 FullName:返回当前节点的全名称，包括命名空间和本地名称
 NamespaceURI:返回当前节点的命名空间URI
+IsRoot:是否根节点
 IsNode:返回当前节点是否元素节点
 IsEndNode:遍历过程会两次经过一个节点，一次开始，一次结束，该属性返回是否为结束一次的遍历
 IsTextNode:返回当前节点是否为文本节点
 IsCDATANode:返回当前节点是否为CDATA节点
+Level:节点级别
 Text:返回当前节点的文本内容
 CData:返回CDATA节点的内容
 AttributeCount:返回节点属性的数量
@@ -266,6 +278,26 @@ namespaceURI:指定属性的命名空间URI
 ###### 返回：
 
 返回指定名称和命名空间的属性的内容
+
+
+
+
+##### 从XML文件反序列化动态对象的方法
+dynamic Deserialize(string file, bool includeRoot = false)
+
+###### 参数:
+file:待反序列化的XML文件绝对路径
+inculdeRoot:是否包含根节点
+
+
+
+
+##### 从XML内容反序列化动态对象的方法
+dynamic DeserializeFromString(string xml, bool includeRoot = false)
+
+###### 参数:
+xml:待反序列化的XML内容
+inculdeRoot:是否包含根节点
 
 
 
@@ -424,6 +456,31 @@ path: 要删除的路径，多个由点分隔。
 ###### 返回：
 
 删除成功返回true；否则，返回false。
+
+
+
+
+##### 将对象序列化为Json字符串
+public string ToString()
+
+###### 参数：
+无。
+
+###### 返回：
+序列化之后的Json字符串。
+
+
+
+
+##### 将对象序列化为XML字符串
+public string ToXMLString(string defaultNS = "")
+
+###### 参数：
+defaultNS:转换时XML的默认命名空间，默认为空。
+
+###### 返回：
+序列化之后的XML字符串。
+
 
 
 

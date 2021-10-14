@@ -9,23 +9,9 @@ namespace CodeM.Common.Tools.Xml
     {
         private XmlTextReader mReader;
 
-        private XmlNodeType mNodeType;
-        private bool mIsRoot = false;
-        private bool mIsEmptyNode = false;
-        private string mValue = string.Empty;
-        private int mDepth = 0;
-        private int mAttrCount = 0;
-
         public XmlNodeInfo(XmlTextReader reader)
         {
             mReader = reader;
-
-            mNodeType = mReader.NodeType;
-            mIsRoot = mReader.Depth == 0;
-            mIsEmptyNode = mReader.IsEmptyElement;
-            mValue = mReader.Value;
-            mDepth = mReader.Depth;
-            mAttrCount = mReader.AttributeCount;
         }
 
         public string Path
@@ -142,7 +128,7 @@ namespace CodeM.Common.Tools.Xml
         }
 
         /// <summary>
-        /// �ڵ㼶�𣬸��ڵ�Ϊ1��
+        /// 节点级别
         /// </summary>
         public int Level
         {
@@ -398,7 +384,7 @@ namespace CodeM.Common.Tools.Xml
             }
         }
 
-        private static void SerializeXmlNode(Stack<JsonDynamicObject> s,
+        private static void DeserializeXmlNode(Stack<JsonDynamicObject> s,
             XmlNodeInfo node, bool includeRoot)
         {
             if (!node.IsEndNode)
@@ -434,7 +420,7 @@ namespace CodeM.Common.Tools.Xml
             }
         }
 
-        public static dynamic Serialize(string file, bool includeRoot = false)
+        public static dynamic Deserialize(string file, bool includeRoot = false)
         {
             JsonDynamicObject r = new JsonDynamicObject();
             Stack<JsonDynamicObject> s = new Stack<JsonDynamicObject>();
@@ -442,13 +428,13 @@ namespace CodeM.Common.Tools.Xml
 
             Iterate(file, (XmlNodeInfo node) =>
             {
-                SerializeXmlNode(s, node, includeRoot);
+                DeserializeXmlNode(s, node, includeRoot);
                 return true;
             });
             return r;
         }
 
-        public static dynamic SerializeFromString(string xml, bool includeRoot = false)
+        public static dynamic DeserializeFromString(string xml, bool includeRoot = false)
         {
             JsonDynamicObject r = new JsonDynamicObject();
             Stack<JsonDynamicObject> s = new Stack<JsonDynamicObject>();
@@ -456,7 +442,7 @@ namespace CodeM.Common.Tools.Xml
 
             IterateFromString(xml, (XmlNodeInfo node) =>
             {
-                SerializeXmlNode(s, node, includeRoot);
+                DeserializeXmlNode(s, node, includeRoot);
                 return true;
             });
             return r;

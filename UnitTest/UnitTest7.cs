@@ -77,7 +77,7 @@ namespace UnitTest
                 <age>18</age>
                 <gender>男</gender>
             </xml>";
-            dynamic obj = XmlUtils.SerializeFromString(xml);
+            dynamic obj = XmlUtils.DeserializeFromString(xml);
             Assert.NotNull(obj);
             Assert.Equal("张三", obj.name.Value);
             Assert.Equal("aaa", obj.test.hello.id);
