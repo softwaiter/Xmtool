@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="DynamicObject.Extcs" />
+    <None Include="DynamicObjectExt.cs" />
   </ItemGroup>
 
   <ItemGroup>
