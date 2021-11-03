@@ -9,22 +9,22 @@
 ### 依赖安装
 #### Package Manager
 ```shell
-Install-Package CodeM.Common.Tools -Version 1.1.15
+Install-Package CodeM.Common.Tools -Version 1.1.16
 ```
 
 #### .NET CLI
 ```shell
-dotnet add package CodeM.Common.Tools --version 1.1.15
+dotnet add package CodeM.Common.Tools --version 1.1.16
 ```
 
 #### PackageReference
 ```xml
-<PackageReference Include="CodeM.Common.Tools" Version="1.1.15" />
+<PackageReference Include="CodeM.Common.Tools" Version="1.1.16" />
 ```
 
 #### Paket CLI
 ```shell
-paket add CodeM.Common.Tools --version 1.1.15
+paket add CodeM.Common.Tools --version 1.1.16
 ```
 
 
@@ -301,9 +301,9 @@ inculdeRoot:是否包含根节点
 
 
 
-## Json2Dynamic
+## Json2DynamicParser
 
-### Json动态对象转换器
+### Json动态对象解析器
 
 
 
@@ -335,23 +335,15 @@ jsonStr:除了可以通过添加配置文件转换动态对象，还可以直接
 
 
 
-##### 创建一个Json动态对象
+## DynamicObjectExt
 
-public dynamic CreateObject()
-
-###### 参数：
-
-无
-
-###### 返回：
-
-返回创建好的JsonDynamicObject实例。
+### 动态对象扩展类
 
 
 
-## JsonDynamicObject
+##### 获取对象所有属性
 
-### Json动态对象
+public Dictionary<string, object>.KeyCollection Keys
 
 
 
