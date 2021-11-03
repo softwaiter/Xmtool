@@ -87,5 +87,14 @@ namespace UnitTest
             configObj.SetValueByPath("Company.Name", "MYWS");
             Assert.Equal(configObj.Company.Name, "MYWS");
         }
+
+        [Fact]
+        public void TestKeys()
+        {
+            dynamic obj = new DynamicObjectExt();
+            obj.Id = "001";
+            obj.Name = "wangxm";
+            Assert.Equal(2, obj.Keys.Count);
+        }
     }
 }
