@@ -384,17 +384,17 @@ namespace CodeM.Common.Tools.Xml
             }
         }
 
-        private static void DeserializeXmlNode(Stack<JsonDynamicObject> s,
+        private static void DeserializeXmlNode(Stack<DynamicObjectExt> s,
             XmlNodeInfo node, bool includeRoot)
         {
             if (!node.IsEndNode)
             {
                 if (!node.IsRoot || includeRoot)
                 {
-                    JsonDynamicObject p = s.Peek();
+                    DynamicObjectExt p = s.Peek();
                     if (node.IsNode)
                     {
-                        JsonDynamicObject newObj = new JsonDynamicObject();
+                        DynamicObjectExt newObj = new DynamicObjectExt();
                         p.TrySetValue(node.LocalName, newObj);
                         s.Push(newObj);
 
@@ -422,8 +422,8 @@ namespace CodeM.Common.Tools.Xml
 
         public static dynamic Deserialize(string file, bool includeRoot = false)
         {
-            JsonDynamicObject r = new JsonDynamicObject();
-            Stack<JsonDynamicObject> s = new Stack<JsonDynamicObject>();
+            DynamicObjectExt r = new DynamicObjectExt();
+            Stack<DynamicObjectExt> s = new Stack<DynamicObjectExt>();
             s.Push(r);
 
             Iterate(file, (XmlNodeInfo node) =>
@@ -436,8 +436,8 @@ namespace CodeM.Common.Tools.Xml
 
         public static dynamic DeserializeFromString(string xml, bool includeRoot = false)
         {
-            JsonDynamicObject r = new JsonDynamicObject();
-            Stack<JsonDynamicObject> s = new Stack<JsonDynamicObject>();
+            DynamicObjectExt r = new DynamicObjectExt();
+            Stack<DynamicObjectExt> s = new Stack<DynamicObjectExt>();
             s.Push(r);
 
             IterateFromString(xml, (XmlNodeInfo node) =>

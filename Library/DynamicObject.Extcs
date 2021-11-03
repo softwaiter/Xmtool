@@ -6,7 +6,7 @@ using System.Text;
 
 namespace CodeM.Common.Tools.Json
 {
-    internal class JsonDynamicObject : DynamicObject
+    public class DynamicObjectExt : DynamicObject
     {
         Dictionary<string, object> mValues = new Dictionary<string, object>();
 
@@ -85,7 +85,7 @@ namespace CodeM.Common.Tools.Json
                 dynamic subObj = null;
                 if (!currObj.TryGetValue(item, out subObj))
                 {
-                    subObj = new JsonDynamicObject();
+                    subObj = new DynamicObjectExt();
                     currObj.TrySetValue(item, subObj);
                     currObj = subObj;
                 }
@@ -93,13 +93,13 @@ namespace CodeM.Common.Tools.Json
                 {
                     if (subObj == null)
                     {
-                        subObj = new JsonDynamicObject();
+                        subObj = new DynamicObjectExt();
                         currObj.TrySetValue(item, subObj);
                     }
                     currObj = subObj;
                 }
 
-                if (!(currObj is JsonDynamicObject))
+                if (!(currObj is DynamicObjectExt))
                 {
                     bRet = false;
                     break;
@@ -134,7 +134,7 @@ namespace CodeM.Common.Tools.Json
                         break;
                     }
                     
-                    if (!(currObj is JsonDynamicObject))
+                    if (!(currObj is DynamicObjectExt))
                     {
                         bRet = false;
                         break;
@@ -176,7 +176,7 @@ namespace CodeM.Common.Tools.Json
                         break;
                     }
 
-                    if (!(currObj is JsonDynamicObject))
+                    if (!(currObj is DynamicObjectExt))
                     {
                         bRet = false;
                         break;
@@ -302,9 +302,9 @@ namespace CodeM.Common.Tools.Json
             {
                 if (e.Current.Value != null)
                 {
-                    if (e.Current.Value is JsonDynamicObject)
+                    if (e.Current.Value is DynamicObjectExt)
                     {
-                        dynamic objValue = (JsonDynamicObject)e.Current.Value;
+                        dynamic objValue = (DynamicObjectExt)e.Current.Value;
 
                         sbResult.Append("<" + e.Current.Key);
                         sbResult.Append(objValue.SerializeXMLAttributes());

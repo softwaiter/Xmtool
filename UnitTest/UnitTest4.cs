@@ -31,7 +31,7 @@ namespace UnitTest
         [Fact]
         public async void PostTest()
         {
-            dynamic data = new Json2Dynamic().CreateObject();
+            dynamic data = new DynamicObjectExt();
             data.channel = 0;
             data.d = 10;
             data.domains = "163.com";

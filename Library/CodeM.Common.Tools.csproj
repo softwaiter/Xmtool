@@ -16,6 +16,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Json\DynamicObject.Extcs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="DynamicObject.Extcs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="HtmlSanitizer" Version="6.0.441" />
   </ItemGroup>
 

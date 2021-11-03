@@ -12,7 +12,7 @@ namespace CodeM.Common.Tools.Web
 
         private HttpRequestMessage mRequest = null;
 
-        private Json2Dynamic mParser = new Json2Dynamic();
+        private Json2DynamicParser mParser = new Json2DynamicParser();
 
         internal HttpClientExt(HttpClient client)
         {
