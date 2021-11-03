@@ -10,6 +10,14 @@ namespace CodeM.Common.Tools.Json
     {
         Dictionary<string, object> mValues = new Dictionary<string, object>();
 
+        public Dictionary<string, object>.KeyCollection Keys
+        {
+            get
+            {
+                return mValues.Keys;
+            }
+        }
+
         public override bool TrySetMember(SetMemberBinder binder, object value)
         {
             mValues[binder.Name] = value;
