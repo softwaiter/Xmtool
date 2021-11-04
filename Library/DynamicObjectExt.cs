@@ -18,6 +18,18 @@ namespace CodeM.Common.Tools.Json
             }
         }
 
+        public dynamic this[string key]
+        {
+            get
+            {
+                if (mValues.ContainsKey(key))
+                {
+                    return mValues[key];
+                }
+                return null;
+            }
+        }
+
         public override bool TrySetMember(SetMemberBinder binder, object value)
         {
             mValues[binder.Name] = value;

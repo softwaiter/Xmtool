@@ -89,12 +89,22 @@ namespace UnitTest
         }
 
         [Fact]
-        public void TestKeys()
+        public void TestDynamicObjectExtKeys()
         {
             dynamic obj = new DynamicObjectExt();
             obj.Id = "001";
             obj.Name = "wangxm";
             Assert.Equal(2, obj.Keys.Count);
+        }
+
+        [Fact]
+        public void TestDynamicObjectExtIndexerProperty()
+        {
+            dynamic obj = new DynamicObjectExt();
+            obj.Id = "001";
+            obj.Name = "wangxm";
+            Assert.Equal("wangxm", obj["Name"]);
+            Assert.Null(obj["Age"]);
         }
     }
 }
