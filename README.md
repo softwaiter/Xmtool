@@ -9,22 +9,22 @@
 ### 依赖安装
 #### Package Manager
 ```shell
-Install-Package CodeM.Common.Tools -Version 1.1.16
+Install-Package CodeM.Common.Tools -Version 1.1.18
 ```
 
 #### .NET CLI
 ```shell
-dotnet add package CodeM.Common.Tools --version 1.1.16
+dotnet add package CodeM.Common.Tools --version 1.1.18
 ```
 
 #### PackageReference
 ```xml
-<PackageReference Include="CodeM.Common.Tools" Version="1.1.16" />
+<PackageReference Include="CodeM.Common.Tools" Version="1.1.18" />
 ```
 
 #### Paket CLI
 ```shell
-paket add CodeM.Common.Tools --version 1.1.16
+paket add CodeM.Common.Tools --version 1.1.18
 ```
 
 
@@ -344,6 +344,12 @@ jsonStr:除了可以通过添加配置文件转换动态对象，还可以直接
 ##### 获取对象所有属性
 
 public Dictionary<string, object>.KeyCollection Keys
+
+
+
+##### 以索引器形式通过key获取对应属性内容
+
+public dynamic this[string key]
 
 
 
