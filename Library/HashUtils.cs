@@ -4,9 +4,9 @@ using System.Text;
 
 namespace CodeM.Common.Tools.Security
 {
-    public class HashUtils
+    public class HashGenerator
     {
-        public static string MD5(string text, string encoding = "utf-8") {
+        public string MD5(string text, string encoding = "utf-8") {
             byte[] bytes = Encoding.GetEncoding(encoding).GetBytes(text);
 
             using (MD5 md5 = System.Security.Cryptography.MD5.Create()) {
@@ -17,7 +17,7 @@ namespace CodeM.Common.Tools.Security
             }
         }
 
-        public static string SHA1(string text, string encoding = "utf-8") {
+        public string SHA1(string text, string encoding = "utf-8") {
             byte[] bytes = Encoding.GetEncoding(encoding).GetBytes(text);
 
             using (SHA1Managed sha1 = new SHA1Managed()) {
@@ -28,7 +28,7 @@ namespace CodeM.Common.Tools.Security
             }
         }
 
-        public static string SHA256(string text, string encoding = "utf-8") {
+        public string SHA256(string text, string encoding = "utf-8") {
             byte[] bytes = Encoding.GetEncoding(encoding).GetBytes(text);
 
             using (SHA256Managed sha256 = new SHA256Managed()) {
@@ -39,7 +39,7 @@ namespace CodeM.Common.Tools.Security
             }
         }
 
-        public static string SHA384(string text, string encoding = "utf-8") {
+        public string SHA384(string text, string encoding = "utf-8") {
             byte[] bytes = Encoding.GetEncoding(encoding).GetBytes(text);
 
             using (SHA384Managed sha384 = new SHA384Managed()) {
@@ -50,7 +50,7 @@ namespace CodeM.Common.Tools.Security
             }
         }
 
-        public static string SHA512(string text, string encoding = "utf-8") {
+        public string SHA512(string text, string encoding = "utf-8") {
             byte[] bytes = Encoding.GetEncoding(encoding).GetBytes(text);
 
             using (SHA512Managed sha512 = new SHA512Managed()) {
