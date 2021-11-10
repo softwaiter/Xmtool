@@ -43,18 +43,18 @@ namespace UnitTest
         [Fact]
         public void Base64() {
             string source = "wangxiaoming";
-            string base64Encode = CryptoUtils.Base64Encode(source);
+            string base64Encode = CryptoTool.New().Base64Encode(source);
             output.WriteLine("wangxiaoming base64: " + base64Encode);
-            string base64Decode = CryptoUtils.Base64Decode(base64Encode);
+            string base64Decode = CryptoTool.New().Base64Decode(base64Encode);
             Assert.Equal(base64Decode, source);
         }
 
         [Fact]
         public void Aes() {
             string source = "wangxiaoming";
-            string aesEncypted = CryptoUtils.AESEncode(source, "test");
+            string aesEncypted = CryptoTool.New().AESEncode(source, "test");
             output.WriteLine("wangxiaoming aes: " + aesEncypted);
-            string aesDecrypted = CryptoUtils.AESDecode(aesEncypted, "test");
+            string aesDecrypted = CryptoTool.New().AESDecode(aesEncypted, "test");
             Assert.Equal(aesDecrypted, source);
         }
 
