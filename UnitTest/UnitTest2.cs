@@ -19,8 +19,7 @@ namespace UnitTest
         public void LoadOneConfig()
         {
             string path = Path.Combine(Environment.CurrentDirectory, "appsettings.json");
-            Json2DynamicParser parser = new Json2DynamicParser();
-            dynamic configObj = parser.AddJsonFile(path).Parse();
+            dynamic configObj = JsonParseTool.New().AddJsonFile(path).Parse();
             Assert.True(configObj.Has("User"));
         }
 
@@ -29,8 +28,7 @@ namespace UnitTest
         {
             string path = Path.Combine(Environment.CurrentDirectory, "appsettings.json");
             string path2 = Path.Combine(Environment.CurrentDirectory, "appsettings.Development.json");
-            Json2DynamicParser parser = new Json2DynamicParser();
-            dynamic configObj = parser.AddJsonFile(path).AddJsonFile(path2).Parse();
+            dynamic configObj = JsonParseTool.New().AddJsonFile(path).AddJsonFile(path2).Parse();
             Assert.Equal(configObj.Test, "This is a example.");
         }
 
@@ -38,8 +36,7 @@ namespace UnitTest
         public void HasPath()
         { 
             string path = Path.Combine(Environment.CurrentDirectory, "appsettings.json");
-            Json2DynamicParser parser = new Json2DynamicParser();
-            dynamic configObj = parser.AddJsonFile(path).Parse();
+            dynamic configObj = JsonParseTool.New().AddJsonFile(path).Parse();
 
             bool ret = configObj.HasPath("User");
             Assert.True(ret);
@@ -56,8 +53,7 @@ namespace UnitTest
         public void RemovePath()
         {
             string path = Path.Combine(Environment.CurrentDirectory, "appsettings.json");
-            Json2DynamicParser parser = new Json2DynamicParser();
-            dynamic configObj = parser.AddJsonFile(path).Parse();
+            dynamic configObj = JsonParseTool.New().AddJsonFile(path).Parse();
 
             bool ret = configObj.HasPath("User.Name");
             Assert.True(ret);
@@ -76,8 +72,7 @@ namespace UnitTest
         public void SetValueByPath()
         {
             string path = Path.Combine(Environment.CurrentDirectory, "appsettings.json");
-            Json2DynamicParser parser = new Json2DynamicParser();
-            dynamic configObj = parser.AddJsonFile(path).Parse();
+            dynamic configObj = JsonParseTool.New().AddJsonFile(path).Parse();
 
             Assert.Equal(configObj.User.Name, "Wangxm");
 

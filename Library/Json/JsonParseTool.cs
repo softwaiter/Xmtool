@@ -6,11 +6,16 @@ using System.Text.Json;
 
 namespace CodeM.Common.Tools.Json
 {
-    public class Json2DynamicParser
+    public class JsonParseTool
     {
         private List<string> mJsonFiles = new List<string>();
 
-        public Json2DynamicParser AddJsonFile(string path)
+        public static JsonParseTool New()
+        {
+            return new JsonParseTool();
+        }
+
+        public JsonParseTool AddJsonFile(string path)
         {
             if (!File.Exists(path))
             {

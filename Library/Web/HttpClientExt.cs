@@ -12,8 +12,6 @@ namespace CodeM.Common.Tools.Web
 
         private HttpRequestMessage mRequest = null;
 
-        private Json2DynamicParser mParser = new Json2DynamicParser();
-
         internal HttpClientExt(HttpClient client)
         {
             mClient = client;
@@ -100,7 +98,7 @@ namespace CodeM.Common.Tools.Web
                 string result = await resp.Content.ReadAsStringAsync();
                 try
                 {
-                    return mParser.Parse(result);
+                    return JsonParseTool.New().Parse(result);
                 }
                 catch
                 {
