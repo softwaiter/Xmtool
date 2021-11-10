@@ -20,7 +20,7 @@ namespace UnitTest
         {
             try
             {
-                await WebUtils.Client().GetJsonAsync("http://www.baidu.com");
+                await WebTool.Client().GetJsonAsync("http://www.baidu.com");
             }
             catch (Exception exp)
             {
@@ -46,7 +46,7 @@ namespace UnitTest
             data.topURL = "https://www.126.com/";
             data.un = "softwaiter@126.com";
 
-            dynamic result = await WebUtils.Client()
+            dynamic result = await WebTool.Client()
                 .SetJsonContent(data)
                 .PostJsonAsync("https://passport.126.com/dl/l");
             Assert.True(result != null);

@@ -3,8 +3,14 @@ using System.Net.Http;
 
 namespace CodeM.Common.Tools.Web
 {
-    public class WebUtils
+    public class WebTool
     {
+        private static WebTool sWTool = new WebTool();
+        public static WebTool New()
+        {
+            return sWTool;
+        }
+
         private static ConcurrentDictionary<string, HttpClient> sClients = new ConcurrentDictionary<string, HttpClient>();
 
         /// <summary>
@@ -18,21 +24,9 @@ namespace CodeM.Common.Tools.Web
             return new HttpClientExt(client);
         }
 
-        private static HttpSecurity sInst;
-        private static object sLock = new object();
-        public static HttpSecurity Security()
+        public HttpSecurity Security()
         {
-            if (sInst == null)
-            {
-                lock (sLock)
-                {
-                    if (sInst == null)
-                    {
-                        sInst = new HttpSecurity();
-                    }
-                }
-            }
-            return sInst;
+            return HttpSecurity.New();
         }
     }
 }
