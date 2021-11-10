@@ -20,7 +20,7 @@ namespace UnitTest
         public void CheckListType()
         {
             List<string> lst = new List<string>();
-            Assert.True(TypeUtils.IsList(lst));
+            Assert.True(TypeTool.New().IsList(lst));
         }
 
         [Fact]
