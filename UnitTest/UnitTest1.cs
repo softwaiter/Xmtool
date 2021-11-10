@@ -64,7 +64,7 @@ namespace UnitTest
 
             string path = Path.Combine(Environment.CurrentDirectory, "ioc.xml");
             bool isObj = false;
-            XmlUtils.Iterate(path, (XmlNodeInfo node) =>
+            XmlTool.New().Iterate(path, (XmlNodeInfo node) =>
             {
                 if (!node.IsEndNode)
                 {
@@ -97,7 +97,7 @@ namespace UnitTest
                 <age>18</age>
                 <gender>ÄÐ</gender>
             </xml>";
-            XmlUtils.IterateFromString(xml, (XmlNodeInfo node) =>
+            XmlTool.New().IterateFromString(xml, (XmlNodeInfo node) =>
             {
                 if (!node.IsEndNode)
                 {

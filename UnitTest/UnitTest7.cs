@@ -33,7 +33,7 @@ namespace UnitTest
             </xml>";
 
             bool xmlIsRoot = false;
-            XmlUtils.IterateFromString(xml, (XmlNodeInfo node) =>
+            XmlTool.New().IterateFromString(xml, (XmlNodeInfo node) =>
             {
                 if (node.Path == "/xml")
                 {
@@ -54,7 +54,7 @@ namespace UnitTest
             </xml>";
 
             int nameLevel = 0;
-            XmlUtils.IterateFromString(xml, (XmlNodeInfo node) =>
+            XmlTool.New().IterateFromString(xml, (XmlNodeInfo node) =>
             {
                 if (node.Path == "/xml/name")
                 {
@@ -77,7 +77,7 @@ namespace UnitTest
                 <age>18</age>
                 <gender>男</gender>
             </xml>";
-            dynamic obj = XmlUtils.DeserializeFromString(xml);
+            dynamic obj = XmlTool.New().DeserializeFromString(xml);
             Assert.NotNull(obj);
             Assert.Equal("张三", obj.name.Value);
             Assert.Equal("aaa", obj.test.hello.id);

@@ -192,9 +192,15 @@ namespace CodeM.Common.Tools.Xml
 
     public delegate bool XmlNodeInfoGetter(XmlNodeInfo nodeInfo);
 
-    public class XmlUtils
+    public class XmlTool
     {
-        private static void IterateXmlNode(XmlTextReader xr, XmlNodeInfoGetter callback)
+        private static XmlTool sXTool = new XmlTool();
+        public static XmlTool New()
+        {
+            return sXTool;
+        }
+
+        private void IterateXmlNode(XmlTextReader xr, XmlNodeInfoGetter callback)
         {
             Dictionary<string, int> nodeIndexes = new Dictionary<string, int>();
             Dictionary<string, bool> nodeHasChild = new Dictionary<string, bool>();
@@ -359,7 +365,7 @@ namespace CodeM.Common.Tools.Xml
             }
         }
 
-        public static void Iterate(string file, XmlNodeInfoGetter callback = null)
+        public void Iterate(string file, XmlNodeInfoGetter callback = null)
         {
             if (callback != null)
             {
@@ -370,7 +376,7 @@ namespace CodeM.Common.Tools.Xml
             }
         }
 
-        public static void IterateFromString(string content, XmlNodeInfoGetter callback = null)
+        public void IterateFromString(string content, XmlNodeInfoGetter callback = null)
         {
             if (callback != null)
             {
@@ -384,7 +390,7 @@ namespace CodeM.Common.Tools.Xml
             }
         }
 
-        private static void DeserializeXmlNode(Stack<DynamicObjectExt> s,
+        private void DeserializeXmlNode(Stack<DynamicObjectExt> s,
             XmlNodeInfo node, bool includeRoot)
         {
             if (!node.IsEndNode)
@@ -420,7 +426,7 @@ namespace CodeM.Common.Tools.Xml
             }
         }
 
-        public static dynamic Deserialize(string file, bool includeRoot = false)
+        public dynamic Deserialize(string file, bool includeRoot = false)
         {
             DynamicObjectExt r = new DynamicObjectExt();
             Stack<DynamicObjectExt> s = new Stack<DynamicObjectExt>();
@@ -434,7 +440,7 @@ namespace CodeM.Common.Tools.Xml
             return r;
         }
 
-        public static dynamic DeserializeFromString(string xml, bool includeRoot = false)
+        public dynamic DeserializeFromString(string xml, bool includeRoot = false)
         {
             DynamicObjectExt r = new DynamicObjectExt();
             Stack<DynamicObjectExt> s = new Stack<DynamicObjectExt>();
