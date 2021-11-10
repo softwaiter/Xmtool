@@ -19,7 +19,7 @@ namespace UnitTest
         [Fact]
         public void MobileTest()
         {
-            bool ret = RegexUtils.IsMobile("13812345678");
+            bool ret = RegexTool.New().IsMobile("13812345678");
             Assert.True(ret);
         }
 
@@ -29,7 +29,7 @@ namespace UnitTest
         [Fact]
         public void MobileTest2()
         {
-            bool ret = RegexUtils.IsMobile("13612345678");
+            bool ret = RegexTool.New().IsMobile("13612345678");
             Assert.True(ret);
         }
 
@@ -39,7 +39,7 @@ namespace UnitTest
         [Fact]
         public void MobileTest3()
         {
-            bool ret = RegexUtils.IsMobile("23612345678");
+            bool ret = RegexTool.New().IsMobile("23612345678");
             Assert.False(ret);
         }
 
@@ -49,7 +49,7 @@ namespace UnitTest
         [Fact]
         public void MobileTest4()
         {
-            bool ret = RegexUtils.IsMobile("1361234567");
+            bool ret = RegexTool.New().IsMobile("1361234567");
             Assert.False(ret);
         }
 
@@ -59,7 +59,7 @@ namespace UnitTest
         [Fact]
         public void MobileTest5()
         {
-            bool ret = RegexUtils.IsMobile("abc");
+            bool ret = RegexTool.New().IsMobile("abc");
             Assert.False(ret);
         }
 
@@ -69,7 +69,7 @@ namespace UnitTest
         [Fact]
         public void MobileTest6()
         {
-            bool ret = RegexUtils.IsMobile("");
+            bool ret = RegexTool.New().IsMobile("");
             Assert.False(ret);
         }
 
@@ -79,7 +79,7 @@ namespace UnitTest
         [Fact]
         public void EmailTest()
         {
-            bool ret = RegexUtils.IsEmail("abc@126.com");
+            bool ret = RegexTool.New().IsEmail("abc@126.com");
             Assert.True(ret);
         }
 
@@ -89,7 +89,7 @@ namespace UnitTest
         [Fact]
         public void EmailTest2()
         {
-            bool ret = RegexUtils.IsEmail("abc@163.com");
+            bool ret = RegexTool.New().IsEmail("abc@163.com");
             Assert.True(ret);
         }
 
@@ -99,7 +99,7 @@ namespace UnitTest
         [Fact]
         public void EmailTest3()
         {
-            bool ret = RegexUtils.IsEmail("1100@qq.com");
+            bool ret = RegexTool.New().IsEmail("1100@qq.com");
             Assert.True(ret);
         }
 
@@ -109,7 +109,7 @@ namespace UnitTest
         [Fact]
         public void EmailTest4()
         {
-            bool ret = RegexUtils.IsEmail("abc@126.");
+            bool ret = RegexTool.New().IsEmail("abc@126.");
             Assert.False(ret);
         }
 
@@ -119,7 +119,7 @@ namespace UnitTest
         [Fact]
         public void EmailTest5()
         {
-            bool ret = RegexUtils.IsEmail("abc@126");
+            bool ret = RegexTool.New().IsEmail("abc@126");
             Assert.False(ret);
         }
 
@@ -129,7 +129,7 @@ namespace UnitTest
         [Fact]
         public void EmailTest6()
         {
-            bool ret = RegexUtils.IsEmail("abc@");
+            bool ret = RegexTool.New().IsEmail("abc@");
             Assert.False(ret);
         }
 
@@ -139,7 +139,7 @@ namespace UnitTest
         [Fact]
         public void EmailTest7()
         {
-            bool ret = RegexUtils.IsEmail("abc");
+            bool ret = RegexTool.New().IsEmail("abc");
             Assert.False(ret);
         }
 
@@ -149,7 +149,7 @@ namespace UnitTest
         [Fact]
         public void EmailTest8()
         {
-            bool ret = RegexUtils.IsEmail("");
+            bool ret = RegexTool.New().IsEmail("");
             Assert.False(ret);
         }
 
@@ -159,7 +159,7 @@ namespace UnitTest
         [Fact]
         public void UrlTest()
         {
-            bool ret = RegexUtils.IsUrl("http://www.baidu.com");
+            bool ret = RegexTool.New().IsUrl("http://www.baidu.com");
             Assert.True(ret);
         }
 
@@ -169,7 +169,7 @@ namespace UnitTest
         [Fact]
         public void UrlTest2()
         {
-            bool ret = RegexUtils.IsUrl("HTTP://WWW.QQ.COM");
+            bool ret = RegexTool.New().IsUrl("HTTP://WWW.QQ.COM");
             Assert.True(ret);
         }
 
@@ -179,7 +179,7 @@ namespace UnitTest
         [Fact]
         public void UrlTest3()
         {
-            bool ret = RegexUtils.IsUrl("https://news.sina.com.cn");
+            bool ret = RegexTool.New().IsUrl("https://news.sina.com.cn");
             Assert.True(ret);
         }
 
@@ -189,7 +189,7 @@ namespace UnitTest
         [Fact]
         public void UrlTest4()
         {
-            bool ret = RegexUtils.IsUrl("http://gjj.beijing.gov.cn");
+            bool ret = RegexTool.New().IsUrl("http://gjj.beijing.gov.cn");
             Assert.True(ret);
         }
 
@@ -199,7 +199,7 @@ namespace UnitTest
         [Fact]
         public void UrlTest5()
         {
-            bool ret = RegexUtils.IsUrl("www.baidu.com");
+            bool ret = RegexTool.New().IsUrl("www.baidu.com");
             Assert.False(ret);
         }
 
@@ -209,7 +209,7 @@ namespace UnitTest
         [Fact]
         public void UrlTest6()
         {
-            bool ret = RegexUtils.IsUrl("www.baidu");
+            bool ret = RegexTool.New().IsUrl("www.baidu");
             Assert.False(ret);
         }
 
@@ -219,7 +219,7 @@ namespace UnitTest
         [Fact]
         public void UrlTest7()
         {
-            bool ret = RegexUtils.IsUrl("");
+            bool ret = RegexTool.New().IsUrl("");
             Assert.False(ret);
         }
 
@@ -229,7 +229,7 @@ namespace UnitTest
         [Fact]
         public void IPTest()
         {
-            bool ret = RegexUtils.IsIP("192.168.1.1");
+            bool ret = RegexTool.New().IsIP("192.168.1.1");
             Assert.True(ret);
         }
 
@@ -239,7 +239,7 @@ namespace UnitTest
         [Fact]
         public void IPTest2()
         {
-            bool ret = RegexUtils.IsIP("255.255.255.255");
+            bool ret = RegexTool.New().IsIP("255.255.255.255");
             Assert.True(ret);
         }
 
@@ -249,7 +249,7 @@ namespace UnitTest
         [Fact]
         public void IPTest3()
         {
-            bool ret = RegexUtils.IsIP("255.255.255.256");
+            bool ret = RegexTool.New().IsIP("255.255.255.256");
             Assert.False(ret);
         }
 
@@ -259,7 +259,7 @@ namespace UnitTest
         [Fact]
         public void IPTest4()
         {
-            bool ret = RegexUtils.IsIP("255.255.255.-1");
+            bool ret = RegexTool.New().IsIP("255.255.255.-1");
             Assert.False(ret);
         }
 
@@ -269,7 +269,7 @@ namespace UnitTest
         [Fact]
         public void IPTest5()
         {
-            bool ret = RegexUtils.IsIP("255.255.255");
+            bool ret = RegexTool.New().IsIP("255.255.255");
             Assert.False(ret);
         }
 
@@ -279,7 +279,7 @@ namespace UnitTest
         [Fact]
         public void IPTest6()
         {
-            bool ret = RegexUtils.IsIP("abc.abc.abc.abc");
+            bool ret = RegexTool.New().IsIP("abc.abc.abc.abc");
             Assert.False(ret);
         }
 
@@ -289,7 +289,7 @@ namespace UnitTest
         [Fact]
         public void NumberTest()
         {
-            bool ret = RegexUtils.IsNumber("0");
+            bool ret = RegexTool.New().IsNumber("0");
             Assert.True(ret);
         }
 
@@ -299,7 +299,7 @@ namespace UnitTest
         [Fact]
         public void NumberTest2()
         {
-            bool ret = RegexUtils.IsNumber(int.MaxValue.ToString());
+            bool ret = RegexTool.New().IsNumber(int.MaxValue.ToString());
             Assert.True(ret);
         }
 
@@ -309,7 +309,7 @@ namespace UnitTest
         [Fact]
         public void NumberTest3()
         {
-            bool ret = RegexUtils.IsNumber(int.MinValue.ToString());
+            bool ret = RegexTool.New().IsNumber(int.MinValue.ToString());
             Assert.True(ret);
         }
 
@@ -319,7 +319,7 @@ namespace UnitTest
         [Fact]
         public void NumberTest4()
         {
-            bool ret = RegexUtils.IsNumber(double.MaxValue.ToString("0"));
+            bool ret = RegexTool.New().IsNumber(double.MaxValue.ToString("0"));
             Assert.True(ret);
         }
 
@@ -329,7 +329,7 @@ namespace UnitTest
         [Fact]
         public void NumberTest5()
         {
-            bool ret = RegexUtils.IsNumber(double.MinValue.ToString("0"));
+            bool ret = RegexTool.New().IsNumber(double.MinValue.ToString("0"));
             Assert.True(ret);
         }
 
@@ -339,7 +339,7 @@ namespace UnitTest
         [Fact]
         public void NumberTest6()
         {
-            bool ret = RegexUtils.IsNumber("abc");
+            bool ret = RegexTool.New().IsNumber("abc");
             Assert.False(ret);
         }
 
@@ -349,7 +349,7 @@ namespace UnitTest
         [Fact]
         public void NumberTest7()
         {
-            bool ret = RegexUtils.IsNumber("");
+            bool ret = RegexTool.New().IsNumber("");
             Assert.False(ret);
         }
 
@@ -359,7 +359,7 @@ namespace UnitTest
         [Fact]
         public void IntTest()
         {
-            bool ret = RegexUtils.IsInteger("0");
+            bool ret = RegexTool.New().IsInteger("0");
             Assert.True(ret);
         }
 
@@ -369,7 +369,7 @@ namespace UnitTest
         [Fact]
         public void IntTest2()
         {
-            bool ret = RegexUtils.IsInteger("15");
+            bool ret = RegexTool.New().IsInteger("15");
             Assert.True(ret);
         }
 
@@ -379,7 +379,7 @@ namespace UnitTest
         [Fact]
         public void IntTest3()
         {
-            bool ret = RegexUtils.IsInteger("-18");
+            bool ret = RegexTool.New().IsInteger("-18");
             Assert.True(ret);
         }
 
@@ -389,7 +389,7 @@ namespace UnitTest
         [Fact]
         public void IntTest4()
         {
-            bool ret = RegexUtils.IsInteger("0.7");
+            bool ret = RegexTool.New().IsInteger("0.7");
             Assert.False(ret);
         }
 
@@ -399,7 +399,7 @@ namespace UnitTest
         [Fact]
         public void IntTest5()
         {
-            bool ret = RegexUtils.IsInteger("-9.6");
+            bool ret = RegexTool.New().IsInteger("-9.6");
             Assert.False(ret);
         }
 
@@ -409,7 +409,7 @@ namespace UnitTest
         [Fact]
         public void IntTest6()
         {
-            bool ret = RegexUtils.IsInteger("abc");
+            bool ret = RegexTool.New().IsInteger("abc");
             Assert.False(ret);
         }
 
@@ -419,7 +419,7 @@ namespace UnitTest
         [Fact]
         public void IntTest7()
         {
-            bool ret = RegexUtils.IsInteger("");
+            bool ret = RegexTool.New().IsInteger("");
             Assert.False(ret);
         }
 
@@ -429,7 +429,7 @@ namespace UnitTest
         [Fact]
         public void PositiveIntTest()
         {
-            bool ret = RegexUtils.IsPositiveInteger("0");
+            bool ret = RegexTool.New().IsPositiveInteger("0");
             Assert.False(ret);
         }
 
@@ -439,7 +439,7 @@ namespace UnitTest
         [Fact]
         public void PositiveIntTest2()
         {
-            bool ret = RegexUtils.IsPositiveInteger("2");
+            bool ret = RegexTool.New().IsPositiveInteger("2");
             Assert.True(ret);
         }
 
@@ -449,7 +449,7 @@ namespace UnitTest
         [Fact]
         public void PositiveIntTest3()
         {
-            bool ret = RegexUtils.IsPositiveInteger("2.8");
+            bool ret = RegexTool.New().IsPositiveInteger("2.8");
             Assert.False(ret);
         }
 
@@ -459,7 +459,7 @@ namespace UnitTest
         [Fact]
         public void PositiveIntTest4()
         {
-            bool ret = RegexUtils.IsPositiveInteger("-2.8");
+            bool ret = RegexTool.New().IsPositiveInteger("-2.8");
             Assert.False(ret);
         }
 
@@ -469,7 +469,7 @@ namespace UnitTest
         [Fact]
         public void PositiveIntTest5()
         {
-            bool ret = RegexUtils.IsPositiveInteger("-100");
+            bool ret = RegexTool.New().IsPositiveInteger("-100");
             Assert.False(ret);
         }
 
@@ -479,7 +479,7 @@ namespace UnitTest
         [Fact]
         public void PositiveIntTest6()
         {
-            bool ret = RegexUtils.IsPositiveInteger("abc");
+            bool ret = RegexTool.New().IsPositiveInteger("abc");
             Assert.False(ret);
         }
 
@@ -489,7 +489,7 @@ namespace UnitTest
         [Fact]
         public void PositiveIntTest7()
         {
-            bool ret = RegexUtils.IsPositiveInteger("");
+            bool ret = RegexTool.New().IsPositiveInteger("");
             Assert.False(ret);
         }
 
@@ -499,7 +499,7 @@ namespace UnitTest
         [Fact]
         public void NaturalIntTest()
         {
-            bool ret = RegexUtils.IsNaturalInteger("0");
+            bool ret = RegexTool.New().IsNaturalInteger("0");
             Assert.True(ret);
         }
 
@@ -509,7 +509,7 @@ namespace UnitTest
         [Fact]
         public void NaturalIntTest2()
         {
-            bool ret = RegexUtils.IsNaturalInteger("10");
+            bool ret = RegexTool.New().IsNaturalInteger("10");
             Assert.True(ret);
         }
 
@@ -519,7 +519,7 @@ namespace UnitTest
         [Fact]
         public void NaturalIntTest3()
         {
-            bool ret = RegexUtils.IsNaturalInteger("2.5");
+            bool ret = RegexTool.New().IsNaturalInteger("2.5");
             Assert.False(ret);
         }
 
@@ -529,7 +529,7 @@ namespace UnitTest
         [Fact]
         public void NaturalIntTest4()
         {
-            bool ret = RegexUtils.IsNaturalInteger("-4");
+            bool ret = RegexTool.New().IsNaturalInteger("-4");
             Assert.False(ret);
         }
 
@@ -539,7 +539,7 @@ namespace UnitTest
         [Fact]
         public void NaturalIntTest5()
         {
-            bool ret = RegexUtils.IsNaturalInteger("abc");
+            bool ret = RegexTool.New().IsNaturalInteger("abc");
             Assert.False(ret);
         }
 
@@ -549,7 +549,7 @@ namespace UnitTest
         [Fact]
         public void NaturalIntTest6()
         {
-            bool ret = RegexUtils.IsNaturalInteger("");
+            bool ret = RegexTool.New().IsNaturalInteger("");
             Assert.False(ret);
         }
 
@@ -559,7 +559,7 @@ namespace UnitTest
         [Fact]
         public void DecimalTest()
         {
-            bool ret = RegexUtils.IsDecimal("1.5");
+            bool ret = RegexTool.New().IsDecimal("1.5");
             Assert.True(ret);
         }
 
@@ -569,7 +569,7 @@ namespace UnitTest
         [Fact]
         public void DecimalTest2()
         {
-            bool ret = RegexUtils.IsDecimal("0.2");
+            bool ret = RegexTool.New().IsDecimal("0.2");
             Assert.True(ret);
         }
 
@@ -579,7 +579,7 @@ namespace UnitTest
         [Fact]
         public void DecimalTest3()
         {
-            bool ret = RegexUtils.IsDecimal("-5.8");
+            bool ret = RegexTool.New().IsDecimal("-5.8");
             Assert.True(ret);
         }
 
@@ -589,7 +589,7 @@ namespace UnitTest
         [Fact]
         public void DecimalTest4()
         {
-            bool ret = RegexUtils.IsDecimal("-0.9");
+            bool ret = RegexTool.New().IsDecimal("-0.9");
             Assert.True(ret);
         }
 
@@ -599,7 +599,7 @@ namespace UnitTest
         [Fact]
         public void DecimalTest5()
         {
-            bool ret = RegexUtils.IsDecimal("0");
+            bool ret = RegexTool.New().IsDecimal("0");
             Assert.False(ret);
         }
 
@@ -609,7 +609,7 @@ namespace UnitTest
         [Fact]
         public void DecimalTest6()
         {
-            bool ret = RegexUtils.IsDecimal("100");
+            bool ret = RegexTool.New().IsDecimal("100");
             Assert.False(ret);
         }
 
@@ -619,7 +619,7 @@ namespace UnitTest
         [Fact]
         public void DecimalTest7()
         {
-            bool ret = RegexUtils.IsDecimal("-9");
+            bool ret = RegexTool.New().IsDecimal("-9");
             Assert.False(ret);
         }
 
@@ -629,7 +629,7 @@ namespace UnitTest
         [Fact]
         public void DecimalTest8()
         {
-            bool ret = RegexUtils.IsDecimal("abc");
+            bool ret = RegexTool.New().IsDecimal("abc");
             Assert.False(ret);
         }
 
@@ -639,7 +639,7 @@ namespace UnitTest
         [Fact]
         public void DecimalTest9()
         {
-            bool ret = RegexUtils.IsDecimal("");
+            bool ret = RegexTool.New().IsDecimal("");
             Assert.False(ret);
         }
 
