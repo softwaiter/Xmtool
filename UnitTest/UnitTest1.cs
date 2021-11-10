@@ -18,7 +18,7 @@ namespace UnitTest
         [Fact]
         public void Md5()
         {
-            HashGenerator hg = new HashGenerator();
+            HashTool hg = new HashTool();
             string md5 = hg.MD5("wangxiaoming");
             output.WriteLine("wangxiaoming md5: " + md5);
             Assert.Equal(32, md5.Length);
@@ -26,7 +26,7 @@ namespace UnitTest
 
         [Fact]
         public void Sha1() {
-            HashGenerator hg = new HashGenerator();
+            HashTool hg = new HashTool();
             string sha1 = hg.SHA1("wangxiaoming");
             output.WriteLine("wangxiaoming sha1: " + sha1);
             Assert.Equal(40, sha1.Length);
@@ -34,7 +34,7 @@ namespace UnitTest
 
         [Fact]
         public void Sha256() {
-            HashGenerator hg = new HashGenerator();
+            HashTool hg = new HashTool();
             string sha256 = hg.SHA256("wangxiaoming");
             output.WriteLine("wangxiaoming sha256: " + sha256);
             Assert.Equal(64, sha256.Length);
