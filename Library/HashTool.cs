@@ -4,10 +4,10 @@ using System.Text;
 
 namespace CodeM.Common.Tools.Security
 {
-    public class HashGenerator
+    public class HashTool
     {
-        private static HashGenerator sHG = new HashGenerator();
-        public static HashGenerator New()
+        private static HashTool sHG = new HashTool();
+        public static HashTool New()
         {
             return sHG;
         }
