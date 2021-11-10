@@ -6,6 +6,12 @@ namespace CodeM.Common.Tools.Security
 {
     public class HashGenerator
     {
+        private static HashGenerator sHG = new HashGenerator();
+        public static HashGenerator New()
+        {
+            return sHG;
+        }
+
         public string MD5(string text, string encoding = "utf-8") {
             byte[] bytes = Encoding.GetEncoding(encoding).GetBytes(text);
 
