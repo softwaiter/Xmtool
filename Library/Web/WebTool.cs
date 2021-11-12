@@ -6,7 +6,12 @@ namespace CodeM.Common.Tools.Web
     public class WebTool
     {
         private static WebTool sWTool = new WebTool();
-        public static WebTool New()
+
+        private WebTool()
+        { 
+        }
+
+        internal static WebTool New()
         {
             return sWTool;
         }

@@ -1,4 +1,4 @@
-using CodeM.Common.Tools.Security;
+using CodeM.Common.Tools;
 using CodeM.Common.Tools.Xml;
 using System;
 using System.IO;
@@ -18,24 +18,21 @@ namespace UnitTest
         [Fact]
         public void Md5()
         {
-            HashTool hg = new HashTool();
-            string md5 = hg.MD5("wangxiaoming");
+            string md5 = Xmtool.Hash().MD5("wangxiaoming");
             output.WriteLine("wangxiaoming md5: " + md5);
             Assert.Equal(32, md5.Length);
         }
 
         [Fact]
         public void Sha1() {
-            HashTool hg = new HashTool();
-            string sha1 = hg.SHA1("wangxiaoming");
+            string sha1 = Xmtool.Hash().SHA1("wangxiaoming");
             output.WriteLine("wangxiaoming sha1: " + sha1);
             Assert.Equal(40, sha1.Length);
         }
 
         [Fact]
         public void Sha256() {
-            HashTool hg = new HashTool();
-            string sha256 = hg.SHA256("wangxiaoming");
+            string sha256 = Xmtool.Hash().SHA256("wangxiaoming");
             output.WriteLine("wangxiaoming sha256: " + sha256);
             Assert.Equal(64, sha256.Length);
         }
@@ -43,18 +40,18 @@ namespace UnitTest
         [Fact]
         public void Base64() {
             string source = "wangxiaoming";
-            string base64Encode = CryptoTool.New().Base64Encode(source);
+            string base64Encode = Xmtool.Crypto().Base64Encode(source);
             output.WriteLine("wangxiaoming base64: " + base64Encode);
-            string base64Decode = CryptoTool.New().Base64Decode(base64Encode);
+            string base64Decode = Xmtool.Crypto().Base64Decode(base64Encode);
             Assert.Equal(base64Decode, source);
         }
 
         [Fact]
         public void Aes() {
             string source = "wangxiaoming";
-            string aesEncypted = CryptoTool.New().AESEncode(source, "test");
+            string aesEncypted = Xmtool.Crypto().AESEncode(source, "test");
             output.WriteLine("wangxiaoming aes: " + aesEncypted);
-            string aesDecrypted = CryptoTool.New().AESDecode(aesEncypted, "test");
+            string aesDecrypted = Xmtool.Crypto().AESDecode(aesEncypted, "test");
             Assert.Equal(aesDecrypted, source);
         }
 
@@ -64,7 +61,7 @@ namespace UnitTest
 
             string path = Path.Combine(Environment.CurrentDirectory, "ioc.xml");
             bool isObj = false;
-            XmlTool.New().Iterate(path, (XmlNodeInfo node) =>
+            Xmtool.Xml().Iterate(path, (XmlNodeInfo node) =>
             {
                 if (!node.IsEndNode)
                 {
@@ -97,7 +94,7 @@ namespace UnitTest
                 <age>18</age>
                 <gender>ÄÐ</gender>
             </xml>";
-            XmlTool.New().IterateFromString(xml, (XmlNodeInfo node) =>
+            Xmtool.Xml().IterateFromString(xml, (XmlNodeInfo node) =>
             {
                 if (!node.IsEndNode)
                 {

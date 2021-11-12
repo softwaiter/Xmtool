@@ -3,12 +3,17 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace CodeM.Common.Tools.Security
+namespace CodeM.Common.Tools
 {
     public class CryptoTool
     {
         private static CryptoTool sCTool = new CryptoTool();
-        public static CryptoTool New()
+
+        private CryptoTool()
+        { 
+        }
+
+        internal static CryptoTool New()
         {
             return sCTool;
         }

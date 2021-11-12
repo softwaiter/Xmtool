@@ -20,7 +20,7 @@ namespace UnitTest
         public void CheckListType()
         {
             List<string> lst = new List<string>();
-            Assert.True(TypeTool.New().IsList(lst));
+            Assert.True(Xmtool.Type().IsList(lst));
         }
 
         [Fact]
@@ -33,7 +33,7 @@ namespace UnitTest
             </xml>";
 
             bool xmlIsRoot = false;
-            XmlTool.New().IterateFromString(xml, (XmlNodeInfo node) =>
+            Xmtool.Xml().IterateFromString(xml, (XmlNodeInfo node) =>
             {
                 if (node.Path == "/xml")
                 {
@@ -54,7 +54,7 @@ namespace UnitTest
             </xml>";
 
             int nameLevel = 0;
-            XmlTool.New().IterateFromString(xml, (XmlNodeInfo node) =>
+            Xmtool.Xml().IterateFromString(xml, (XmlNodeInfo node) =>
             {
                 if (node.Path == "/xml/name")
                 {
@@ -77,7 +77,7 @@ namespace UnitTest
                 <age>18</age>
                 <gender>男</gender>
             </xml>";
-            dynamic obj = XmlTool.New().DeserializeFromString(xml);
+            dynamic obj = Xmtool.Xml().DeserializeFromString(xml);
             Assert.NotNull(obj);
             Assert.Equal("张三", obj.name.Value);
             Assert.Equal("aaa", obj.test.hello.id);

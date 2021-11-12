@@ -195,7 +195,12 @@ namespace CodeM.Common.Tools.Xml
     public class XmlTool
     {
         private static XmlTool sXTool = new XmlTool();
-        public static XmlTool New()
+
+        private XmlTool()
+        { 
+        }
+
+        internal static XmlTool New()
         {
             return sXTool;
         }

@@ -18,10 +18,10 @@ namespace UnitTest
         public void Test()
         {
             DateTime dtNow = DateTime.Now;
-            long ts = DateTimeTool.New().GetUtcTimestamp10();
+            long ts = Xmtool.DateTime().GetUtcTimestamp10();
             Assert.True((ts + "").Length == 10);
 
-            DateTime dt = DateTimeTool.New().GetLocalDateTimeFromUtcTimestamp10(ts);
+            DateTime dt =  Xmtool.DateTime().GetLocalDateTimeFromUtcTimestamp10(ts);
             Assert.Equal(dt.Year, dtNow.Year);
             Assert.Equal(dt.Month, dtNow.Month);
             Assert.Equal(dt.Day, dtNow.Day);
@@ -34,10 +34,10 @@ namespace UnitTest
         public void Test2()
         {
             DateTime dtNow = DateTime.Now;
-            long ts = DateTimeTool.New().GetUtcTimestamp13();
+            long ts = Xmtool.DateTime().GetUtcTimestamp13();
             Assert.True((ts + "").Length == 13);
 
-            DateTime dt = DateTimeTool.New().GetLocalDateTimeFromUtcTimestamp13(ts);
+            DateTime dt = Xmtool.DateTime().GetLocalDateTimeFromUtcTimestamp13(ts);
             Assert.Equal(dt.Year, dtNow.Year);
             Assert.Equal(dt.Month, dtNow.Month);
             Assert.Equal(dt.Day, dtNow.Day);
@@ -50,7 +50,7 @@ namespace UnitTest
         public void Test3()
         {
             string timespan = "1000ms";
-            TimeSpan? ts = DateTimeTool.New().GetTimeSpanFromString(timespan);
+            TimeSpan? ts = Xmtool.DateTime().GetTimeSpanFromString(timespan);
             Assert.NotNull(ts);
             Assert.True(ts.Value.TotalSeconds == 1);
         }
@@ -59,7 +59,7 @@ namespace UnitTest
         public void Test4()
         {
             string timespan = "1m";
-            TimeSpan? ts = DateTimeTool.New().GetTimeSpanFromString(timespan);
+            TimeSpan? ts = Xmtool.DateTime().GetTimeSpanFromString(timespan);
             Assert.NotNull(ts);
             Assert.True(ts.Value.TotalSeconds == 60);
         }
@@ -68,7 +68,7 @@ namespace UnitTest
         public void Test5()
         {
             string timespan = "1h";
-            TimeSpan? ts = DateTimeTool.New().GetTimeSpanFromString(timespan);
+            TimeSpan? ts = Xmtool.DateTime().GetTimeSpanFromString(timespan);
             Assert.NotNull(ts);
             Assert.True(ts.Value.TotalSeconds == 60 * 60);
         }
@@ -77,7 +77,7 @@ namespace UnitTest
         public void Test6()
         {
             string timespan = "15";
-            TimeSpan? ts = DateTimeTool.New().GetTimeSpanFromString(timespan);
+            TimeSpan? ts = Xmtool.DateTime().GetTimeSpanFromString(timespan);
             Assert.NotNull(ts);
             Assert.True(ts.Value.TotalSeconds == 15);
         }
@@ -85,7 +85,7 @@ namespace UnitTest
         [Fact]
         public void Test7()
         {
-            bool bRet = DateTimeTool.New().CheckStringTimeSpan("1s");
+            bool bRet = Xmtool.DateTime().CheckStringTimeSpan("1s");
             Assert.True(bRet);
         }
 
@@ -94,7 +94,7 @@ namespace UnitTest
         {
             try
             {
-                bool bRet = DateTimeTool.New().CheckStringTimeSpan("abc");
+                bool bRet = Xmtool.DateTime().CheckStringTimeSpan("abc");
             }
             catch (Exception exp)
             {
@@ -105,7 +105,7 @@ namespace UnitTest
         [Fact]
         public void Test9()
         {
-            bool bRet = DateTimeTool.New().CheckStringTimeSpan("abc", false);
+            bool bRet = Xmtool.DateTime().CheckStringTimeSpan("abc", false);
             Assert.False(bRet);
         }
     }

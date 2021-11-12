@@ -6,7 +6,12 @@ namespace CodeM.Common.Tools
     public class TypeTool
     {
         private static TypeTool sTTool = new TypeTool();
-        public static TypeTool New()
+
+        private TypeTool()
+        { 
+        }
+
+        internal static TypeTool New()
         {
             return sTTool;
         }

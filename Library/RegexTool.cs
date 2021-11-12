@@ -5,7 +5,12 @@ namespace CodeM.Common.Tools
     public class RegexTool
     {
         private static RegexTool sRTool = new RegexTool();
-        public static RegexTool New()
+
+        private RegexTool()
+        { 
+        }
+
+        internal static RegexTool New()
         {
             return sRTool;
         }

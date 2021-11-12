@@ -6,16 +6,20 @@ using System.Text.Json;
 
 namespace CodeM.Common.Tools.Json
 {
-    public class JsonParseTool
+    public class JsonConfigParser
     {
         private List<string> mJsonFiles = new List<string>();
 
-        public static JsonParseTool New()
-        {
-            return new JsonParseTool();
+        private JsonConfigParser()
+        { 
         }
 
-        public JsonParseTool AddJsonFile(string path)
+        internal static JsonConfigParser New()
+        {
+            return new JsonConfigParser();
+        }
+
+        public JsonConfigParser AddJsonFile(string path)
         {
             if (!File.Exists(path))
             {

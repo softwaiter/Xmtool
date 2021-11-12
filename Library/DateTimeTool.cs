@@ -5,7 +5,12 @@ namespace CodeM.Common.Tools
     public class DateTimeTool
     {
         private static DateTimeTool sDTTool = new DateTimeTool();
-        public static DateTimeTool New()
+
+        private DateTimeTool()
+        { 
+        }
+
+        internal static DateTimeTool New()
         {
             return sDTTool;
         }

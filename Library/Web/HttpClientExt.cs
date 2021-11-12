@@ -98,7 +98,7 @@ namespace CodeM.Common.Tools.Web
                 string result = await resp.Content.ReadAsStringAsync();
                 try
                 {
-                    return JsonParseTool.New().Parse(result);
+                    return JsonConfigParser.New().Parse(result);
                 }
                 catch
                 {

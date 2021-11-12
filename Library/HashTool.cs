@@ -2,12 +2,17 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace CodeM.Common.Tools.Security
+namespace CodeM.Common.Tools
 {
     public class HashTool
     {
         private static HashTool sHG = new HashTool();
-        public static HashTool New()
+
+        private HashTool()
+        { 
+        }
+
+        internal static HashTool New()
         {
             return sHG;
         }
