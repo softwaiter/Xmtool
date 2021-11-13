@@ -497,20 +497,20 @@ nodeInfo:当前遍历到的节点对象
 ##### <span id="xmlnodeinfo">4. XmlNodeInfo对象</span>
 ##### 属性：
 
-Path:返回当前节点路径，如：/root/person
-LocalName:返回当前节点的本地名称
-FullName:返回当前节点的全名称，包括命名空间和本地名称
-NamespaceURI:返回当前节点的命名空间URI
-IsRoot:是否根节点
-IsNode:返回当前节点是否元素节点
-IsEndNode:遍历过程会两次经过一个节点，一次开始，一次结束，该属性返回是否为结束一次的遍历
-IsTextNode:返回当前节点是否为文本节点
-IsCDATANode:返回当前节点是否为CDATA节点
-Level:节点级别
-Text:返回当前节点的文本内容
-CData:返回CDATA节点的内容
-AttributeCount:返回节点属性的数量
-Line:返回当前节点在文件中的行数
+Path:返回当前节点路径，如：/root/person<br/>
+LocalName:返回当前节点的本地名称<br/>
+FullName:返回当前节点的全名称，包括命名空间和本地名称<br/>
+NamespaceURI:返回当前节点的命名空间URI<br/>
+IsRoot:是否根节点<br/>
+IsNode:返回当前节点是否元素节点<br/>
+IsEndNode:遍历过程会两次经过一个节点，一次开始，一次结束，该属性返回是否为结束一次的遍历<br/>
+IsTextNode:返回当前节点是否为文本节点<br/>
+IsCDATANode:返回当前节点是否为CDATA节点<br/>
+Level:节点级别<br/>
+Text:返回当前节点的文本内容<br/>
+CData:返回CDATA节点的内容<br/>
+AttributeCount:返回节点属性的数量<br/>
+Line:返回当前节点在文件中的行数<br/>
 
 ##### 方法:
 bool HasAttributes()
@@ -638,19 +638,7 @@ if (obj.Has("Age"))
 
 #### 方法：
 
-##### 1. 获取对象所有属性
-
-Dictionary<string, object>.KeyCollection Keys
-
-<br/>
-
-##### 2. 以索引器形式通过key获取对应属性内容
-
-dynamic this[string key]
-
-<br/>
-
-##### 3. 尝试设置属性内容
+##### 1. 尝试设置属性内容
 
 bool TrySetValue(string name, object value)
 
@@ -666,7 +654,7 @@ value: 属性值
 
 <br/>
 
-##### 4. 尝试读取属性内容
+##### 2. 尝试读取属性内容
 
 bool TryGetValue(string name, out object result)
 
@@ -682,7 +670,7 @@ result: 读取成功后数据的内容
 
 <br/>
 
-##### 5. 根据路径设置属性内容
+##### 3. 根据路径设置属性内容
 
 bool SetValueByPath(string path, object value)
 
@@ -698,7 +686,7 @@ value: 属性值
 
 <br/>
 
-##### 6. 判断属性是否存在
+##### 4. 判断属性是否存在
 
 bool Has(string key)
 
@@ -712,7 +700,7 @@ key: 要判断的属性
 
 <br/>
 
-##### 7. 判断路径是否存在
+##### 5. 判断路径是否存在
 
 bool HasPath(string path)
 
@@ -726,7 +714,7 @@ path： 要判断的路径，多个由点分隔。
 
 <br/>
 
-##### 8. 删除指定属性
+##### 6. 删除指定属性
 
 bool Remove(string key)
 
@@ -740,7 +728,7 @@ key: 要删除的属性
 
 <br/>
 
-##### 9. 删除指定路径
+##### 7. 删除指定路径
 
 bool RemovePath(string path)
 
@@ -755,7 +743,7 @@ path: 要删除的路径，多个由点分隔。
 <br/>
 
 
-##### 10. 将对象序列化为Json字符串
+##### 8. 将对象序列化为Json字符串
 string ToString()
 
 ###### 参数：
@@ -767,14 +755,30 @@ string ToString()
 <br/>
 
 
-##### 11. 将对象序列化为XML字符串
+##### 9. 将对象序列化为XML字符串
 string ToXMLString(string defaultNS = "")
 
 ###### 参数：
 defaultNS:转换时XML的默认命名空间，默认为空。
 
 ###### 返回：
-序列化之后的XML字符串。<br/>
+序列化之后的XML字符串。
+
+<br/>
+
+#### 属性：
+
+##### 1. 获取对象所有属性
+
+Dictionary<string, object>.KeyCollection Keys
+
+<br/>
+
+##### 2. 以索引器形式通过key获取对应属性内容
+
+dynamic this[string key]
+
+<br/>
 
 <br/>
 
