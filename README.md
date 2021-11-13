@@ -1,41 +1,74 @@
-# netcoreTools
-.netcore常用工具类集合
+# Xmtool	.netcore常用工具集合库
+收集.netcore开发过程中经常需要用到的工具类，目前收集的相关工具类涉及Json、Xml、正则表达式常用判断、加解密、Http请求、日期时间，数据类型、动态对象等，持续收集中。。。
 
 
 
 
-## Install
+## 依赖安装
 
-### 依赖安装
-#### Package Manager
+##### Package Manager
 ```shell
-Install-Package CodeM.Common.Tools -Version 1.1.18
+Install-Package CodeM.Common.Tools -Version 1.2.0
 ```
 
-#### .NET CLI
+##### .NET CLI
 ```shell
-dotnet add package CodeM.Common.Tools --version 1.1.18
+dotnet add package CodeM.Common.Tools --version 1.2.0
 ```
 
-#### PackageReference
+##### PackageReference
 ```xml
-<PackageReference Include="CodeM.Common.Tools" Version="1.1.18" />
+<PackageReference Include="CodeM.Common.Tools" Version="1.2.0" />
 ```
 
-#### Paket CLI
+##### Paket CLI
 ```shell
-paket add CodeM.Common.Tools --version 1.1.18
+paket add CodeM.Common.Tools --version 1.2.0
 ```
 
 
 
-## CryptoUtils
-### 加密相关类
+## 使用方法
+
+Xmtool工具集合库通过Xmtool静态类统一对外提供服务，所有的详细工具类都可以通过Xmtool返回对应工具类实例，用户通过实例调用具体工具类的API。
+
+### Xmtool  API
+
+#### 方法：
+
+<span style="color: #686868;"><b>1. 获取编码加解密工具类</b></span>
+[CryptoTool](#crypto-tool) Crypto()
+
+<span style="color: #686868;"><b>2. 获取日期时间工具类</b></span>
+[DateTimeTool](#datetime-tool) DateTime()
+
+<span style="color: #686868;"><b>3. 获取Hash工具类</b></span>
+[HashTool](#hash-tool) Hash()
+
+<span style="color: #686868;"><b>4. 获取正则表达式工具类</b></span>
+[RegexTool](#regex-tool) Regex()
+
+<span style="color: #686868;"><b>5. 获取类型相关工具类</b></span>
+[TypeTool](#type-tool) Type()
+
+<span style="color: #686868;"><b>6. 获取Xml工具类</b></span>
+[XmlTool](#xml-tool) Xml()
+
+#### 属性：
+
+<span style="color: #686868;"><b>1. 返回Json工具类</b></span>
+[JsonTool](#json-tool) Json
+
+<span style="color: #686868;"><b>2. 返回Web工具类</b></span>
+[WebTool](#web-tool) Web
 
 
 
 
-##### Base64编码方法
+### <span id="crypto-tool">CryptoTool  API</span>
+
+
+##### 1. 对字符串进行Base64编码并返回结果
 string Base64Encode(string text, string encoding = "utf-8")
 
 ###### 参数：
@@ -49,7 +82,7 @@ encoding:指定字符编码格式，默认utf-8
 
 
 
-##### Base64解码方法
+##### 2. 解码Base64字符串并返回结果
 string Base64Decode(string base64Text, string encoding = "utf-8")
 
 ###### 参数：
@@ -63,7 +96,7 @@ encoding:指定字符编码格式，默认utf-8
 
 
 
-##### AES加密方法
+##### 3. AES加密方法
 string AESEncode(string text, string key, string encoding = "utf-8")
 
 ###### 参数：
@@ -81,7 +114,7 @@ encoding:指定字符编码格式，默认utf-8
 
 
 
-##### AES解密方法
+##### 4. AES解密方法
 string AESDecode(string aesText, string key, string encoding = "utf-8")
 
 ###### 参数：
@@ -98,13 +131,99 @@ encoding:指定字符编码格式，默认utf-8
 
 
 
-
-## HashUtils
-### Hash算法类
+### <span id="datetime-tool">DateTimeTool  API</span>
 
 
+##### 1. 获取10位UTC时间戳
 
-##### MD5哈希计算
+long GetUtcTimestamp10()
+
+###### 参数：
+
+无
+
+###### 返回：
+
+返回10位当前Utc时间戳。
+
+
+
+##### 2. 获取13位UTC时间戳
+
+long GetUtcTimestamp13()
+
+###### 参数：
+
+无
+
+###### 返回：
+
+返回10位当前Utc时间戳。
+
+
+
+##### 3. 根据10位UTC时间戳得到本地日期时间对象
+
+DateTime GetLocalDateTimeFromUtcTimestamp10(long ts)
+
+###### 参数：
+
+ts：10位UTC时间戳
+
+###### 返回：
+
+返回时间戳转换后的本地日期时间对象。
+
+
+
+##### 4. 根据13位UTC时间戳得到本地日期时间对象
+
+DateTime GetLocalDateTimeFromUtcTimestamp13(long ts)
+
+###### 参数：
+
+ts：13位UTC时间戳
+
+###### 返回：
+
+返回时间戳转换后的本地日期时间对象。
+
+
+
+##### 5. 检查字符串时间范围格式是否合法
+
+bool CheckStringTimeSpan(string timespan,  bool throwError = true)
+
+###### 参数：
+
+timespan：时间范围字符串，单位支持ms, s, m, h, d；如：1s，代表1秒
+throwError：格式不合法时是否抛出错误，默认true，抛出
+
+###### 返回：
+
+合法返回true；否则，返回false。
+
+
+
+##### 6. 根据时间范围字符串转换为时间段对象
+
+TimeSpan GetTimeSpanFromString(string timespan，bool throwError = true)
+
+###### 参数：
+
+timespan：时间范围字符串，单位支持ms, s, m, h, d；如：1s，代表1秒
+throwError：格式不合法时是否抛出错误，默认true，抛出
+
+###### 返回：
+
+返回转换后的时间段对象。
+
+
+
+### <span id="hash-tool">HashTool  API</span>
+
+
+##### 1. MD5哈希计算
 string MD5(string text, string encoding = "utf-8")
 
 ###### 参数：
@@ -120,7 +239,7 @@ encoding:指定字符编码格式，默认utf-8
 
 
 
-##### SHA1哈希计算<br/>
+##### 2. SHA1哈希计算
 string SHA1(string text, string encoding = "utf-8")
 
 ###### 参数：
@@ -136,7 +255,7 @@ encoding:指定字符编码格式，默认utf-8
 
 
 
-##### SHA256计算
+##### 3. SHA256计算
 string SHA256(string text, string encoding = "utf-8")
 
 ###### 参数：
@@ -152,7 +271,7 @@ encoding:指定字符编码格式，默认utf-8
 
 
 
-##### SHA384计算
+##### 4. SHA384计算
 string SHA384(string text, string encoding = "utf-8")
 
 ###### 参数：
@@ -168,7 +287,7 @@ encoding:指定字符编码格式，默认utf-8
 
 
 
-##### SHA512计算
+##### 5. SHA512计算
 string SHA512(string text, string encoding = "utf-8")
 
 ###### 参数：
@@ -183,13 +302,156 @@ encoding:指定字符编码格式，默认utf-8
 
 
 
+### <span id="regex-tool">RegexTool  API</span>
 
-## XmlUtils
-### Xml文件遍历类
+##### 1. 判断是否手机号
+
+bool IsMobile(string value)
+
+###### 参数：
+
+value:要判断的字符串内容。
+
+###### 返回：
+
+是有效手机号返回true，否则返回false。
 
 
 
-##### 节点遍历方法（从文件加载内容）
+##### 2. 判断是否电子邮箱
+
+bool IsEmail(string value)
+
+###### 参数：
+
+value:要判断的字符串内容。
+
+###### 返回：
+
+是有效电子邮箱返回true，否则返回false。
+
+
+
+##### 3. 判断是否网址
+
+bool IsUrl(string value)
+
+###### 参数：
+
+value:要判断的字符串内容。
+
+###### 返回：
+
+是有效网址返回true，否则返回false。
+
+
+
+##### 4. 判断是否IPv4地址
+
+bool IsIP(string value)
+
+###### 参数：
+
+value:要判断的字符串内容。
+
+###### 返回：
+
+是有效IPv4地址返回true，否则返回false。
+
+
+
+##### 5. 判断是否数值
+
+bool IsNumber(string value)
+
+###### 参数：
+
+value:要判断的字符串内容。
+
+###### 返回：
+
+是有效数值返回true，否则返回false。
+
+
+
+##### 6. 判断是否整数
+
+bool IsInteger(string value)
+
+###### 参数：
+
+value:要判断的字符串内容。
+
+###### 返回：
+
+是有效整数返回true，否则返回false。
+
+
+
+##### 7. 判断是否正整数
+
+bool IsPositiveInteger(string value)
+
+###### 参数：
+
+value:要判断的字符串内容。
+
+###### 返回：
+
+是有效正整数返回true，否则返回false。
+
+
+
+##### 8. 判断是否自然数
+
+bool IsNaturalInteger(string value)
+
+###### 参数：
+
+value:要判断的字符串内容。
+
+###### 返回：
+
+是有效自然数返回true，否则返回false。
+
+
+
+##### 9. 判断是否小数
+
+bool IsDecimal(string value)
+
+###### 参数：
+
+value:要判断的字符串内容。
+
+###### 返回：
+
+是有效小数返回true，否则返回false。
+
+
+
+### <span id="type-tool">TypeTool  API</span>
+
+
+##### 1. 判断指定对象是否为List类型
+
+bool IsList(object obj)
+
+###### 参数：
+
+obj: 待判断类型的对象。
+
+###### 返回：
+
+是返回true；否则，返回false。
+
+
+
+
+### <span id="xml-tool">XmlTool  API</span>
+
+
+##### 1. Xml节点遍历方法（从文件加载内容）
 void Iterate(string file, XmlNodeInfoGetter callback = null)
 
 ###### 参数：
@@ -199,8 +461,8 @@ callback:回调函数，可在回调函数中进行节点信息解析和收集
 
 
 
-##### 节点遍历方法（从字符串加载内容）
-void IterateFromString(string content, XmlNodeInfoGetter callback = null)
+##### 2. Xml节点遍历方法（从字符串加载内容）
+void IterateFromString(string content, [XmlNodeInfoGetter](#xmlnodeinfogetter) callback = null)
 
 ###### 参数：
 content:待遍历的XML文件内容
@@ -209,8 +471,8 @@ callback:回调函数，可在回调函数中进行节点信息解析和收集
 
 
 
-##### XmlNodeInfoGetter回调方法定义
-bool XmlNodeInfoGetter(XmlNodeInfo nodeInfo);
+##### <span id="xmlnodeinfogetter">3. XmlNodeInfoGetter回调方法定义</span>
+bool XmlNodeInfoGetter([XmlNodeInfo](#xmlnodeinfo) nodeInfo);
 
 ###### 参数：
 nodeInfo:当前遍历到的节点对象
@@ -222,7 +484,7 @@ nodeInfo:当前遍历到的节点对象
 
 
 
-##### XmlNodeInfo对象
+##### <span id="xmlnodeinfo">4. XmlNodeInfo对象</span>
 ##### 属性：
 
 Path:返回当前节点路径，如：/root/person
@@ -282,34 +544,46 @@ namespaceURI:指定属性的命名空间URI
 
 
 
-##### 从XML文件反序列化动态对象的方法
+##### 5. 反序列化动态对象的方法（从文件加载内容）
 dynamic Deserialize(string file, bool includeRoot = false)
 
 ###### 参数:
 file:待反序列化的XML文件绝对路径
 inculdeRoot:是否包含根节点
 
+###### 返回：
+
+返回序列化之后的动态对象。
 
 
 
-##### 从XML内容反序列化动态对象的方法
+
+##### 6. 反序列化动态对象的方法（从字符串加载内容）
 dynamic DeserializeFromString(string xml, bool includeRoot = false)
 
 ###### 参数:
 xml:待反序列化的XML内容
 inculdeRoot:是否包含根节点
 
+###### 返回：
 
-
-## Json2DynamicParser
-
-### Json动态对象解析器
+返回序列化之后的动态对象。
 
 
 
-##### 添加Json配置文件
+### <span id="json-tool">JsonTool  API</span>
 
-public JsonConfigParser AddJsonFile(string path)
+##### 1. 获取Json配置文件解析器实例
+
+[JsonConfigParser](#jsonconfigparser) ConfigParser()
+
+
+
+### <span id="jsonconfigparser">JsonConfigParser  API</span>
+
+##### 1. 添加要解析的Json配置文件
+
+JsonConfigParser AddJsonFile(string path)
 
 ###### 参数：
 
@@ -321,9 +595,9 @@ path:Json配置文件全路径
 
 
 
-##### 将添加的Json配置文件内容解析为动态对象
+##### 2. 将添加的Json配置文件内容解析为动态对象
 
-public dynamic Parse(string jsonStr=null)
+dynamic Parse(string jsonStr=null)
 
 ###### 参数：
 
@@ -331,31 +605,42 @@ jsonStr:除了可以通过添加配置文件转换动态对象，还可以直接
 
 ###### 返回：
 
-将Json配置文件的内容转换为DynamicObject实例并返回。
+将Json配置文件的内容转换为[DynamicObjectExt](#dynamicobjectext)实例并返回。
 
 
 
-## DynamicObjectExt
+### <span id="dynamicobjectext">DynamicObjectExt 动态对象</span>
 
-### 动态对象扩展类
+DynamicObjectExt是对DynamicObject的扩展。使用时，可以直接进行属性赋值，并可通过内置方法读、写、判断和删除等操作。
+
+```c#
+dynamic obj = new DynamicObjectExt();
+obj.Name = "wangxm";
+obj.Age = 18;
+
+if (obj.Has("Age"))
+{
+    //TODO
+}
+```
+
+#### 方法：
+
+##### 1. 获取对象所有属性
+
+Dictionary<string, object>.KeyCollection Keys
 
 
 
-##### 获取对象所有属性
+##### 2. 以索引器形式通过key获取对应属性内容
 
-public Dictionary<string, object>.KeyCollection Keys
-
-
-
-##### 以索引器形式通过key获取对应属性内容
-
-public dynamic this[string key]
+dynamic this[string key]
 
 
 
-##### 尝试设置属性内容
+##### 3. 尝试设置属性内容
 
-public bool TrySetValue(string name, object value)
+bool TrySetValue(string name, object value)
 
 ###### 参数：
 
@@ -369,9 +654,9 @@ value: 属性值
 
 
 
-##### 尝试读取属性内容
+##### 4. 尝试读取属性内容
 
-public bool TryGetValue(string name, out object result)
+bool TryGetValue(string name, out object result)
 
 ###### 参数：
 
@@ -385,9 +670,9 @@ result: 读取成功后数据的内容
 
 
 
-##### 根据路径设置属性内容
+##### 5. 根据路径设置属性内容
 
-public bool SetValueByPath(string path, object value)
+bool SetValueByPath(string path, object value)
 
 ###### 参数：
 
@@ -401,9 +686,9 @@ value: 属性值
 
 
 
-##### 判断属性是否存在
+##### 6. 判断属性是否存在
 
-public bool Has(string key)
+bool Has(string key)
 
 ###### 参数：
 
@@ -415,9 +700,9 @@ key: 要判断的属性
 
 
 
-##### 判断路径是否存在
+##### 7. 判断路径是否存在
 
-public bool HasPath(string path)
+bool HasPath(string path)
 
 ###### 参数：
 
@@ -429,9 +714,9 @@ path： 要判断的路径，多个由点分隔。
 
 
 
-##### 删除指定属性
+##### 8. 删除指定属性
 
-public bool Remove(string key)
+bool Remove(string key)
 
 ###### 参数：
 
@@ -443,9 +728,9 @@ key: 要删除的属性
 
 
 
-##### 删除指定路径
+##### 9. 删除指定路径
 
-public bool RemovePath(string path)
+bool RemovePath(string path)
 
 ###### 参数：
 
@@ -458,8 +743,8 @@ path: 要删除的路径，多个由点分隔。
 
 
 
-##### 将对象序列化为Json字符串
-public string ToString()
+##### 10. 将对象序列化为Json字符串
+string ToString()
 
 ###### 参数：
 无。
@@ -470,8 +755,8 @@ public string ToString()
 
 
 
-##### 将对象序列化为XML字符串
-public string ToXMLString(string defaultNS = "")
+##### 11. 将对象序列化为XML字符串
+string ToXMLString(string defaultNS = "")
 
 ###### 参数：
 defaultNS:转换时XML的默认命名空间，默认为空。
@@ -481,169 +766,11 @@ defaultNS:转换时XML的默认命名空间，默认为空。
 
 
 
+### <span id="web-tool">WebTool  API</span>
 
-## RegexUtils
+##### 1. 获取HttpClientExt对象实例
 
-### 常用正则表达式匹配方法
-
-
-
-##### 判断手机号
-
-bool IsMobile(string value)
-
-###### 参数：
-
-value:要判断的字符串内容。
-
-###### 返回：
-
-是有效手机号返回true，否则返回false。
-
-
-
-##### 判断电子邮箱
-
-bool IsEmail(string value)
-
-###### 参数：
-
-value:要判断的字符串内容。
-
-###### 返回：
-
-是有效电子邮箱返回true，否则返回false。
-
-
-
-##### 判断网址
-
-bool IsUrl(string value)
-
-###### 参数：
-
-value:要判断的字符串内容。
-
-###### 返回：
-
-是有效网址返回true，否则返回false。
-
-
-
-##### 判断IPv4地址
-
-bool IsIP(string value)
-
-###### 参数：
-
-value:要判断的字符串内容。
-
-###### 返回：
-
-是有效IPv4地址返回true，否则返回false。
-
-
-
-##### 判断数值
-
-bool IsNumber(string value)
-
-###### 参数：
-
-value:要判断的字符串内容。
-
-###### 返回：
-
-是有效数值返回true，否则返回false。
-
-
-
-##### 判断整数
-
-bool IsInteger(string value)
-
-###### 参数：
-
-value:要判断的字符串内容。
-
-###### 返回：
-
-是有效整数返回true，否则返回false。
-
-
-
-##### 判断正整数
-
-bool IsPositiveInteger(string value)
-
-###### 参数：
-
-value:要判断的字符串内容。
-
-###### 返回：
-
-是有效正整数返回true，否则返回false。
-
-
-
-##### 判断自然数
-
-bool IsNaturalInteger(string value)
-
-###### 参数：
-
-value:要判断的字符串内容。
-
-###### 返回：
-
-是有效自然数返回true，否则返回false。
-
-
-
-##### 判断小数
-
-bool IsDecimal(string value)
-
-###### 参数：
-
-value:要判断的字符串内容。
-
-###### 返回：
-
-是有效小数返回true，否则返回false。
-
-
-
-## TypeUtils
-
-### 类型常用操作库
-
-
-
-##### 判断指定对象是否为List类型
-
-bool IsList(object obj)
-
-###### 参数：
-
-obj: 待判断类型的对象。
-
-###### 返回：
-
-是返回true；否则，返回false。
-
-
-
-
-## WebUtils
-
-### Web常用操作库
-
-
-
-##### 获取HttpClientExt对象实例
-
-HttpClientExt Client(string name="default")
+[HttpClientExt](#httpclientext) Client(string name="default")
 
 ###### 参数：
 
@@ -655,9 +782,9 @@ name:实例标识，同一标识不会反复实例化对象。
 
 
 
-##### 获取Web安全操作对象
+##### 2. 获取Web安全操作对象
 
-HttpSecurity Security()
+[HttpSecurity](#httpsecurity) Security()
 
 ###### 参数：
 
@@ -669,25 +796,11 @@ HttpSecurity Security()
 
 
 
-## HttpClientExt
+### <span id="httpclientext">HttpClientExt  API</span>
 
-### HttpClientExt请求对象
+#### 方法：
 
-
-
-##### 获取或设置超时时间
-
-TimeSpan Timeout
-
-
-
-##### 获取或设置请求基本地址
-
-Uri BaseAddress
-
-
-
-##### 增加默认请求头，对后续所有请求起作用
+##### 1. 增加默认请求头，对后续所有请求起作用
 
 HttpClientExt AddDefaultHeader(string name, string value)
 
@@ -703,8 +816,8 @@ value: Header值
 
 
 
+##### 2. 增加临时性请求头，仅在本次请求起作用
 
-##### 增加临时性请求头，仅在本次请求起作用
 HttpClientExt AddRequestHeader(string name, string value)
 
 ###### 参数：
@@ -719,43 +832,60 @@ value: Header值
 
 
 
-##### 设置JSON格式请求体内容
+##### 3. 设置JSON格式请求体内容
+
 HttpClientExt SetJsonContent(string content)
 
 ###### 参数：
+
 content: 字符串格式Json内容
 
 ###### 返回：
+
 当前HttpClientExt实例，可链式调用。
 
 
 
-##### 设置JSON格式请求体内容
+##### 4. 设置JSON格式请求体内容
+
 HttpClientExt SetJsonContent(dynamic content)
+
 ###### 参数：
+
 content: 可转换成Json格式的动态对象，建议使用JsonDynamicObject对象
 
 ###### 返回：
+
 当前HttpClientExt实例，可链式调用。
 
 
 
 
-##### 提交一个Get请求，并获取Json格式返回结果
-dynamic GetJsonAsync(string requestUri)
+##### 5. 提交一个Get请求，并获取请求返回结果
+
+[HttpResponseExt](#httpresponseext) GetJsonAsync(string requestUri)
+
 ###### 参数：
+
 requestUri：请求地址
+
 ###### 返回：
-返回结果转换成的动态对象，JsonDynamicObject类型；结果为非法Json格式，返回null
+
+返回请求结果对象。
 
 
 
-##### 提交一个Get请求，并获取Json格式返回结果
-dynamic GetJson(string requestUri)
+##### 4. 提交一个Get请求，并获取请求返回结果
+
+[HttpResponseExt](#httpresponseext) GetJson(string requestUri)
+
 ###### 参数：
+
 requestUri：请求地址
+
 ###### 返回：
-返回结果转换成的动态对象，JsonDynamicObject类型；结果为非法Json格式，返回null
+
+返回请求结果对象。
 
 
 
@@ -763,13 +893,51 @@ requestUri：请求地址
 
 
 
-## HttpSecurity
+#### 属性：
 
-### HttpSecurity安全对象
+##### 1. 获取或设置超时时间
+
+TimeSpan Timeout
 
 
 
-##### XSS安全过滤方法
+##### 2. 获取或设置请求基本地址
+
+Uri BaseAddress
+
+
+
+### <span id="httpresponseext">HttpResponseExt  API</span>
+
+#### 属性：
+
+##### 1. 获取请求的状态码
+
+HttpStatusCode StatusCode
+
+
+
+##### 2. 获取请求反馈的字符串内容
+
+string Content
+
+
+
+##### 3. 将请求反馈的字符串按照Json格式解析，并返回解析后的动态对象（如果字符串不是Json格式将抛出异常）
+
+dynamic Json
+
+
+
+##### 4. 将请求反馈的字符串按照Xml格式解析，并返回解析后的动态对象（如果字符串不是Xml格式将抛出异常）
+
+dynamic Xml
+
+
+
+### <span id="httpsecurity">HttpSecurity  API</span>
+
+##### 1. XSS安全过滤方法
 
 string Xss(string str)
 
@@ -780,86 +948,3 @@ str：要进行XSS处理的字符串。
 ###### 返回：
 
 按照规则处理后的字符串。
-
-
-
-## DateTimeUtils
-
-### 日期时间常用方法库
-
-
-
-##### 获取10位UTC时间戳
-
-long GetUtcTimestamp10()
-
-###### 参数：
-
-无
-
-###### 返回：
-
-返回10位当前Utc时间戳。
-
-
-
-##### 获取13位UTC时间戳
-
-long GetUtcTimestamp13()
-
-###### 参数：
-
-无
-
-###### 返回：
-
-返回10位当前Utc时间戳。
-
-
-
-##### 根据10位UTC时间戳得到本地日期时间对象
-
-DateTime GetLocalDateTimeFromUtcTimestamp10(long ts)
-
-###### 参数：
-
-ts：10位UTC时间戳
-
-###### 返回：
-
-返回时间戳转换后的本地日期时间对象。
-
-
-
-##### 根据13位UTC时间戳得到本地日期时间对象
-
-DateTime GetLocalDateTimeFromUtcTimestamp13(long ts)
-
-###### 参数：
-
-ts：13位UTC时间戳
-
-###### 返回：
-
-返回时间戳转换后的本地日期时间对象。
-
-
-
-##### 检查字符串时间范围格式是否合法
-bool CheckStringTimeSpan(string timespan,  bool throwError = true)
-###### 参数：
-timespan：时间范围字符串，单位支持ms, s, m, h, d；如：1s，代表1秒
-throwError：格式不合法时是否抛出错误，默认true，抛出
-###### 返回：
-合法返回true；否则，返回false。
-
-
-
-##### 根据时间范围字符串转换为时间段对象
-TimeSpan GetTimeSpanFromString(string timespan，bool throwError = true)
-###### 参数：
-timespan：时间范围字符串，单位支持ms, s, m, h, d；如：1s，代表1秒
-throwError：格式不合法时是否抛出错误，默认true，抛出
-
-###### 返回：
-返回转换后的时间段对象。
