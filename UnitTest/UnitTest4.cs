@@ -1,6 +1,8 @@
-﻿using CodeM.Common.Tools.Json;
+﻿using CodeM.Common.Tools;
+using CodeM.Common.Tools.Json;
 using CodeM.Common.Tools.Web;
 using System;
+using System.Net;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -18,9 +20,11 @@ namespace UnitTest
         [Fact]
         public async void GetTest()
         {
+            HttpResponseExt rep = await Xmtool.Web.Client().GetJsonAsync("http://www.baidu.com");
+            Assert.Equal(HttpStatusCode.OK, rep.StatusCode);
             try
             {
-                await WebTool.Client().GetJsonAsync("http://www.baidu.com");
+                dynamic jsonObj = rep.Json;
             }
             catch (Exception exp)
             {
@@ -46,10 +50,21 @@ namespace UnitTest
             data.topURL = "https://www.126.com/";
             data.un = "softwaiter@126.com";
 
-            dynamic result = await WebTool.Client()
+            HttpResponseExt rep = await Xmtool.Web.Client()
                 .SetJsonContent(data)
                 .PostJsonAsync("https://passport.126.com/dl/l");
-            Assert.True(result != null);
+            Assert.Equal(HttpStatusCode.OK, rep.StatusCode);
+            Assert.Equal("401", rep.Json.ret);
+        }
+
+        [Fact]
+        public void DoubleRequestTest()
+        {
+            HttpResponseExt rep = Xmtool.Web.Client().GetJson("https://api.juejin.cn/interact_api/v1/pin_tab_lead");
+            Assert.Equal(HttpStatusCode.OK, rep.StatusCode);
+            rep = Xmtool.Web.Client().GetJson("http://www.baidu.com");
+            Assert.Equal(HttpStatusCode.OK, rep.StatusCode);
+            Assert.Contains("<!DOCTYPE html>", rep.Content);
         }
     }
 }

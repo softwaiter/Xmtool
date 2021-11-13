@@ -1,11 +1,81 @@
 ﻿using CodeM.Common.Tools.Json;
+using CodeM.Common.Tools.Xml;
 using System;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CodeM.Common.Tools.Web
 {
+    public class HttpResponseExt
+    {
+        private HttpStatusCode mStatusCode;
+        private string mContent;
+
+        public HttpResponseExt(HttpStatusCode statusCode, string content)
+        {
+            mStatusCode = statusCode;
+            mContent = content;
+        }
+
+        public HttpStatusCode StatusCode
+        {
+            get
+            {
+                return mStatusCode;
+            }
+        }
+
+        public string Content
+        {
+            get
+            {
+                return mContent;
+            }
+        }
+
+        private dynamic mJsonObj = null;
+        public dynamic Json
+        {
+            get
+            {
+                if (mJsonObj == null)
+                {
+                    try
+                    {
+                        mJsonObj = JsonConfigParser.New().Parse(mContent);
+                    }
+                    catch
+                    {
+                        throw new Exception("返回结果不是有效的JSON格式。");
+                    }
+                }
+                return mJsonObj;
+            }
+        }
+
+        private dynamic mXmlObj = null;
+        public dynamic Xml
+        {
+            get
+            {
+                if (mXmlObj == null)
+                {
+                    try
+                    {
+                        mXmlObj = XmlTool.New().DeserializeFromString(mContent);
+                    }
+                    catch
+                    {
+                        throw new Exception("返回结果不是有效的XML格式。");
+                    }
+                }
+                return mXmlObj;
+            }
+        }
+    }
+
     public class HttpClientExt
     {
         private HttpClient mClient;
@@ -76,7 +146,7 @@ namespace CodeM.Common.Tools.Web
             return this;
         }
 
-        private async Task<dynamic> SendJsonAsync(string requestUri)
+        private async Task<HttpResponseExt> SendJsonAsync(string requestUri)
         {
             InitRequest();
             if (mClient.BaseAddress == null)
@@ -93,101 +163,94 @@ namespace CodeM.Common.Tools.Web
             mRequest.Headers.Clear();
             mRequest.Content = null;
 
+            string content = string.Empty;
             if (resp.IsSuccessStatusCode)
             {
-                string result = await resp.Content.ReadAsStringAsync();
-                try
-                {
-                    return JsonConfigParser.New().Parse(result);
-                }
-                catch
-                {
-                    throw new Exception("请求结果不是合法JSON格式。");
-                }
+                content = await resp.Content.ReadAsStringAsync();
             }
-            return null;
+            return new HttpResponseExt(resp.StatusCode, content);
         }
 
-        public async Task<dynamic> GetJsonAsync(string requestUri)
+        public async Task<HttpResponseExt> GetJsonAsync(string requestUri)
         {
             InitRequest();
             mRequest.Method = HttpMethod.Get;
             return await SendJsonAsync(requestUri);
         }
 
-        public dynamic GetJson(string requestUri)
+        public HttpResponseExt GetJson(string requestUri)
         {
             return GetJsonAsync(requestUri).GetAwaiter().GetResult();
         }
 
-        public async Task<dynamic> PostJsonAsync(string requestUri)
+        public async Task<HttpResponseExt> PostJsonAsync(string requestUri)
         {
             InitRequest();
             mRequest.Method = HttpMethod.Post;
             return await SendJsonAsync(requestUri);
         }
 
-        public dynamic PostJson(string requestUri)
+        public HttpResponseExt PostJson(string requestUri)
         {
             return PostJsonAsync(requestUri).GetAwaiter().GetResult();
         }
 
-        public async Task<dynamic> PutJsonAsync(string requestUri)
+        public async Task<HttpResponseExt> PutJsonAsync(string requestUri)
         {
             InitRequest();
             mRequest.Method = HttpMethod.Put;
             return await SendJsonAsync(requestUri);
         }
 
-        public dynamic PutJson(string requestUri)
+        public HttpResponseExt PutJson(string requestUri)
         {
             return PutJsonAsync(requestUri).GetAwaiter().GetResult();
         }
 
-        public async Task<dynamic> DeleteJsonAsync(string requestUri)
+        public async Task<HttpResponseExt> DeleteJsonAsync(string requestUri)
         {
             InitRequest();
             mRequest.Method = HttpMethod.Delete;
             return await SendJsonAsync(requestUri);
         }
 
-        public dynamic DeleteJson(string requestUri)
+        public HttpResponseExt DeleteJson(string requestUri)
         {
             return DeleteJsonAsync(requestUri).GetAwaiter().GetResult();
         }
 
-        public async Task<dynamic> PatchJsonAsync(string requestUri)
+        public async Task<HttpResponseExt> PatchJsonAsync(string requestUri)
         {
             InitRequest();
             mRequest.Method = HttpMethod.Patch;
             return await SendJsonAsync(requestUri);
         }
 
-        public dynamic PatchJson(string requestUri)
+        public HttpResponseExt PatchJson(string requestUri)
         {
             return PatchJsonAsync(requestUri).GetAwaiter().GetResult();
         }
 
-        public async Task<dynamic> HeadJsonAsync(string requestUri)
+        public async Task<HttpResponseExt> HeadJsonAsync(string requestUri)
         {
             InitRequest();
             mRequest.Method = HttpMethod.Head;
             return await SendJsonAsync(requestUri);
         }
 
-        public dynamic HeadJson(string requestUri)
+        public HttpResponseExt HeadJson(string requestUri)
         {
             return HeadJsonAsync(requestUri).GetAwaiter().GetResult();
         }
 
-        public async Task<dynamic> OptionsJsonAsync(string requestUri)
+        public async Task<HttpResponseExt> OptionsJsonAsync(string requestUri)
         {
             InitRequest();
             mRequest.Method = HttpMethod.Options;
             return await SendJsonAsync(requestUri);
         }
 
-        public dynamic OptionsJson(string requestUri)
+        public HttpResponseExt OptionsJson(string requestUri)
         {
             return OptionsJsonAsync(requestUri).GetAwaiter().GetResult();
         }
