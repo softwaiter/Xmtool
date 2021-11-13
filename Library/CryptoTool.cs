@@ -18,17 +18,20 @@ namespace CodeM.Common.Tools
             return sCTool;
         }
 
-        public string Base64Encode(string text, string encoding = "utf-8") {
+        public string Base64Encode(string text, string encoding = "utf-8") 
+        {
             byte[] bytes = Encoding.GetEncoding(encoding).GetBytes(text);
             return Convert.ToBase64String(bytes);
         }
 
-        public string Base64Decode(string base64Text, string encoding = "utf-8") {
+        public string Base64Decode(string base64Text, string encoding = "utf-8") 
+        {
             byte[] bytes = Convert.FromBase64String(base64Text);
             return Encoding.GetEncoding(encoding).GetString(bytes);
         }
 
-        private void GenerateAESKeyIV(string aesKey, out byte[] key, out byte[] iv, string encoding) {
+        private void GenerateAESKeyIV(string aesKey, out byte[] key, out byte[] iv, string encoding) 
+        {
             byte[] bytes = Encoding.GetEncoding(encoding).GetBytes(aesKey);
 
             using (SHA256Managed sha256 = new SHA256Managed()) {
@@ -44,7 +47,8 @@ namespace CodeM.Common.Tools
             }
         }
 
-        public string AESEncode(string text, string key, string encoding = "utf-8") {
+        public string AESEncode(string text, string key, string encoding = "utf-8") 
+        {
             byte[] source = Encoding.GetEncoding(encoding).GetBytes(text);
 
             byte[] _key;
@@ -73,7 +77,8 @@ namespace CodeM.Common.Tools
             return Convert.ToBase64String(target);
         }
 
-        public string AESDecode(string aesText, string key, string encoding = "utf-8") {
+        public string AESDecode(string aesText, string key, string encoding = "utf-8") 
+        {
             byte[] source = Convert.FromBase64String(aesText);
 
             byte[] _key;
