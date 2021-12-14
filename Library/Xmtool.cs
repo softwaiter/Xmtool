@@ -51,5 +51,10 @@ namespace CodeM.Common.Tools
         {
             return XmlTool.New();
         }
+
+        public static MailTool Mail(string host, int port, string account, string password, bool enableSsl = false)
+        {
+            return MailTool.New(host, port, enableSsl, account, password);
+        }
     }
 }
