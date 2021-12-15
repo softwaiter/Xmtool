@@ -1,5 +1,5 @@
 # Xmtool	.netcore常用工具集合库
-收集.netcore开发过程中经常需要用到的工具类，目前收集的相关工具类涉及Json、Xml、正则表达式常用判断、加解密、Http请求、日期时间，数据类型、动态对象等，持续收集中。。。<br/>
+收集.netcore开发过程中经常需要用到的工具类，目前收集的相关工具类涉及Json、Xml、正则表达式常用判断、加解密、Http请求、日期时间，数据类型、动态对象、图形验证码生成、发送邮件等，持续收集中。。。<br/>
 
 
 
@@ -61,6 +61,14 @@ Xmtool工具集合库通过Xmtool静态类统一对外提供服务，所有的�
 <span style="color: #686868;"><b>6. 获取Xml工具类</b></span>
 
 [XmlTool](#xml-tool) Xml()<br/>
+
+<span style="color: #686868;"><b>7. 发送邮件工具类</b></span>
+
+[MailTool](#mail-tool) Mail()<br/>
+
+<span style="color: #686868;"><b>8. 验证码生成工具类</b></span>
+
+[CaptchaTool](#captcha-tool) Captcha()<br/>
 
 #### 属性：
 
@@ -457,7 +465,6 @@ obj: 待判断类型的对象。
 
 <br/>
 
-
 ### <span id="xml-tool">XmlTool  API</span>
 
 
@@ -578,6 +585,111 @@ inculdeRoot:是否包含根节点
 ###### 返回：
 
 返回序列化之后的动态对象。<br/>
+
+<br/>
+
+### <span id="mail-tool">MailTool  API</span>
+
+##### 1. 同步发送普通邮件（方法一）
+void Send(string subject, string body, string bodyEncoding,
+    string from, string fromName, string to, string replyTo, string cc, string bcc,
+    params string[] attachments)
+
+###### 参数：
+subject:邮件标题
+body:邮件正文内容
+bodyEncoding:邮件正文内容编码格式
+from:发件人地址
+fromName:发件人显示名称
+to:收件人地址，多个用分号分隔
+replyTo:回复地址，多个用分号分隔
+cc:抄送地址，多个用分号分隔
+bcc:秘密抄送地址，多个用分号分隔
+attachments:附件文件路径
+
+##### 2. 同步发送普通邮件（方法二）
+void Send(string subject, string body, 
+    string from, string to, params string[] attachments)
+
+###### 参数：
+subject:邮件标题
+body:邮件正文内容
+from:发件人地址
+to:收件人地址，多个用分号分隔
+attachments:附件文件路径
+
+##### 3. 同步发送网页邮件（方法一）
+void SendHtml(string subject, string body, string bodyEncoding,
+    string from, string fromName, string to, string replyTo, string cc, string bcc,
+    params string[] attachments)
+
+###### 参数：
+subject:邮件标题
+body:邮件正文内容（网页格式）
+bodyEncoding:邮件正文内容编码格式
+from:发件人地址
+fromName:发件人显示名称
+to:收件人地址，多个用分号分隔
+replyTo:回复地址，多个用分号分隔
+cc:抄送地址，多个用分号分隔
+bcc:秘密抄送地址，多个用分号分隔
+attachments:附件文件路径
+
+##### 4. 同步发送网页邮件（方法二）
+void SendHtml(string subject, string body, 
+    string from, string to, params string[] attachments)
+
+###### 参数：
+subject:邮件标题
+body:邮件正文内容（网页格式）
+from:发件人地址
+to:收件人地址，多个用分号分隔
+attachments:附件文件路径
+
+##### <font color="red">注：</font>SendAsync、SendHtmlAsync相关方法请参照对应同步方法使用方式。
+
+<br/>
+
+### <span id="captcha-tool">CaptchaTool  API</span>
+
+##### 1. 随机生成字母数字混合验证码
+string Random(int len = 6)
+
+###### 参数：
+len:验证码位数，默认6。
+
+###### 返回：
+生成的验证码。<br/>
+
+##### 2. 随机生成数字验证码
+string RandomOnlyNumber(int len = 6)
+
+###### 参数：
+len:验证码位数，默认6。
+
+###### 返回：
+生成的验证码。<br/>
+
+##### 3. 生成图形验证码
+void Build(int width, int height, string code, out MemoryStream stream)
+
+###### 参数：
+width:验证码图片的宽度
+height:验证码图片的高度
+code:图片中显示的验证码内容
+stream:输出生成的验证码图片的字节流对象
+
+##### 4. 生成图形验证码
+void Build(int width, int height, out MemoryStream stream,
+    out string code, bool onlyNumber, int codeLength = 6)
+
+###### 参数：
+width:验证码图片的宽度
+height:验证码图片的高度
+stream:输出生成的验证码图片的字节流对象
+code:随机生成验证码字符并返回
+onlyNumber:生成验证码字符是否只包含数字
+codeLength:验证码字符的位数，默认为6
 
 <br/>
 
