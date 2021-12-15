@@ -56,5 +56,10 @@ namespace CodeM.Common.Tools
         {
             return MailTool.New(host, port, enableSsl, account, password);
         }
+
+        public static CaptchaTool Captcha()
+        {
+            return CaptchaTool.New();
+        }
     }
 }

@@ -12,7 +12,7 @@ namespace CodeM.Common.Tools
         private static ConcurrentDictionary<string, MailTool> sClients = new ConcurrentDictionary<string, MailTool>();
         private static object sClientLock = new object();
 
-        public static MailTool New(string host, int port, bool enableSsl, string account, string password)
+        internal static MailTool New(string host, int port, bool enableSsl, string account, string password)
         {
             MailTool result;
             string key = string.Concat(host.Trim(), port, enableSsl, account.Trim(), password.Trim()).ToLower();
