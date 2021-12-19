@@ -8,9 +8,9 @@
     <AssemblyName>CodeM.Common.Tools</AssemblyName>
     <RootNamespace>CodeM.Common.Tools</RootNamespace>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Version>1.2.2</Version>
-    <AssemblyVersion>1.2.2.0</AssemblyVersion>
-    <FileVersion>1.2.2.0</FileVersion>
+    <Version>1.2.3</Version>
+    <AssemblyVersion>1.2.3.0</AssemblyVersion>
+    <FileVersion>1.2.3.0</FileVersion>
     <Authors>softwaiter</Authors>
     <Description>.netcore常用工具集合库（加Json、Xml、正则表达式常用判断、加解密、Http请求、日期时间，数据类型、动态对象、验证码生成、发送邮件等，持续收集中。。。）</Description>
   </PropertyGroup>
