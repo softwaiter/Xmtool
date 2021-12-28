@@ -27,7 +27,7 @@ namespace UnitTest
 
             string code;
             MemoryStream stream;
-            Xmtool.Captcha().Build(120, 50, out stream, out code, false, 4);
+            Xmtool.Captcha().Build(100, 45, out stream, out code, true, 4);
 
             Assert.Equal(4, code.Length);
             Assert.NotNull(stream);

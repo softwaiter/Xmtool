@@ -67,7 +67,7 @@ namespace CodeM.Common.Tools
             Pen penBorder = new Pen(sBorderColor, 1);
             g.DrawRectangle(penBorder, 0, 0, width - 1, height - 1);
 
-            float fontSize = height / 2.5f;
+            float fontSize = height / 2.9f;
             Font font = new Font(SystemFonts.DefaultFont.FontFamily,
                 fontSize, FontStyle.Bold | FontStyle.Italic);
             SizeF charSize = g.MeasureString("G", font);
@@ -78,7 +78,7 @@ namespace CodeM.Common.Tools
             Random r = new Random();
             for (int i = 0; i < code.Length; i++)
             {
-                float x = r.Next((int)offsetX, (int)(offsetX + Math.Max(charWidth - charSize.Width, 0)));
+                float x = r.Next((int)offsetX, (int)(Math.Max((i + 1) * charWidth - charSize.Width, 0)));
                 float y = r.Next(0, (int)(height - charHeight));
 
                 int r1 = r.Next(0, 100);
