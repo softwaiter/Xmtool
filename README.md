@@ -1,5 +1,5 @@
 # Xmtool	.netcore常用工具集合库
-收集.netcore开发过程中经常需要用到的工具类，目前收集的相关工具类涉及Json、Xml、正则表达式常用判断、加解密、Http请求、日期时间，数据类型、动态对象、图形验证码生成、发送邮件等，持续收集中。。。<br/>
+收集.netcore开发过程中经常需要用到的工具类，目前收集的相关工具类涉及Json、Xml、正则表达式常用判断、加解密、Http请求、日期时间，数据类型、动态对象、图形验证码生成、发送邮件、发送阿里云短信等，持续收集中。。。<br/>
 
 
 
@@ -8,22 +8,22 @@
 
 ##### Package Manager
 ```shell
-Install-Package CodeM.Common.Tools -Version 1.2.0
+Install-Package CodeM.Common.Tools -Version 1.3.0
 ```
 
 ##### .NET CLI
 ```shell
-dotnet add package CodeM.Common.Tools --version 1.2.0
+dotnet add package CodeM.Common.Tools --version 1.3.0
 ```
 
 ##### PackageReference
 ```xml
-<PackageReference Include="CodeM.Common.Tools" Version="1.2.0" />
+<PackageReference Include="CodeM.Common.Tools" Version="1.3.0" />
 ```
 
 ##### Paket CLI
 ```shell
-paket add CodeM.Common.Tools --version 1.2.0
+paket add CodeM.Common.Tools --version 1.3.0
 ```
 
 <br/>
@@ -69,6 +69,10 @@ Xmtool工具集合库通过Xmtool静态类统一对外提供服务，所有的�
 <span style="color: #686868;"><b>8. 验证码生成工具类</b></span>
 
 [CaptchaTool](#captcha-tool) Captcha()<br/>
+
+<span style="color: #686868;"><b>9. 发送短信工具类</b></span>
+[ISmsProvider](#ismsprovider) Sms(SmsProvider provider)<br/>
+
 
 #### 属性：
 
@@ -1080,4 +1084,102 @@ str：要进行XSS处理的字符串。
 ###### 返回：
 
 按照规则处理后的字符串。
+
+<br/>
+
+<br/>
+
+### <span id="ismsprovider">Sms API</span>
+
+##### 1. 初始化配置方法
+
+void Config(string accessKeyId, string accessKeySecret, string signName, string templateCode)
+
+###### 参数：
+
+accessKeyId: 短信发送平台生成的AccessKeyId。
+
+accessKeySecret: 短信发送平台生成的AccessKeySecret。
+
+signName: 短信签名的名称。
+
+templateCode: 短信发送模板的编码。
+
+###### 返回：
+
+无。
+
+<br/>
+
+##### 2. 同步发送短信方法一（采用初始化指定的短信签名和发送模板）
+
+bool Send(string templateParam, params string[] phones)
+
+###### 参数：
+
+templateParam: 对应发送短信模板中的参数内容。
+
+phones: 要发送的手机号码数组。
+
+###### 返回：
+
+成功返回true；否则，返回false。
+
+<br/>
+
+##### 3. 同步发送短信方法二
+
+bool Send(string signName, string templateCode, string templateParam, params string[] phones)
+
+###### 参数：
+
+signName: 发送短信使用的签名名称。
+
+templateCode: 发送短信使用的模板编码。
+
+templateParam: 对应发送短信模板中的参数内容。
+
+phones: 要发送的手机号码数组。
+
+###### 返回：
+
+成功返回true；否则，返回false。
+
+<br/>
+
+##### 4. 异步发送短信方法一（采用初始化指定的短信签名和发送模板）
+
+Task<bool> SendAsync(string templateParam, params string[] phones)
+
+###### 参数：
+
+templateParam: 对应发送短信模板中的参数内容。
+
+phones: 要发送的手机号码数组。
+
+###### 返回：
+
+成功返回true；否则，返回false。
+
+<br/>
+
+##### 5. 异步发送短信方法二
+
+Task<bool> SendAsync(string signName, string templateCode, string templateParam, params string[] phones)
+
+###### 参数：
+
+signName: 发送短信使用的签名名称。
+
+templateCode: 发送短信使用的模板编码。
+
+templateParam: 对应发送短信模板中的参数内容。
+
+phones: 要发送的手机号码数组。
+
+###### 返回：
+
+成功返回true；否则，返回false。
+
+<br/>
 
