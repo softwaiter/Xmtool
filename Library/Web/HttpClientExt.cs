@@ -164,7 +164,7 @@ namespace CodeM.Common.Tools.Web
             mRequest.Content = null;
 
             string content = string.Empty;
-            if (resp.IsSuccessStatusCode)
+            if (resp.Content != null)
             {
                 content = await resp.Content.ReadAsStringAsync();
             }

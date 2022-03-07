@@ -1,4 +1,5 @@
 ﻿using CodeM.Common.Tools.Json;
+using CodeM.Common.Tools.Sms;
 using CodeM.Common.Tools.Web;
 using CodeM.Common.Tools.Xml;
 
@@ -60,6 +61,11 @@ namespace CodeM.Common.Tools
         public static CaptchaTool Captcha()
         {
             return CaptchaTool.New();
+        }
+
+        public static ISmsProvider Sms(SmsProvider provider)
+        {
+            return SmsTool.New(provider);
         }
     }
 }
