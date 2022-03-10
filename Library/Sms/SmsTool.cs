@@ -14,7 +14,7 @@ namespace CodeM.Common.Tools.Sms
                 case SmsProvider.Alibaba:
                     return new AlibabaSms();
                 case SmsProvider.Tencent:
-                    break;
+                    return new TencentSms();
             }
             return null;
         }

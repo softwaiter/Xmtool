@@ -20,5 +20,12 @@ namespace UnitTest
             bool ret = Xmtool.Sms(SmsProvider.Alibaba).Send("{\"code\":\"1234\"}", "136********");
             Assert.True(ret);
         }
+
+        [Fact]
+        public void Test2()
+        {
+            Xmtool.Sms(SmsProvider.Tencent).Config("accessKeyId（替换成自己的）", "accessKeySecret（替换成自己的）", "腾讯云", "12345678");
+            Xmtool.Sms(SmsProvider.Tencent).Send("{\"code\":\"1234\"}", "136********");
+        }
     }
 }
