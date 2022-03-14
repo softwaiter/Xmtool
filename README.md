@@ -8,22 +8,22 @@
 
 ##### Package Manager
 ```shell
-Install-Package CodeM.Common.Tools -Version 1.3.0
+Install-Package CodeM.Common.Tools -Version 1.3.1
 ```
 
 ##### .NET CLI
 ```shell
-dotnet add package CodeM.Common.Tools --version 1.3.0
+dotnet add package CodeM.Common.Tools --version 1.3.1
 ```
 
 ##### PackageReference
 ```xml
-<PackageReference Include="CodeM.Common.Tools" Version="1.3.0" />
+<PackageReference Include="CodeM.Common.Tools" Version="1.3.1" />
 ```
 
 ##### Paket CLI
 ```shell
-paket add CodeM.Common.Tools --version 1.3.0
+paket add CodeM.Common.Tools --version 1.3.1
 ```
 
 <br/>
@@ -786,7 +786,21 @@ result: 读取成功后数据的内容
 
 <br/>
 
-##### 3. 根据路径设置属性内容
+##### 3. 获取指定路径的属性内容
+
+object GetValueByPath(string path)
+
+###### 参数：
+
+path: 属性完整路径，用点连接；如User.Name。
+
+###### 返回：
+
+path指向的属性存在，返回属性值；否则，返回null。
+
+<br/>
+
+##### 4. 根据路径设置属性内容
 
 bool SetValueByPath(string path, object value)
 
@@ -802,7 +816,7 @@ value: 属性值
 
 <br/>
 
-##### 4. 判断属性是否存在
+##### 5. 判断属性是否存在
 
 bool Has(string key)
 
@@ -816,7 +830,7 @@ key: 要判断的属性
 
 <br/>
 
-##### 5. 判断路径是否存在
+##### 6. 判断路径是否存在
 
 bool HasPath(string path)
 
@@ -830,7 +844,7 @@ path： 要判断的路径，多个由点分隔。
 
 <br/>
 
-##### 6. 删除指定属性
+##### 7. 删除指定属性
 
 bool Remove(string key)
 
@@ -844,7 +858,7 @@ key: 要删除的属性
 
 <br/>
 
-##### 7. 删除指定路径
+##### 8. 删除指定路径
 
 bool RemovePath(string path)
 
@@ -859,7 +873,7 @@ path: 要删除的路径，多个由点分隔。
 <br/>
 
 
-##### 8. 将对象序列化为Json字符串
+##### 9. 将对象序列化为Json字符串
 string ToString()
 
 ###### 参数：
@@ -871,7 +885,7 @@ string ToString()
 <br/>
 
 
-##### 9. 将对象序列化为XML字符串
+##### 10. 将对象序列化为XML字符串
 string ToXMLString(string defaultNS = "")
 
 ###### 参数：
@@ -1111,7 +1125,7 @@ templateCode: 短信发送模板的编码。
 
 <br/>
 
-##### 2. 同步发送短信方法一（采用初始化指定的短信签名和发送模板）
+##### 2. 同步发送短信方法一（采用初始化的短信签名和发送模板）
 
 bool Send(string templateParam, params string[] phones)
 
@@ -1127,7 +1141,7 @@ phones: 要发送的手机号码数组。
 
 <br/>
 
-##### 3. 同步发送短信方法二
+##### 3. 同步发送短信方法二（采用当前方法指定的短信签名和发送模板）
 
 bool Send(string signName, string templateCode, string templateParam, params string[] phones)
 
@@ -1147,7 +1161,7 @@ phones: 要发送的手机号码数组。
 
 <br/>
 
-##### 4. 异步发送短信方法一（采用初始化指定的短信签名和发送模板）
+##### 4. 异步发送短信方法一（采用初始化的短信签名和发送模板）
 
 Task<bool> SendAsync(string templateParam, params string[] phones)
 
@@ -1163,7 +1177,7 @@ phones: 要发送的手机号码数组。
 
 <br/>
 
-##### 5. 异步发送短信方法二
+##### 5. 异步发送短信方法二（采用当前方法指定的短信签名和发送模板）
 
 Task<bool> SendAsync(string signName, string templateCode, string templateParam, params string[] phones)
 
