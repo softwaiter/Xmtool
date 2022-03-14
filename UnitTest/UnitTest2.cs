@@ -85,6 +85,19 @@ namespace UnitTest
         }
 
         [Fact]
+        public void GetValueByPath()
+        {
+            string path = Path.Combine(Environment.CurrentDirectory, "appsettings.json");
+            dynamic configObj = Xmtool.Json.ConfigParser().AddJsonFile(path).Parse();
+
+            object name = configObj.GetValueByPath("User.Name");
+            Assert.Equal("Wangxm", name);
+
+            object addr = configObj.GetValueByPath("User.Address");
+            Assert.Null(addr);
+        }
+
+        [Fact]
         public void TestDynamicObjectExtKeys()
         {
             dynamic obj = new DynamicObjectExt();

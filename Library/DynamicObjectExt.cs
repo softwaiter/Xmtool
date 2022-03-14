@@ -79,12 +79,33 @@ namespace CodeM.Common.Tools.Json
             if (mValues.ContainsKey(name))
             {
                 result = mValues[name];
+                return true;
             }
             else
             {
                 result = null;
+                return false;
             }
-            return true;
+        }
+
+        public object GetValueByPath(string path)
+        {
+            object result = null;
+            string[] pathItems = path.Split('.');
+            dynamic currObj = this;
+            for (int i = 0; i < pathItems.Length; i++)
+            {
+                string item = pathItems[i];
+                if (currObj.TryGetValue(item, out result))
+                {
+                    currObj = result;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return result;
         }
 
         public bool SetValueByPath(string path, object value)
