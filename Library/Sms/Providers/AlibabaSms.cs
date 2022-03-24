@@ -15,12 +15,23 @@ namespace CodeM.Common.Tools.Sms.Providers
         private string mSignName;
         private string mTemplateCode;
 
-        public void Config(string accessKeyId, string accessKeySecret, string signName, string templateCode)
+        /// <summary>
+        /// 初始化参数（accessKeyId、accessKeySecrect、signName、templateCode）
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        public ISmsProvider Config(params string[] args)
         {
-            mAccessKeyId = accessKeyId;
-            mAccessKeySecret = accessKeySecret;
-            mSignName = signName;
-            mTemplateCode = templateCode;
+            if (args.Length != 4)
+            {
+                throw new ArgumentException("需要4个配置参数：accessKeyId、accessKeySecrect、signName、templateCode");
+            }
+
+            mAccessKeyId = args[0];
+            mAccessKeySecret = args[1];
+            mSignName = args[2];
+            mTemplateCode = args[3];
+            return this;
         }
 
         private string UrlEncode(string str)
@@ -58,7 +69,7 @@ namespace CodeM.Common.Tools.Sms.Providers
             }
         }
 
-        private string GenQueryParams(string signName, string templateCode, string templateParam, params string[] phones)
+        private string GenQueryParams(string signName, string templateCode, string phoneNum, params string[] templateParams)
         {
             Dictionary<string, string> _params = new Dictionary<string, string>();
             _params.Add("AccessKeyId", mAccessKeyId);
@@ -71,9 +82,9 @@ namespace CodeM.Common.Tools.Sms.Providers
             _params.Add("Version", "2017-05-25");
             _params.Add("Action", "SendSms");
             _params.Add("SignName", signName);
-            _params.Add("PhoneNumbers", string.Join(",", phones));
+            _params.Add("PhoneNumbers", phoneNum);
             _params.Add("TemplateCode", templateCode);
-            _params.Add("TemplateParam", templateParam);
+            _params.Add("TemplateParam", templateParams.Length > 0 ? templateParams[0] : "");
 
             List<string> _keyList = new List<string>();
             _keyList.Add("AccessKeyId");
@@ -113,34 +124,40 @@ namespace CodeM.Common.Tools.Sms.Providers
             return sbResult.ToString();
         }
 
-        public bool Send(string templateParam, params string[] phones)
+        private string GenRquestUri(string _queryParams)
         {
-            string _queryParams = GenQueryParams(mSignName, mTemplateCode, templateParam, phones);
             string url = "http://dysmsapi.aliyuncs.com/?" + _queryParams;
+            return url;
+        }
+
+        public bool Send(string phoneNum, params string[] templateParams)
+        {
+            string _queryParams = GenQueryParams(mSignName, mTemplateCode, phoneNum, templateParams);
+            string url = GenRquestUri(_queryParams);
             HttpResponseExt res = WebTool.New().Client().GetJson(url);
             return res.Json.Code == "OK";
         }
 
-        public bool Send(string signName, string templateCode, string templateParam, params string[] phones)
+        public bool Send2(string signName, string templateCode, string phoneNum, params string[] templateParams)
         {
-            string _queryParams = GenQueryParams(signName, templateCode, templateParam, phones);
-            string url = "http://dysmsapi.aliyuncs.com/?" + _queryParams;
+            string _queryParams = GenQueryParams(signName, templateCode, phoneNum, templateParams);
+            string url = GenRquestUri(_queryParams);
             HttpResponseExt res = WebTool.New().Client().GetJson(url);
             return res.Json.Code == "OK";
         }
 
-        public async Task<bool> SendAsync(string templateParam, params string[] phones)
+        public async Task<bool> SendAsync(string phoneNum, params string[] templateParams)
         {
-            string _queryParams = GenQueryParams(mSignName, mTemplateCode, templateParam, phones);
-            string url = "http://dysmsapi.aliyuncs.com/?" + _queryParams;
+            string _queryParams = GenQueryParams(mSignName, mTemplateCode, phoneNum, templateParams);
+            string url = GenRquestUri(_queryParams);
             HttpResponseExt res = await WebTool.New().Client().GetJsonAsync(url);
             return res.Json.Code == "OK";
         }
 
-        public async Task<bool> SendAsync(string signName, string templateCode, string templateParam, params string[] phones)
+        public async Task<bool> Send2Async(string signName, string templateCode, string phoneNum, params string[] templateParams)
         {
-            string _queryParams = GenQueryParams(signName, templateCode, templateParam, phones);
-            string url = "http://dysmsapi.aliyuncs.com/?" + _queryParams;
+            string _queryParams = GenQueryParams(signName, templateCode, phoneNum, templateParams);
+            string url = GenRquestUri(_queryParams);
             HttpResponseExt res = await WebTool.New().Client().GetJsonAsync(url);
             return res.Json.Code == "OK";
         }

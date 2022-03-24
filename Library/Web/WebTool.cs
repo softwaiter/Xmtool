@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Net.Http;
 
 namespace CodeM.Common.Tools.Web
@@ -23,8 +24,12 @@ namespace CodeM.Common.Tools.Web
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public HttpClientExt Client(string name = "default")
+        public HttpClientExt Client(string name = null)
         {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                name = DateTime.Now.Ticks.ToString();
+            }
             HttpClient client = sClients.GetOrAdd(name, new HttpClient());
             return new HttpClientExt(client);
         }

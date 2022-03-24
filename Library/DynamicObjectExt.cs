@@ -232,6 +232,25 @@ namespace CodeM.Common.Tools.Json
             return bRet;
         }
 
+        private string SerializeArray(dynamic list)
+        {
+            StringBuilder sbResult = new StringBuilder();
+
+            sbResult.Append("[");
+            for (int i = 0; i < list.Length; i++)
+            {
+                if (i > 0)
+                {
+                    sbResult.Append(",");
+                }
+
+                sbResult.Append(SerializeValue(list[i]));
+            }
+            sbResult.Append("]");
+
+            return sbResult.ToString();
+        }
+
         private string SerializeList(dynamic list)
         {
             StringBuilder sbResult = new StringBuilder();
@@ -261,6 +280,10 @@ namespace CodeM.Common.Tools.Json
                 if (_typ == typeof(string))
                 {
                     sbResult.Append(string.Concat("\"", value, "\""));
+                }
+                else if (_typ.IsArray)
+                {
+                    sbResult.Append(SerializeArray(value));
                 }
                 else if (_typ.IsGenericType &&
                     _typ.GetGenericTypeDefinition() == typeof(List<>))
@@ -323,6 +346,35 @@ namespace CodeM.Common.Tools.Json
                         {
                             sbResult.Append(" " + e.Current.Key + "=\"" + e.Current.Value + "\"");
                         }
+                        else if (_typ.IsArray)
+                        {
+                            StringBuilder sbValue = new StringBuilder();
+                            dynamic arrObj = e.Current.Value;
+                            for (int i = 0; i < arrObj.Length; i++)
+                            {
+                                if (sbValue.Length > 0)
+                                {
+                                    sbValue.Append(",");
+                                }
+                                sbValue.Append(arrObj[i]);
+                            }
+                            sbResult.Append(" " + e.Current.Key + "=\"" + sbValue + "\"");
+                        }
+                        else if (_typ.IsGenericType &&
+                            _typ.GetGenericTypeDefinition() == typeof(List<>))
+                        {
+                            StringBuilder sbValue = new StringBuilder();
+                            dynamic listObj = e.Current.Value;
+                            for (int i = 0; i < listObj.Count; i++)
+                            {
+                                if (sbValue.Length > 0)
+                                {
+                                    sbValue.Append(",");
+                                }
+                                sbValue.Append(listObj[i]);
+                            }
+                            sbResult.Append(" " + e.Current.Key + "=\"" + sbValue + "\"");
+                        }
                     }
                     else
                     {
@@ -366,9 +418,38 @@ namespace CodeM.Common.Tools.Json
                     {
                         if (isRootNode)
                         {
-                            sbResult.Append("<" + e.Current.Key + ">");
-                            sbResult.Append(e.Current.Value.ToString());
-                            sbResult.Append("</" + e.Current.Key + ">");
+                            Type _typ = e.Current.Value.GetType();
+                            if (_typ.IsArray)
+                            {
+                                sbResult.Append("<" + e.Current.Key + ">");
+                                dynamic arrObj = e.Current.Value;
+                                for (int i = 0; i < arrObj.Length; i++)
+                                {
+                                    sbResult.Append("<value>");
+                                    sbResult.Append(arrObj[i]);
+                                    sbResult.Append("</value>");
+                                }
+                                sbResult.Append("</" + e.Current.Key + ">");
+                            }
+                            else if (_typ.IsGenericType &&
+                                _typ.GetGenericTypeDefinition() == typeof(List<>))
+                            {
+                                sbResult.Append("<" + e.Current.Key + ">");
+                                dynamic listObj = e.Current.Value;
+                                for (int i = 0; i < listObj.Count; i++)
+                                {
+                                    sbResult.Append("<item>");
+                                    sbResult.Append(listObj[i]);
+                                    sbResult.Append("</item>");
+                                }
+                                sbResult.Append("</" + e.Current.Key + ">");
+                            }
+                            else
+                            {
+                                sbResult.Append("<" + e.Current.Key + ">");
+                                sbResult.Append(e.Current.Value.ToString());
+                                sbResult.Append("</" + e.Current.Key + ">");
+                            }
                         }
                     }
                 }

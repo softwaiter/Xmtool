@@ -27,6 +27,18 @@ namespace CodeM.Common.Tools
             return (long)ts.TotalMilliseconds;
         }
 
+        public DateTime GetUtcDateTimeFromUtcTimestamp10(long ts)
+        {
+            DateTime st = new DateTime(1970, 1, 1, 0, 0, 0);
+            return st.AddSeconds(ts);
+        }
+
+        public DateTime GetUtcDateTimeFromUtcTimestamp13(long ts)
+        {
+            DateTime st = new DateTime(1970, 1, 1, 0, 0, 0);
+            return st.AddMilliseconds(ts);
+        }
+
         public DateTime GetLocalDateTimeFromUtcTimestamp10(long ts)
         {
             DateTime st = TimeZoneInfo.ConvertTimeFromUtc(new DateTime(1970, 1, 1, 0, 0, 0), TimeZoneInfo.Local);

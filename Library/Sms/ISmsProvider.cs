@@ -10,14 +10,14 @@ namespace CodeM.Common.Tools
 
     public interface ISmsProvider
     {
-        public void Config(string accessKeyId, string accessKeySecret, string signName, string templateCode);
+        public ISmsProvider Config(params string[] args);
 
-        public bool Send(string templateParam, params string[] phones);
+        public bool Send(string templateParam, params string[] phoneNums);
 
-        public bool Send(string signName, string templateCode, string templateParam, params string[] phones);
+        public bool Send2(string signName, string templateCode, string templateParam, params string[] phoneNums);
 
-        public Task<bool> SendAsync(string templateParam, params string[] phones);
+        public Task<bool> SendAsync(string templateParam, params string[] phoneNums);
 
-        public Task<bool> SendAsync(string signName, string templateCode, string templateParam, params string[] phones);
+        public Task<bool> Send2Async(string signName, string templateCode, string templateParam, params string[] phoneNums);
     }
 }

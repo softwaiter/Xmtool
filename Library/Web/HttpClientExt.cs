@@ -132,6 +132,13 @@ namespace CodeM.Common.Tools.Web
             return this;
         }
 
+        public HttpClientExt AddRequestHeaderWithoutValidation(string name, string value)
+        {
+            InitRequest();
+            mRequest.Headers.TryAddWithoutValidation(name, value);
+            return this;
+        }
+
         public HttpClientExt SetJsonContent(string content)
         {
             InitRequest();
