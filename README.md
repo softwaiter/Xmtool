@@ -8,22 +8,22 @@
 
 ##### Package Manager
 ```shell
-Install-Package CodeM.Common.Tools -Version 1.3.1
+Install-Package CodeM.Common.Tools -Version 1.3.5
 ```
 
 ##### .NET CLI
 ```shell
-dotnet add package CodeM.Common.Tools --version 1.3.1
+dotnet add package CodeM.Common.Tools --version 1.3.5
 ```
 
 ##### PackageReference
 ```xml
-<PackageReference Include="CodeM.Common.Tools" Version="1.3.1" />
+<PackageReference Include="CodeM.Common.Tools" Version="1.3.5" />
 ```
 
 ##### Paket CLI
 ```shell
-paket add CodeM.Common.Tools --version 1.3.1
+paket add CodeM.Common.Tools --version 1.3.5
 ```
 
 <br/>
@@ -1107,21 +1107,19 @@ str：要进行XSS处理的字符串。
 
 ##### 1. 初始化配置方法
 
-void Config(string accessKeyId, string accessKeySecret, string signName, string templateCode)
+ISmsProvider Config(params string[] args)
 
 ###### 参数：
 
-accessKeyId: 短信发送平台生成的AccessKeyId。
+args:  配置短信发送参数（根据不同平台，参数不同）。
 
-accessKeySecret: 短信发送平台生成的AccessKeySecret。
+阿里云：4个参数，依次是accessKeyId、accessKeySecrect、signName、templateCode。
 
-signName: 短信签名的名称。
-
-templateCode: 短信发送模板的编码。
+腾讯云：5个参数，依次是appid, secrectId、secrectKey、signName、templateCode。
 
 ###### 返回：
 
-无。
+短信发送接口实例。
 
 <br/>
 
@@ -1143,7 +1141,7 @@ phones: 要发送的手机号码数组。
 
 ##### 3. 同步发送短信方法二（采用当前方法指定的短信签名和发送模板）
 
-bool Send(string signName, string templateCode, string templateParam, params string[] phones)
+bool Send2(string signName, string templateCode, string templateParam, params string[] phones)
 
 ###### 参数：
 
@@ -1179,7 +1177,7 @@ phones: 要发送的手机号码数组。
 
 ##### 5. 异步发送短信方法二（采用当前方法指定的短信签名和发送模板）
 
-Task<bool> SendAsync(string signName, string templateCode, string templateParam, params string[] phones)
+Task<bool> Send2Async(string signName, string templateCode, string templateParam, params string[] phones)
 
 ###### 参数：
 
