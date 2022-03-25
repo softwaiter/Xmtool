@@ -8,22 +8,22 @@
 
 ##### Package Manager
 ```shell
-Install-Package CodeM.Common.Tools -Version 1.3.5
+Install-Package CodeM.Common.Tools -Version 1.3.6
 ```
 
 ##### .NET CLI
 ```shell
-dotnet add package CodeM.Common.Tools --version 1.3.5
+dotnet add package CodeM.Common.Tools --version 1.3.6
 ```
 
 ##### PackageReference
 ```xml
-<PackageReference Include="CodeM.Common.Tools" Version="1.3.5" />
+<PackageReference Include="CodeM.Common.Tools" Version="1.3.6" />
 ```
 
 ##### Paket CLI
 ```shell
-paket add CodeM.Common.Tools --version 1.3.5
+paket add CodeM.Common.Tools --version 1.3.6
 ```
 
 <br/>
@@ -1115,7 +1115,7 @@ args:  配置短信发送参数（根据不同平台，参数不同）。
 
 阿里云：4个参数，依次是accessKeyId、accessKeySecrect、signName、templateCode。
 
-腾讯云：5个参数，依次是appid, secrectId、secrectKey、signName、templateCode。
+腾讯云：5个参数，依次是secrectId、secrectKey、signName、templateCode、appId。
 
 ###### 返回：
 
