@@ -16,7 +16,7 @@ namespace CodeM.Common.Tools.Sms.Providers
         private string mTemplateCode;
 
         /// <summary>
-        /// 初始化参数（appid, secrectId、secrectKey、signName、templateCode）
+        /// 初始化参数（secrectId、secrectKey、signName、templateCode、appId）
         /// </summary>
         /// <param name="args"></param>
         /// <returns></returns>
@@ -24,14 +24,14 @@ namespace CodeM.Common.Tools.Sms.Providers
         {
             if (args.Length != 5)
             {
-                throw new ArgumentException("需要5个配置参数：appid, secrectId、secrectKey、signName、templateCode");
+                throw new ArgumentException("需要5个配置参数：secrectId、secrectKey、signName、templateCode, appId");
             }
 
-            mAppId = args[0]; 
-            mSecretId = args[1];
-            mSecretKey = args[2];
-            mSignName = args[3];
-            mTemplateCode = args[4];
+            mSecretId = args[0];
+            mSecretKey = args[1];
+            mSignName = args[2];
+            mTemplateCode = args[3];
+            mAppId = args[4];
             return this;
         }
 

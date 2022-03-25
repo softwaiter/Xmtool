@@ -4,6 +4,7 @@ namespace CodeM.Common.Tools
 {
     public enum SmsProvider
     {
+        Unset,
         Alibaba,
         Tencent
     }

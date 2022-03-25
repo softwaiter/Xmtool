@@ -1,4 +1,5 @@
 ﻿using CodeM.Common.Tools;
+using System;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -16,6 +17,8 @@ namespace UnitTest
         [Fact]
         public void Test()
         {
+            SmsProvider a = Enum.Parse<SmsProvider>("0");
+
             Xmtool.Sms(SmsProvider.Alibaba).Config("accessKeyId（替换成自己的）", "accessKeySecret（替换成自己的）",
                 "阿里云短信签名（替换成自己的）", "模板编码（替换成自己的）");
             bool ret = Xmtool.Sms(SmsProvider.Alibaba).Send("136********", "参数（替换成自己的，如：{\"code\":\"1234\"}）");
@@ -25,8 +28,8 @@ namespace UnitTest
         [Fact]
         public void Test2()
         {
-            ISmsProvider sms = Xmtool.Sms(SmsProvider.Tencent).Config("appid（替换成自己的）", "secretId（替换成自己的）",
-                "secretKey（替换成自己的）", "腾讯云短信签名（替换成自己的）", "模板Id（替换成自己的）");
+            ISmsProvider sms = Xmtool.Sms(SmsProvider.Tencent).Config("secretId（替换成自己的）", "secretKey（替换成自己的）",
+                "腾讯云短信签名（替换成自己的）", "模板Id（替换成自己的）", "appId（替换成自己的）");
             bool ret = sms.Send("136********", "参数（替换成自己的，如：1234）");
             Assert.True(ret);
         }
