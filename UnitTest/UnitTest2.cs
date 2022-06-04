@@ -2,6 +2,8 @@
 using CodeM.Common.Tools.Json;
 using System;
 using System.IO;
+using System.Text.Encodings.Web;
+using System.Text.Json;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -114,6 +116,25 @@ namespace UnitTest
             obj.Name = "wangxm";
             Assert.Equal("wangxm", obj["Name"]);
             Assert.Null(obj["Age"]);
+        }
+
+        [Fact]
+        public void TestDynamicObjectExtSerialize()
+        {
+            JsonSerializerOptions options = new JsonSerializerOptions
+            {
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+            };
+
+            dynamic data = new DynamicObjectExt();
+            data.Name = "wangxm";
+            data.Age = 18;
+            string json = JsonSerializer.Serialize<dynamic>(new
+            {
+                data
+            }, options);
+
+            Assert.Contains("Name", json);
         }
     }
 }

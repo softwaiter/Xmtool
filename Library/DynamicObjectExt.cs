@@ -1,71 +1,23 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
-using System.Reflection;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace CodeM.Common.Tools.Json
 {
-    public class DynamicObjectExt : DynamicObject
+
+    [Serializable]
+    public class DynamicObjectExt : IDynamicMetaObjectProvider, IDictionary<string, object>, ICloneable
     {
-        Dictionary<string, object> mValues = new Dictionary<string, object>();
-
-        public Dictionary<string, object>.KeyCollection Keys
+        public object this[string key]
         {
             get
             {
-                return mValues.Keys;
+                return GetValue(key);
             }
-        }
-
-        public dynamic this[string key]
-        {
-            get
-            {
-                if (mValues.ContainsKey(key))
-                {
-                    return mValues[key];
-                }
-                return null;
-            }
-        }
-
-        public override bool TrySetMember(SetMemberBinder binder, object value)
-        {
-            mValues[binder.Name] = value;
-            return true;
-        }
-
-        public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
-        {
-            MethodInfo mi = GetType().GetMethod(binder.Name);
-            if (mi != null)
-            {
-                if ("ToXMLString".Equals(binder.Name) && args.Length == 0)
-                {
-                    args = new object[] { "" };
-                }
-                result = mi.Invoke(this, args);
-                return true;
-            }
-            else
-            {
-                result = null;
-                return false;
-            }
-        }
-
-        public override bool TryGetMember(GetMemberBinder binder, out object result)
-        {
-            if (mValues.ContainsKey(binder.Name))
-            {
-                result = mValues[binder.Name];
-            }
-            else
-            {
-                result = null;
-            }
-            return true;
         }
 
         public bool TrySetValue(string name, object value)
@@ -88,6 +40,32 @@ namespace CodeM.Common.Tools.Json
             }
         }
 
+        public object GetValue(string name)
+        {
+            if (mValues.ContainsKey(name))
+            {
+                return mValues[name];
+            }
+            else if ("Keys".Equals(name, StringComparison.OrdinalIgnoreCase))
+            {
+                return mValues.Keys;
+            }
+            else if ("Values".Equals(name, StringComparison.OrdinalIgnoreCase))
+            {
+                return mValues.Values;
+            }
+            else if ("Count".Equals(name, StringComparison.OrdinalIgnoreCase))
+            {
+                return mValues.Count;
+            }
+            else if ("IsReadOnly".Equals(name, StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
+            return null;
+        }
+
         public object GetValueByPath(string path)
         {
             object result = null;
@@ -106,6 +84,12 @@ namespace CodeM.Common.Tools.Json
                 }
             }
             return result;
+        }
+
+        public object SetValue(string name, object value)
+        {
+            mValues[name] = value;
+            return value;
         }
 
         public bool SetValueByPath(string path, object value)
@@ -482,5 +466,92 @@ namespace CodeM.Common.Tools.Json
 
             return sbResult.ToString();
         }
+
+        #region IDictionary<string, object>
+        private Dictionary<string, object> mValues = new Dictionary<string, object>();
+
+        public void Add(string key, object value)
+        {
+            SetValue(key, value);
+        }
+
+        public bool ContainsKey(string key)
+        {
+            return mValues.ContainsKey(key);
+        }
+
+        public void Add(KeyValuePair<string, object> item)
+        {
+            Add(item.Key, item.Value);
+        }
+
+        public void Clear()
+        {
+            mValues.Clear();
+        }
+
+        public bool Contains(KeyValuePair<string, object> item)
+        {
+            if (mValues.ContainsKey(item.Key))
+            {
+                return mValues[item.Key] == item.Value;
+            }
+            return false;
+        }
+
+        public void CopyTo(KeyValuePair<string, object>[] array, int arrayIndex)
+        {
+            mValues.ToArray().CopyTo(array, arrayIndex);
+        }
+
+        public bool Remove(KeyValuePair<string, object> item)
+        {
+            if (Contains(item))
+            {
+                return Remove(item.Key);
+            }
+            return false;
+        }
+
+        public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
+        {
+            return mValues.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return mValues.GetEnumerator();
+        }
+
+        ICollection<string> IDictionary<string, object>.Keys => mValues.Keys;
+
+        public ICollection<object> Values => mValues.Values;
+
+        public int Count => mValues.Count;
+
+        public bool IsReadOnly => false;
+
+        object IDictionary<string, object>.this[string key] { get => GetValue(key); set => SetValue(key, value); }
+        #endregion
+
+        #region IDynamicMetaObjectProvider
+        public DynamicMetaObject GetMetaObject(Expression parameter)
+        {
+            return new DynamicObjectExtMetaObject(parameter, BindingRestrictions.Empty, this);
+        }
+        #endregion
+
+        #region ICloneable
+        public object Clone()
+        {
+            DynamicObjectExt cloneObj = new DynamicObjectExt();
+            Dictionary<string, object>.Enumerator e = mValues.GetEnumerator();
+            while (e.MoveNext())
+            {
+                cloneObj.SetValue(e.Current.Key, e.Current.Value);
+            }
+            return cloneObj;
+        }
+        #endregion
     }
 }
