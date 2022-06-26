@@ -69,7 +69,7 @@ namespace CodeM.Common.Tools.Sms.Providers
             }
         }
 
-        private string GenQueryParams(string signName, string templateCode, string phoneNum, params string[] templateParams)
+        private string GenQueryParams(string signName, string templateCode, string templateParam, params string[] phoneNums)
         {
             Dictionary<string, string> _params = new Dictionary<string, string>();
             _params.Add("AccessKeyId", mAccessKeyId);
@@ -82,9 +82,9 @@ namespace CodeM.Common.Tools.Sms.Providers
             _params.Add("Version", "2017-05-25");
             _params.Add("Action", "SendSms");
             _params.Add("SignName", signName);
-            _params.Add("PhoneNumbers", phoneNum);
+            _params.Add("PhoneNumbers", String.Join(",", phoneNums));
             _params.Add("TemplateCode", templateCode);
-            _params.Add("TemplateParam", templateParams.Length > 0 ? templateParams[0] : "");
+            _params.Add("TemplateParam", templateParam);
 
             List<string> _keyList = new List<string>();
             _keyList.Add("AccessKeyId");
@@ -130,17 +130,17 @@ namespace CodeM.Common.Tools.Sms.Providers
             return url;
         }
 
-        public bool Send(string phoneNum, params string[] templateParams)
+        public bool Send(string templateParam, params string[] phoneNums)
         {
-            string _queryParams = GenQueryParams(mSignName, mTemplateCode, phoneNum, templateParams);
+            string _queryParams = GenQueryParams(mSignName, mTemplateCode, templateParam, phoneNums);
             string url = GenRquestUri(_queryParams);
             HttpResponseExt res = WebTool.New().Client().GetJson(url);
             return res.Json.Code == "OK";
         }
 
-        public bool Send2(string signName, string templateCode, string phoneNum, params string[] templateParams)
+        public bool Send2(string signName, string templateCode, string templateParam, params string[] phoneNums)
         {
-            string _queryParams = GenQueryParams(signName, templateCode, phoneNum, templateParams);
+            string _queryParams = GenQueryParams(signName, templateCode, templateParam, phoneNums);
             string url = GenRquestUri(_queryParams);
             HttpResponseExt res = WebTool.New().Client().GetJson(url);
             return res.Json.Code == "OK";

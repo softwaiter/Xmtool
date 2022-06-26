@@ -8,9 +8,9 @@
     <AssemblyName>CodeM.Common.Tools</AssemblyName>
     <RootNamespace>CodeM.Common.Tools</RootNamespace>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Version>1.3.8</Version>
-    <AssemblyVersion>1.3.8.0</AssemblyVersion>
-    <FileVersion>1.3.8.0</FileVersion>
+    <Version>1.3.9</Version>
+    <AssemblyVersion>1.3.9.0</AssemblyVersion>
+    <FileVersion>1.3.9.0</FileVersion>
     <Authors>softwaiter</Authors>
     <Description>.netcore常用工具集合库（Json、Xml、正则表达式常用判断、加解密、Http请求、日期时间，数据类型、动态对象、验证码生成、发送邮件、阿里云短信等，持续收集中。。。）</Description>
     <PackageProjectUrl>https://github.com/softwaiter/netcoreTools</PackageProjectUrl>
