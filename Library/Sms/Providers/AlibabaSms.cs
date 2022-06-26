@@ -22,7 +22,7 @@ namespace CodeM.Common.Tools.Sms.Providers
         /// <returns></returns>
         public ISmsProvider Config(params string[] args)
         {
-            if (args.Length != 4)
+            if (args.Length < 4)
             {
                 throw new ArgumentException("需要4个配置参数：accessKeyId、accessKeySecrect、signName、templateCode");
             }

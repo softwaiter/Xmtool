@@ -74,6 +74,66 @@ namespace UnitTest
         }
 
         /// <summary>
+        /// 判断“010-80001234”是否为固定电话，应为True
+        /// </summary>
+        [Fact]
+        public void TelephoneTest()
+        {
+            bool ret = Xmtool.Regex().IsTelephone("010-80001234");
+            Assert.True(ret);
+        }
+
+        /// <summary>
+        /// 判断“0312-6928579”是否为固定电话，应为True
+        /// </summary>
+        [Fact]
+        public void TelephoneTest2()
+        {
+            bool ret = Xmtool.Regex().IsTelephone("0312-6928579");
+            Assert.True(ret);
+        }
+
+        /// <summary>
+        /// 判断“010-2387950”是否为手机号，应为False
+        /// </summary>
+        [Fact]
+        public void TelephoneTest3()
+        {
+            bool ret = Xmtool.Regex().IsTelephone("010-2387950");
+            Assert.False(ret);
+        }
+
+        /// <summary>
+        /// 判断“0312-85850278”是否为手机号，应为False
+        /// </summary>
+        [Fact]
+        public void TelephoneTest4()
+        {
+            bool ret = Xmtool.Regex().IsTelephone("0312-85850278");
+            Assert.False(ret);
+        }
+
+        /// <summary>
+        /// 判断abc是否为手机号，应为False
+        /// </summary>
+        [Fact]
+        public void TelephoneTest5()
+        {
+            bool ret = Xmtool.Regex().IsTelephone("abc");
+            Assert.False(ret);
+        }
+
+        /// <summary>
+        /// 判断空是否为手机号，应为False
+        /// </summary>
+        [Fact]
+        public void TelephoneTest6()
+        {
+            bool ret = Xmtool.Regex().IsTelephone("");
+            Assert.False(ret);
+        }
+
+        /// <summary>
         /// 判断abc@126.com是否有效邮箱，应为True
         /// </summary>
         [Fact]
@@ -640,6 +700,246 @@ namespace UnitTest
         public void DecimalTest9()
         {
             bool ret = Xmtool.Regex().IsDecimal("");
+            Assert.False(ret);
+        }
+
+        /// <summary>
+        /// 判断“Hello”是否为英文， 应为True
+        /// </summary>
+        [Fact]
+        public void EnglishTest1()
+        {
+            bool ret = Xmtool.Regex().IsEnglish("Hello");
+            Assert.True(ret);
+        }
+
+        /// <summary>
+        /// 判断“Abc123”是否为英文，应为False
+        /// </summary>
+        [Fact]
+        public void EnglishTest2()
+        {
+            bool ret = Xmtool.Regex().IsEnglish("Abc123");
+            Assert.False(ret);
+        }
+
+        /// <summary>
+        /// 判断“中国China”是否为英文，应为False
+        /// </summary>
+        [Fact]
+        public void EnglishTest3()
+        {
+            bool ret = Xmtool.Regex().IsEnglish("中国China");
+            Assert.False(ret);
+        }
+
+        /// <summary>
+        /// 判断空是否为英文，应为False
+        /// </summary>
+        [Fact]
+        public void EnglishTest4()
+        {
+            bool ret = Xmtool.Regex().IsEnglish("");
+            Assert.False(ret);
+        }
+
+        /// <summary>
+        /// 判断“China”是否为小写英文，应为False
+        /// </summary>
+        [Fact]
+        public void LowercaseEnglishTest1()
+        {
+            bool ret = Xmtool.Regex().IsLowercaseEnglish("China");
+            Assert.False(ret);
+        }
+
+        /// <summary>
+        /// 判断“hello”是否为小写英文，应为True
+        /// </summary>
+        [Fact]
+        public void LowercaseEnglishTest2()
+        {
+            bool ret = Xmtool.Regex().IsLowercaseEnglish("hello");
+            Assert.True(ret);
+        }
+
+        /// <summary>
+        /// 判断空是否为小写英文，应为False
+        /// </summary>
+        [Fact]
+        public void LowercaseEnglishTest3()
+        {
+            bool ret = Xmtool.Regex().IsLowercaseEnglish("");
+            Assert.False(ret);
+        }
+
+        /// <summary>
+        /// 判断“China”是否为大写英文，应为False
+        /// </summary>
+        [Fact]
+        public void CapitalEnglishTest1()
+        {
+            bool ret = Xmtool.Regex().IsCapitalEnglish("China");
+            Assert.False(ret);
+        }
+
+        /// <summary>
+        /// 判断“ABC”是否为大写英文，应为True
+        /// </summary>
+        [Fact]
+        public void CapitalEnglishTest2()
+        {
+            bool ret = Xmtool.Regex().IsCapitalEnglish("ABC");
+            Assert.True(ret);
+        }
+
+        /// <summary>
+        /// 判断空是否为大写英文，应为False
+        /// </summary>
+        [Fact]
+        public void CapitalEnglishTest3()
+        {
+            bool ret = Xmtool.Regex().IsCapitalEnglish("");
+            Assert.False(ret);
+        }
+
+        /// <summary>
+        /// 判断“中国”是否为中文，应为True
+        /// </summary>
+        [Fact]
+        public void ChineseTest1()
+        {
+            bool ret = Xmtool.Regex().IsChinese("中国");
+            Assert.True(ret);
+        }
+
+        /// <summary>
+        /// 判断“中国Good”是否为中文，应为False
+        /// </summary>
+        [Fact]
+        public void ChineseTest2()
+        {
+            bool ret = Xmtool.Regex().IsChinese("中国Good");
+            Assert.False(ret);
+        }
+
+        /// <summary>
+        /// 判断空是否为中文，应为False
+        /// </summary>
+        [Fact]
+        public void ChineseTest3()
+        {
+            bool ret = Xmtool.Regex().IsChinese("");
+            Assert.False(ret);
+        }
+
+        /// <summary>
+        /// 判断“Abc123”是否为数字或英文，应为True
+        /// </summary>
+        [Fact]
+        public void MixCharTest1()
+        {
+            bool ret = Xmtool.Regex().IsMixChar("Abc123");
+            Assert.True(ret);
+        }
+
+        /// <summary>
+        /// 判断“Abc”是否为数字或英文，应为True
+        /// </summary>
+        [Fact]
+        public void MixCharTest2()
+        {
+            bool ret = Xmtool.Regex().IsMixChar("Abc");
+            Assert.True(ret);
+        }
+
+        /// <summary>
+        /// 判断“123”是否为数字或英文，应为True
+        /// </summary>
+        [Fact]
+        public void MixCharTest3()
+        {
+            bool ret = Xmtool.Regex().IsMixChar("123");
+            Assert.True(ret);
+        }
+
+        /// <summary>
+        /// 判断“中国Abc123”是否为数字或英文，应为False
+        /// </summary>
+        [Fact]
+        public void MixCharTest4()
+        {
+            bool ret = Xmtool.Regex().IsMixChar("中国Abc123");
+            Assert.False(ret);
+        }
+
+        /// <summary>
+        /// 判断空是否为数字或英文，应为False
+        /// </summary>
+        [Fact]
+        public void MixCharTest5()
+        {
+            bool ret = Xmtool.Regex().IsMixChar("");
+            Assert.False(ret);
+        }
+
+        /// <summary>
+        /// 判断“一二三Abc123”是否为中文、数字或英文，应为True
+        /// </summary>
+        [Fact]
+        public void MixChar2Test1()
+        {
+            bool ret = Xmtool.Regex().IsMixChar2("一二三Abc123");
+            Assert.True(ret);
+        }
+
+        /// <summary>
+        /// 判断“Abc123”是否为中文、数字或英文，应为True
+        /// </summary>
+        [Fact]
+        public void MixChar2Test2()
+        {
+            bool ret = Xmtool.Regex().IsMixChar2("Abc123");
+            Assert.True(ret);
+        }
+
+        /// <summary>
+        /// 判断“Abc”是否为中文、数字或英文，应为True
+        /// </summary>
+        [Fact]
+        public void MixChar2Test3()
+        {
+            bool ret = Xmtool.Regex().IsMixChar2("Abc");
+            Assert.True(ret);
+        }
+
+        /// <summary>
+        /// 判断“123”是否为中文、数字或英文，应为True
+        /// </summary>
+        [Fact]
+        public void MixChar2Test4()
+        {
+            bool ret = Xmtool.Regex().IsMixChar2("123");
+            Assert.True(ret);
+        }
+
+        /// <summary>
+        /// 判断“一二三Abc123~”是否为数字或英文，应为False
+        /// </summary>
+        [Fact]
+        public void MixChar2Test5()
+        {
+            bool ret = Xmtool.Regex().IsMixChar("一二三Abc123~");
+            Assert.False(ret);
+        }
+
+        /// <summary>
+        /// 判断空是否为数字或英文，应为False
+        /// </summary>
+        [Fact]
+        public void MixChar2Test6()
+        {
+            bool ret = Xmtool.Regex().IsMixChar2("");
             Assert.False(ret);
         }
 

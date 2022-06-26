@@ -22,7 +22,7 @@ namespace CodeM.Common.Tools.Sms.Providers
         /// <returns></returns>
         public ISmsProvider Config(params string[] args)
         {
-            if (args.Length != 5)
+            if (args.Length < 5)
             {
                 throw new ArgumentException("需要5个配置参数：secrectId、secrectKey、signName、templateCode, appId");
             }
