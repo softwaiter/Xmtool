@@ -1,5 +1,4 @@
 ﻿using CodeM.Common.Tools;
-using System.IO;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -17,21 +16,19 @@ namespace UnitTest
         [Fact]
         public void Test()
         {
-            string a = Xmtool.Captcha().Random(4);
-            string b = Xmtool.Captcha().Random(4);
-            string c = Xmtool.Captcha().Random(4);
+            string data = Xmtool.Captcha(CaptchKind.Character).Config(4) .Generate();
 
-            string d = Xmtool.Captcha().RandomOnlyNumber(4);
-            string e = Xmtool.Captcha().RandomOnlyNumber(4);
-            string f = Xmtool.Captcha().RandomOnlyNumber(4);
+            string[] items = data.Split("|");
+            Assert.Equal(2, items.Length);
+            Assert.Equal(4, items[0].Length);
+            Assert.StartsWith("data:image/png;base64,", items[1]);
+        }
 
-            string code;
-            MemoryStream stream;
-            Xmtool.Captcha().Build(100, 45, out stream, out code, true, 4);
-
-            Assert.Equal(4, code.Length);
-            Assert.NotNull(stream);
-            Assert.True(stream.Length > 0);
+        [Fact]
+        public void Test2()
+        {
+            bool result = Xmtool.Captcha(CaptchKind.Character).Validate("1234", "1234");
+            Assert.True(result);
         }
     }
 }
