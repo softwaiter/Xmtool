@@ -24,7 +24,7 @@ namespace CodeM.Common.Tools.Captcha.Implements
         /// <returns></returns>
         public ICaptcha Config(params object[] args)
         {
-            if (args.Length > 4)
+            if (args.Length > 6)
             {
                 throw new ArgumentException("最多可配置6个参数：length, onlynumber, width, height，backcolor, bordercolor。");
             }
@@ -104,11 +104,11 @@ namespace CodeM.Common.Tools.Captcha.Implements
             return this;
         }
 
-        public string Generate(string initData = null)
+        public string Generate(params object[] datas)
         {
             StringBuilder sbResult = new StringBuilder();
 
-            string code = initData;
+            string code = datas.Length > 0 && datas[0] is String && datas[0].ToString().Length > 0 ? datas[0].ToString() : null;
             if (string.IsNullOrWhiteSpace(code))
             {
                 code = RandomTool.New().RandomCaptcha(_length, _onlyNumber);
@@ -185,7 +185,7 @@ namespace CodeM.Common.Tools.Captcha.Implements
             return sbResult.ToString();
         }
 
-        public bool Validate(string source, string input)
+        public bool Validate(object source, object input)
         {
             return string.Equals(source, input);
         }

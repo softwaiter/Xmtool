@@ -10,6 +10,8 @@ namespace CodeM.Common.Tools.Captcha
             {
                 case CaptchKind.Character:
                     return new CharacterCaptcha();
+                case CaptchKind.Sliding:
+                    return new SlidingCaptcha();
             }
             return null;
         }
