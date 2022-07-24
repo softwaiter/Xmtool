@@ -8,7 +8,7 @@
     <AssemblyName>CodeM.Common.Tools</AssemblyName>
     <RootNamespace>CodeM.Common.Tools</RootNamespace>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Version>1.6.0</Version>
+    <Version>1.6.1</Version>
     <AssemblyVersion></AssemblyVersion>
     <FileVersion></FileVersion>
     <Authors>softwaiter</Authors>

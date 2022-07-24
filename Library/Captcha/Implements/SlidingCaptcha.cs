@@ -131,35 +131,28 @@ namespace CodeM.Common.Tools.Captcha.Implements
             return new ComplexPolygon(new PathCollection(pathList));
         }
 
-        /// <summary>
-        /// 可以配置滑动验证码需要的图片资源目录（目录内必须包含backgrounds、templates两个子目录）
-        /// </summary>
-        /// <param name="args"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public ICaptcha Config(params object[] args)
+        public ICaptcha Config(CaptchaOption option)
         {
-            if (args.Length > 2)
+            if (!(option is SlidingCaptchaOption))
             {
-                throw new ArgumentException("最多可配置2个参数：resourcepath，resulterror。");
+                throw new ArgumentException("此处需要SlidingCaptchaOption类型的参数。");
             }
 
-            if (args.Length > 0 && string.IsNullOrWhiteSpace(args[0] + ""))
+            SlidingCaptchaOption sco = (SlidingCaptchaOption)option;
+
+            if (string.IsNullOrWhiteSpace(sco.Resource))
             {
-                throw new ArgumentNullException("参数resourcepath不能为空。");
+                throw new ArgumentNullException("Resource不能为空。");
             }
 
-            LoadResources(args[0] as string);
+            LoadResources(sco.Resource);
 
-            if (args.Length > 1 && args[1] != null && args[1] is float)
-            {
-                mResultError = (float)args[1];
-            }
+            mResultError = sco.ResultError;
 
             return this;
         }
 
-        public string Generate(params object[] datas)
+        public string Generate(CaptchaData data = null)
         {
             StringBuilder sbResult = new StringBuilder();
 
@@ -170,7 +163,17 @@ namespace CodeM.Common.Tools.Captcha.Implements
             int randomX = mRandom.Next(gapTemplate.HoleImage.Width + 5, backgroundImage.Width - gapTemplate.HoleImage.Width - 10);
             int randomY = mRandom.Next(5, backgroundImage.Height - gapTemplate.HoleImage.Height - 5);
 
-            float percent = randomX / backgroundImage.Width;
+            if (data != null)
+            {
+                if (!(data is SlidingCaptchaData))
+                {
+                    throw new ArgumentException("此处需要SlidingCaptchaData类型的参数。");
+                }
+
+                SlidingCaptchaData scd = (SlidingCaptchaData)data;
+                randomX = scd.GapX ?? scd.GapX.Value;
+                randomY = scd.GapY ?? scd.GapY.Value;
+            }
 
             sbResult.Append(randomX);
             sbResult.Append("|");

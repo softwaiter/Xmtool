@@ -10,129 +10,58 @@ namespace CodeM.Common.Tools.Captcha.Implements
 {
     internal class CharacterCaptcha : ICaptcha
     {
-        private int _length = 6;
-        private bool _onlyNumber = true;
-        private int _width = 300;
-        private int _height = 125;
-        private Color _backColor = Color.White;
-        private Color _borderColor = Color.LightGray;
+        private CharacterCaptchaOption mOption = new CharacterCaptchaOption();
 
-        /// <summary>
-        /// 可顺序设置字符长度、是否只包含数字、宽度、高度、背景色、边框色6个参数；传入null即不设置，使用默认值
-        /// </summary>
-        /// <param name="args">length(默认6)、onlynumber(默认true)、width(默认300)、height(默认125)，backcolor(默认Color.White), bordercolor(默认Color.LightGray)</param>
-        /// <returns></returns>
-        public ICaptcha Config(params object[] args)
+        public ICaptcha Config(CaptchaOption option)
         {
-            if (args.Length > 6)
+            if (!(option is CharacterCaptchaOption))
             {
-                throw new ArgumentException("最多可配置6个参数：length, onlynumber, width, height，backcolor, bordercolor。");
+                throw new ArgumentException("此处需要CharacterCaptchaOption类型的参数。");
             }
 
-            if (args.Length > 0 && args[0] != null)
-            {
-                if (args[0] is int)
-                {
-                    _length = (int)args[0];
-                }
-                else
-                {
-                    throw new ArgumentException("length必须是整型。");
-                }
-            }
-
-            if (args.Length > 1 && args[1] != null)
-            {
-                if (args[1] is bool)
-                {
-                    _onlyNumber = (bool)args[1];
-                }
-                else
-                {
-                    throw new ArgumentException("onlynumber必须是布尔型。");
-                }
-            }
-
-            if (args.Length > 2 && args[2] != null)
-            {
-                if (args[2] is int)
-                {
-                    _width = (int)args[2];
-                }
-                else
-                {
-                    throw new ArgumentException("width必须是整型。");
-                }
-            }
-
-            if (args.Length > 3 && args[3] != null)
-            {
-                if (args[3] is int)
-                {
-                    _height = (int)args[3];
-                }
-                else
-                {
-                    throw new ArgumentException("height必须是整型。");
-                }
-            }
-
-            if (args.Length > 4 && args[4] != null)
-            {
-                if (args[4] is Color)
-                {
-                    _backColor = (Color)args[4];
-                }
-                else
-                {
-                    throw new ArgumentException("backcolor必须是Color类型。");
-                }
-            }
-
-            if (args.Length > 5 && args[5] != null)
-            {
-                if (args[5] is Color)
-                {
-                    _backColor = (Color)args[5];
-                }
-                else
-                {
-                    throw new ArgumentException("bordercolor必须是Color类型。");
-                }
-            }
+            mOption = (CharacterCaptchaOption)option;
 
             return this;
         }
 
-        public string Generate(params object[] datas)
+        public string Generate(CaptchaData data = null)
         {
+             
             StringBuilder sbResult = new StringBuilder();
 
-            string code = datas.Length > 0 && datas[0] is String && datas[0].ToString().Length > 0 ? datas[0].ToString() : null;
+            string code = String.Empty;
+            if (data != null)
+            {
+                if (!(data is CharacterCaptchaData))
+                {
+                    throw new ArgumentException("此处需要CharacterCaptchaData类型的参数。");
+                }
+                code = ((CharacterCaptchaData)data).Code;
+            }
             if (string.IsNullOrWhiteSpace(code))
             {
-                code = RandomTool.New().RandomCaptcha(_length, _onlyNumber);
+                code = RandomTool.New().RandomCaptcha(mOption.Length, mOption.OnlyNumber);
             }
             sbResult.Append(code).Append("|");
 
             using (MemoryStream stream = new MemoryStream())
             {
-                Bitmap bmp = new Bitmap(_width, _height);
+                Bitmap bmp = new Bitmap(mOption.Width, mOption.Height);
 
                 Graphics g = Graphics.FromImage(bmp);
                 g.SmoothingMode = SmoothingMode.AntiAlias;
                 g.CompositingQuality = CompositingQuality.HighQuality;
                 g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
 
-                g.Clear(_backColor);
-                Pen penBorder = new Pen(_borderColor, 1);
-                g.DrawRectangle(penBorder, 0, 0, _width - 1, _height - 1);
+                g.Clear(mOption.BackColor);
+                Pen penBorder = new Pen(mOption.BorderColor, 1);
+                g.DrawRectangle(penBorder, 0, 0, mOption.Width - 1, mOption.Height - 1);
 
-                float fontSize = _height / 2.9f;
+                float fontSize = mOption.Height / 2.9f;
                 Font font = new Font(SystemFonts.DefaultFont.FontFamily,
                     fontSize, FontStyle.Bold | FontStyle.Italic);
                 SizeF charSize = g.MeasureString("G", font);
-                int charWidth = _width / code.Length;
+                int charWidth = mOption.Width / code.Length;
                 int charHeight = (int)Math.Ceiling(charSize.Height);
 
                 float offsetX = 0;
@@ -140,7 +69,7 @@ namespace CodeM.Common.Tools.Captcha.Implements
                 for (int i = 0; i < code.Length; i++)
                 {
                     float x = r.Next((int)offsetX, (int)Math.Max((i + 1) * charWidth - charSize.Width, 0));
-                    float y = r.Next(0, _height - charHeight);
+                    float y = r.Next(0, mOption.Height - charHeight);
 
                     int r1 = r.Next(0, 100);
                     int g1 = r.Next(0, 100);
@@ -159,9 +88,9 @@ namespace CodeM.Common.Tools.Captcha.Implements
 
                     for (int j = 0; j < lineCount; j++)
                     {
-                        int ly = r.Next(0, _height);
+                        int ly = r.Next(0, mOption.Height);
                         int bd = r.Next(-100, 100);
-                        g.DrawBezier(pen, 0, ly, _width / 3, ly + bd, _width / 3 * 2, ly - bd, _width, ly);
+                        g.DrawBezier(pen, 0, ly, mOption.Width / 3, ly + bd, mOption.Width / 3 * 2, ly - bd, mOption.Width, ly);
                     }
 
                     g.DrawString("" + code[i], font, new SolidBrush(Color.Gray), x, y);
