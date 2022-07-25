@@ -80,6 +80,9 @@ namespace UnitTest
         {
             bool result = Xmtool.Captcha(CaptchaKind.Sliding).Validate(0.5f, 0.48f);
             Assert.True(result);
+            
+            bool result2 = Xmtool.Captcha(CaptchaKind.Sliding).Validate("0.5", "0.48");
+            Assert.True(result2);
         }
     }
 }

@@ -30,7 +30,6 @@ namespace CodeM.Common.Tools.Captcha.Implements
 
         private Random mRandom = new Random((int)DateTime.Now.Ticks % int.MaxValue);
 
-
         private void LoadResources(string path)
         {
             if (!Directory.Exists(path))
@@ -213,14 +212,43 @@ namespace CodeM.Common.Tools.Captcha.Implements
 
         public bool Validate(object source, object input)
         {
-            if (source is float &&
-                input is float)
+            float validation;
+            if (source is float)
             {
-                int digits = Math.Max(0, mResultError.ToString().Length - mResultError.ToString().IndexOf(".") - 1);
-                float error = (float)Math.Round(Math.Abs((float)input - (float)source), digits);
-                return error <= mResultError;
+                validation = (float)source;
             }
-            return false;
+            else if (source is string)
+            {
+                if (!float.TryParse(source + "", out validation))
+                {
+                    throw new ArgumentException("source必须是浮点数。");
+                }
+            }
+            else
+            {
+                throw new ArgumentException("source必须是浮点数。");
+            }
+
+            float user;
+            if (input is float)
+            {
+                user = (float)input;
+            }
+            else if (input is string)
+            {
+                if (!float.TryParse(input + "", out user))
+                {
+                    throw new ArgumentException("input必须是浮点数。");
+                }
+            }
+            else
+            {
+                throw new ArgumentException("input必须是浮点数。");
+            }
+
+            int digits = Math.Max(0, mResultError.ToString().Length - mResultError.ToString().IndexOf(".") - 1);
+            float error = (float)Math.Round(Math.Abs(user - validation), digits);
+            return error <= mResultError;
         }
     }
 }
