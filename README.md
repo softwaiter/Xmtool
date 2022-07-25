@@ -8,22 +8,22 @@
 
 ##### Package Manager
 ```shell
-Install-Package CodeM.Common.Tools -Version 1.3.9
+Install-Package CodeM.Common.Tools -Version 1.6.2
 ```
 
 ##### .NET CLI
 ```shell
-dotnet add package CodeM.Common.Tools --version 1.3.9
+dotnet add package CodeM.Common.Tools --version 1.6.2
 ```
 
 ##### PackageReference
 ```xml
-<PackageReference Include="CodeM.Common.Tools" Version="1.3.9" />
+<PackageReference Include="CodeM.Common.Tools" Version="1.6.2" />
 ```
 
 ##### Paket CLI
 ```shell
-paket add CodeM.Common.Tools --version 1.3.9
+paket add CodeM.Common.Tools --version 1.6.2
 ```
 
 <br/>
