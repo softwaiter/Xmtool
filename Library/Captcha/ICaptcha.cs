@@ -1,6 +1,6 @@
 ﻿namespace CodeM.Common.Tools
 {
-    public enum CaptchKind
+    public enum CaptchaKind
     {
         Character,
         Sliding

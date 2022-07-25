@@ -20,7 +20,7 @@ namespace UnitTest
         {
             CharacterCaptchaOption option = new CharacterCaptchaOption();
             option.Length = 4;
-            string data = Xmtool.Captcha(CaptchKind.Character).Config(option).Generate();
+            string data = Xmtool.Captcha(CaptchaKind.Character).Config(option).Generate();
 
             string[] items = data.Split("|");
             Assert.Equal(2, items.Length);
@@ -31,7 +31,7 @@ namespace UnitTest
         [Fact]
         public void Test2()
         {
-            string data = Xmtool.Captcha(CaptchKind.Character).Generate(new CharacterCaptchaData("666666"));
+            string data = Xmtool.Captcha(CaptchaKind.Character).Generate(new CharacterCaptchaData("666666"));
 
             string[] items = data.Split("|");
             Assert.Equal(2, items.Length);
@@ -43,7 +43,7 @@ namespace UnitTest
         [Fact]
         public void Test3()
         {
-            bool result = Xmtool.Captcha(CaptchKind.Character).Validate("1234", "1234");
+            bool result = Xmtool.Captcha(CaptchaKind.Character).Validate("1234", "1234");
             Assert.True(result);
         }
 
@@ -51,7 +51,7 @@ namespace UnitTest
         public void Test4()
         {
             string resourcePath = Path.Combine(Environment.CurrentDirectory, "images");
-            string data = Xmtool.Captcha(CaptchKind.Sliding).Config(new SlidingCaptchaOption(resourcePath)).Generate();
+            string data = Xmtool.Captcha(CaptchaKind.Sliding).Config(new SlidingCaptchaOption(resourcePath)).Generate();
             string[] items = data.Split("|");
             Assert.Equal(8, items.Length);
 
@@ -74,7 +74,7 @@ namespace UnitTest
         public void Test5()
         {
             string resourcePath = Path.Combine(Environment.CurrentDirectory, "images");
-            string data = Xmtool.Captcha(CaptchKind.Sliding).Config(new SlidingCaptchaOption(resourcePath))
+            string data = Xmtool.Captcha(CaptchaKind.Sliding).Config(new SlidingCaptchaOption(resourcePath))
                 .Generate(new SlidingCaptchaData(0, 0));
             string[] items = data.Split("|");
             Assert.Equal(8, items.Length);
@@ -90,7 +90,7 @@ namespace UnitTest
         [Fact]
         public void Test6()
         {
-            bool result = Xmtool.Captcha(CaptchKind.Sliding).Validate(0.5f, 0.48f);
+            bool result = Xmtool.Captcha(CaptchaKind.Sliding).Validate(0.5f, 0.48f);
             Assert.True(result);
         }
     }

@@ -64,7 +64,7 @@ namespace CodeM.Common.Tools
             return RandomTool.New();
         }
 
-        public static ICaptcha Captcha(CaptchKind kind)
+        public static ICaptcha Captcha(CaptchaKind kind)
         {
             return CaptchaTool.New(kind);
         }
