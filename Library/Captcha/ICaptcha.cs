@@ -10,7 +10,7 @@
     {
         public ICaptcha Config(CaptchaOption option);
 
-        public string Generate(CaptchaData data = null);
+        public CaptchaResult Generate(CaptchaData data = null);
 
         public bool Validate(object source, object input);
     }

@@ -24,26 +24,23 @@ namespace CodeM.Common.Tools.Captcha.Implements
             return this;
         }
 
-        public string Generate(CaptchaData data = null)
+        public CaptchaResult Generate(CaptchaData data = null)
         {
-             
-            StringBuilder sbResult = new StringBuilder();
-
-            string code = String.Empty;
+            string validationData = String.Empty;
             if (data != null)
             {
                 if (!(data is CharacterCaptchaData))
                 {
                     throw new ArgumentException("此处需要CharacterCaptchaData类型的参数。");
                 }
-                code = ((CharacterCaptchaData)data).Code;
+                validationData = ((CharacterCaptchaData)data).Code;
             }
-            if (string.IsNullOrWhiteSpace(code))
+            if (string.IsNullOrWhiteSpace(validationData))
             {
-                code = RandomTool.New().RandomCaptcha(mOption.Length, mOption.OnlyNumber);
+                validationData = RandomTool.New().RandomCaptcha(mOption.Length, mOption.OnlyNumber);
             }
-            sbResult.Append(code).Append("|");
 
+            string displayData = string.Empty;
             using (MemoryStream stream = new MemoryStream())
             {
                 Bitmap bmp = new Bitmap(mOption.Width, mOption.Height);
@@ -61,12 +58,12 @@ namespace CodeM.Common.Tools.Captcha.Implements
                 Font font = new Font(SystemFonts.DefaultFont.FontFamily,
                     fontSize, FontStyle.Bold | FontStyle.Italic);
                 SizeF charSize = g.MeasureString("G", font);
-                int charWidth = mOption.Width / code.Length;
+                int charWidth = mOption.Width / validationData.Length;
                 int charHeight = (int)Math.Ceiling(charSize.Height);
 
                 float offsetX = 0;
                 Random r = new Random();
-                for (int i = 0; i < code.Length; i++)
+                for (int i = 0; i < validationData.Length; i++)
                 {
                     float x = r.Next((int)offsetX, (int)Math.Max((i + 1) * charWidth - charSize.Width, 0));
                     float y = r.Next(0, mOption.Height - charHeight);
@@ -84,7 +81,7 @@ namespace CodeM.Common.Tools.Captcha.Implements
 
                     Pen pen = new Pen(brush, 5.5f);
                     pen.DashStyle = DashStyle.DashDotDot;
-                    int lineCount = Math.Max(1, 10 / code.Length);
+                    int lineCount = Math.Max(1, 10 / validationData.Length);
 
                     for (int j = 0; j < lineCount; j++)
                     {
@@ -93,8 +90,8 @@ namespace CodeM.Common.Tools.Captcha.Implements
                         g.DrawBezier(pen, 0, ly, mOption.Width / 3, ly + bd, mOption.Width / 3 * 2, ly - bd, mOption.Width, ly);
                     }
 
-                    g.DrawString("" + code[i], font, new SolidBrush(Color.Gray), x, y);
-                    g.DrawString("" + code[i], font, brush, x - 1, y - 1);
+                    g.DrawString("" + validationData[i], font, new SolidBrush(Color.Gray), x, y);
+                    g.DrawString("" + validationData[i], font, brush, x - 1, y - 1);
 
                     offsetX = x + charSize.Width;
                 }
@@ -104,19 +101,22 @@ namespace CodeM.Common.Tools.Captcha.Implements
                 g.Dispose();
                 bmp.Dispose();
 
-                sbResult.Append("data:image/png;base64,");
-
+                StringBuilder sbData = new StringBuilder();
+                sbData.Append("data:image/png;base64,");
                 byte[] pngBytes = stream.ToArray();
                 string pngData = Convert.ToBase64String(pngBytes);
-                sbResult.Append(pngData);
+                sbData.Append(pngData);
+
+                displayData = sbData.ToString();
             }
 
-            return sbResult.ToString();
+            return new CaptchaResult(validationData, displayData);
         }
 
         public bool Validate(object source, object input)
         {
-            return string.Equals(source, input);
+            return source != null && input != null
+                && string.Equals(source, input);
         }
     }
 }

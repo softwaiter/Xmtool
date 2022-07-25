@@ -152,10 +152,8 @@ namespace CodeM.Common.Tools.Captcha.Implements
             return this;
         }
 
-        public string Generate(CaptchaData data = null)
+        public CaptchaResult Generate(CaptchaData data = null)
         {
-            StringBuilder sbResult = new StringBuilder();
-
             Image<Rgba32> backgroundImage = GetRandomBackground();
             GapTemplate gapTemplate = GetRandomGagTemplate();
 
@@ -175,11 +173,9 @@ namespace CodeM.Common.Tools.Captcha.Implements
                 randomY = scd.GapY ?? scd.GapY.Value;
             }
 
-            sbResult.Append(randomX);
-            sbResult.Append("|");
-            sbResult.Append(randomY);
+            float percent = (float)Math.Round((decimal)randomX / (decimal)backgroundImage.Width);
 
-            sbResult.Append("|");
+            StringBuilder sbResult = new StringBuilder();
             sbResult.Append(backgroundImage.Width);
             sbResult.Append("|");
             sbResult.Append(backgroundImage.Height);
@@ -212,7 +208,7 @@ namespace CodeM.Common.Tools.Captcha.Implements
             sbResult.Append("|");
             sbResult.Append(sliderBarImage.ToBase64String(SixLabors.ImageSharp.Formats.Png.PngFormat.Instance));
 
-            return sbResult.ToString();
+            return new CaptchaResult(percent.ToString(), sbResult.ToString());
         }
 
         public bool Validate(object source, object input)

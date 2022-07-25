@@ -20,24 +20,18 @@ namespace UnitTest
         {
             CharacterCaptchaOption option = new CharacterCaptchaOption();
             option.Length = 4;
-            string data = Xmtool.Captcha(CaptchaKind.Character).Config(option).Generate();
-
-            string[] items = data.Split("|");
-            Assert.Equal(2, items.Length);
-            Assert.Equal(4, items[0].Length);
-            Assert.StartsWith("data:image/png;base64,", items[1]);
+            CaptchaResult result = Xmtool.Captcha(CaptchaKind.Character).Config(option).Generate();
+            Assert.Equal(4, result.ValidationData.Length);
+            Assert.StartsWith("data:image/png;base64,", result.DisplayData);
         }
 
         [Fact]
         public void Test2()
         {
-            string data = Xmtool.Captcha(CaptchaKind.Character).Generate(new CharacterCaptchaData("666666"));
-
-            string[] items = data.Split("|");
-            Assert.Equal(2, items.Length);
-            Assert.Equal(6, items[0].Length);
-            Assert.Equal("666666", items[0]);
-            Assert.StartsWith("data:image/png;base64,", items[1]);
+            CaptchaResult result = Xmtool.Captcha(CaptchaKind.Character).Generate(new CharacterCaptchaData("666666"));
+            Assert.Equal(6, result.ValidationData.Length);
+            Assert.Equal("666666", result.ValidationData);
+            Assert.StartsWith("data:image/png;base64,", result.DisplayData);
         }
 
         [Fact]
@@ -51,40 +45,34 @@ namespace UnitTest
         public void Test4()
         {
             string resourcePath = Path.Combine(Environment.CurrentDirectory, "images");
-            string data = Xmtool.Captcha(CaptchaKind.Sliding).Config(new SlidingCaptchaOption(resourcePath)).Generate();
-            string[] items = data.Split("|");
-            Assert.Equal(8, items.Length);
-
-            int x, y;
-            Assert.True(int.TryParse(items[0], out x));
-            Assert.True(int.TryParse(items[1], out y));
+            CaptchaResult result = Xmtool.Captcha(CaptchaKind.Sliding).Config(new SlidingCaptchaOption(resourcePath)).Generate();
+            
+            string[] items = result.DisplayData.Split("|");
+            Assert.Equal(6, items.Length);
 
             int width, height;
-            Assert.True(int.TryParse(items[2], out width));
-            Assert.True(int.TryParse(items[3], out height));
+            Assert.True(int.TryParse(items[0], out width));
+            Assert.True(int.TryParse(items[1], out height));
 
-            Assert.True(x < width);
-            Assert.True(y < height);
+            int sliderWidth, sliderHeight;
+            Assert.True(int.TryParse(items[3], out sliderWidth));
+            Assert.True(int.TryParse(items[4], out sliderHeight));
 
-            Assert.StartsWith("data:image/png;base64,", items[4]);
-            Assert.StartsWith("data:image/png;base64,", items[7]);
+            Assert.True(sliderWidth < width);
+            Assert.Equal(sliderHeight, height);
+
+            Assert.StartsWith("data:image/png;base64,", items[2]);
+            Assert.StartsWith("data:image/png;base64,", items[5]);
         }
 
         [Fact]
         public void Test5()
         {
             string resourcePath = Path.Combine(Environment.CurrentDirectory, "images");
-            string data = Xmtool.Captcha(CaptchaKind.Sliding).Config(new SlidingCaptchaOption(resourcePath))
+            CaptchaResult result = Xmtool.Captcha(CaptchaKind.Sliding).Config(new SlidingCaptchaOption(resourcePath))
                 .Generate(new SlidingCaptchaData(0, 0));
-            string[] items = data.Split("|");
-            Assert.Equal(8, items.Length);
 
-            int x, y;
-            Assert.True(int.TryParse(items[0], out x));
-            Assert.True(int.TryParse(items[1], out y));
-
-            Assert.Equal(0, x);
-            Assert.Equal(0, y);
+            Assert.Equal("0", result.ValidationData);
         }
 
         [Fact]
