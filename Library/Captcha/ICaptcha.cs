@@ -8,6 +8,8 @@
 
     public interface ICaptcha
     {
+        public CaptchaKind Type { get; }
+
         public ICaptcha Config(CaptchaOption option);
 
         public CaptchaResult Generate(CaptchaData data = null);

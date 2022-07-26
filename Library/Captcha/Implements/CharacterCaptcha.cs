@@ -12,6 +12,14 @@ namespace CodeM.Common.Tools.Captcha.Implements
     {
         private CharacterCaptchaOption mOption = new CharacterCaptchaOption();
 
+        public CaptchaKind Type
+        {
+            get
+            {
+                return CaptchaKind.Character;
+            }
+        }
+
         public ICaptcha Config(CaptchaOption option)
         {
             if (!(option is CharacterCaptchaOption))

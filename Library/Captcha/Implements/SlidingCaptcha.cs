@@ -30,6 +30,14 @@ namespace CodeM.Common.Tools.Captcha.Implements
 
         private Random mRandom = new Random((int)DateTime.Now.Ticks % int.MaxValue);
 
+        public CaptchaKind Type
+        {
+            get
+            {
+                return CaptchaKind.Sliding;
+            }
+        }
+
         private void LoadResources(string path)
         {
             if (!Directory.Exists(path))
