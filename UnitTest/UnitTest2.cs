@@ -1,6 +1,7 @@
 ﻿using CodeM.Common.Tools;
 using CodeM.Common.Tools.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -135,6 +136,32 @@ namespace UnitTest
             }, options);
 
             Assert.Contains("Name", json);
+        }
+
+        [Fact]
+        public void TestDynamicObjectArray()
+        {
+            dynamic data = new DynamicObjectExt();
+            data.Children = new string[2];
+            data.Children[0] = "张三";
+            data.Children[1] = "李四";
+
+            string jsonStr = data.ToString();
+            Assert.Equal("{\"Children\":[\"张三\",\"李四\"]}", jsonStr);
+        }
+
+        [Fact]
+        public void TestDynamicObjectList()
+        {
+            dynamic data = new DynamicObjectExt();
+            data.Children = new List<string>();
+            data.Children.Add("张三");
+            data.Children.Add("李四");
+
+            Assert.Equal(2, data.Children.Count);
+
+            string jsonStr = data.ToString();
+            Assert.Equal("{\"Children\":[\"张三\",\"李四\"]}", jsonStr);
         }
     }
 }
