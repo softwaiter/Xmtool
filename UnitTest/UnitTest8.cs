@@ -44,7 +44,7 @@ namespace UnitTest
         [Fact]
         public void Test4()
         {
-            string resourcePath = Path.Combine(Environment.CurrentDirectory, "images");
+            string resourcePath = Path.Combine(Environment.CurrentDirectory, "slider_backgrounds");
             CaptchaResult result = Xmtool.Captcha(CaptchaKind.Sliding).Config(new SlidingCaptchaOption(resourcePath)).Generate();
             
             string[] items = result.DisplayData.Split("|");
@@ -68,7 +68,7 @@ namespace UnitTest
         [Fact]
         public void Test5()
         {
-            string resourcePath = Path.Combine(Environment.CurrentDirectory, "images");
+            string resourcePath = Path.Combine(Environment.CurrentDirectory, "slider_backgrounds");
             CaptchaResult result = Xmtool.Captcha(CaptchaKind.Sliding).Config(new SlidingCaptchaOption(resourcePath))
                 .Generate(new SlidingCaptchaData(0, 0));
 

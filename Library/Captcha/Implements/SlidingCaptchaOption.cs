@@ -6,18 +6,18 @@
         { 
         }
 
-        public SlidingCaptchaOption(string resource)
+        public SlidingCaptchaOption(string backgroundDir)
         {
-            Resource = resource;
+            BackgroundDir = backgroundDir;
         }
 
-        public SlidingCaptchaOption(string resource, float resultError)
-            : this(resource)
+        public SlidingCaptchaOption(string backgroundDir, float resultError)
+            : this(backgroundDir)
         {
             ResultError = resultError;
         }
 
-        public string Resource { get; set; }
+        public string BackgroundDir { get; set; }
 
         public float ResultError { get; set; } = 0.02f;
     }

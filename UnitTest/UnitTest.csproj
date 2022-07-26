@@ -23,64 +23,94 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="images\backgrounds\1.jpg">
+    <None Update="slider_backgrounds\1.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="slider_backgrounds\10.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="slider_backgrounds\2.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="slider_backgrounds\3.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="slider_backgrounds\4.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="slider_backgrounds\5.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="slider_backgrounds\6.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="slider_backgrounds\7.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="slider_backgrounds\8.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="slider_backgrounds\9.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="slider_backgrounds\backgrounds\1.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="images\backgrounds\10.jpg">
+    <None Update="slider_backgrounds\backgrounds\10.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="images\backgrounds\2.jpg">
+    <None Update="slider_backgrounds\backgrounds\2.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="images\backgrounds\3.jpg">
+    <None Update="slider_backgrounds\backgrounds\3.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="images\backgrounds\4.jpg">
+    <None Update="slider_backgrounds\backgrounds\4.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="images\backgrounds\5.jpg">
+    <None Update="slider_backgrounds\backgrounds\5.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="images\backgrounds\6.jpg">
+    <None Update="slider_backgrounds\backgrounds\6.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="images\backgrounds\7.jpg">
+    <None Update="slider_backgrounds\backgrounds\7.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="images\backgrounds\8.jpg">
+    <None Update="slider_backgrounds\backgrounds\8.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="images\backgrounds\9.jpg">
+    <None Update="slider_backgrounds\backgrounds\9.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="images\templates\1\hole.png">
+    <None Update="slider_backgrounds\templates\1\hole.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="images\templates\1\slider.png">
+    <None Update="slider_backgrounds\templates\1\slider.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="images\templates\2\hole.png">
+    <None Update="slider_backgrounds\templates\2\hole.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="images\templates\2\slider.png">
+    <None Update="slider_backgrounds\templates\2\slider.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="images\templates\3\hole.png">
+    <None Update="slider_backgrounds\templates\3\hole.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="images\templates\3\slider.png">
+    <None Update="slider_backgrounds\templates\3\slider.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="images\templates\4\hole.png">
+    <None Update="slider_backgrounds\templates\4\hole.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="images\templates\4\slider.png">
+    <None Update="slider_backgrounds\templates\4\slider.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="images\templates\5\hole.png">
+    <None Update="slider_backgrounds\templates\5\hole.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="images\templates\5\slider.png">
+    <None Update="slider_backgrounds\templates\5\slider.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="ioc.xml">

@@ -6,6 +6,7 @@ using SixLabors.ImageSharp.Processing;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Text;
 
 namespace CodeM.Common.Tools.Captcha.Implements
@@ -20,6 +21,12 @@ namespace CodeM.Common.Tools.Captcha.Implements
                 SliderImage = Image.Load<Rgba32>(sliderFile);
             }
 
+            public GapTemplate(Image<Rgba32> holeImage, Image<Rgba32> sliderImage)
+            {
+                HoleImage = holeImage;
+                SliderImage = sliderImage;
+            }
+
             public Image<Rgba32> HoleImage { get; set; }
             public Image<Rgba32> SliderImage { get; set; }
         }
@@ -30,6 +37,40 @@ namespace CodeM.Common.Tools.Captcha.Implements
 
         private Random mRandom = new Random((int)DateTime.Now.Ticks % int.MaxValue);
 
+        public SlidingCaptcha()
+        {
+            LoadTemplates();
+        }
+
+        private const int TEMPLATE_COUNT = 5;
+        private void LoadTemplates()
+        {
+            Assembly assembly = GetType().Assembly;
+
+            for (int i = 0; i < TEMPLATE_COUNT; i++)
+            {
+                Image<Rgba32> holdImage, sliderImage;
+
+                string holeResource = string.Concat("CodeM.Common.Tools.Captcha.Slider_Templates._", (i + 1), ".hole.png");
+                using (Stream holeStream = assembly.GetManifestResourceStream(holeResource))
+                {
+                    byte[] buff = new byte[holeStream.Length];
+                    holeStream.Read(buff, 0, buff.Length);
+                    holdImage = Image.Load<Rgba32>(buff);
+                }
+
+                string sliderResource = string.Concat("CodeM.Common.Tools.Captcha.Slider_Templates._", (i + 1), ".slider.png");
+                using (Stream sliderStream = assembly.GetManifestResourceStream(sliderResource))
+                {
+                    byte[] buff = new byte[sliderStream.Length];
+                    sliderStream.Read(buff, 0, buff.Length);
+                    sliderImage = Image.Load<Rgba32>(buff);
+                }
+
+                mGapTemplates.Add(new GapTemplate(holdImage, sliderImage));
+            }
+        }
+
         public CaptchaKind Type
         {
             get
@@ -38,40 +79,17 @@ namespace CodeM.Common.Tools.Captcha.Implements
             }
         }
 
-        private void LoadResources(string path)
+        private void LoadBackgrounds(string path)
         {
             if (!Directory.Exists(path))
             {
-                throw new DirectoryNotFoundException(path);
+                throw new DirectoryNotFoundException("滑动验证码背景图片存放路径不存在");
             }
 
-            string backgroundPath = System.IO.Path.Combine(path, "backgrounds");
-            if (!Directory.Exists(backgroundPath))
-            {
-                throw new DirectoryNotFoundException(backgroundPath, new Exception("背景图片存放路径未找到。"));
-            }
-
-            string templatePath = System.IO.Path.Combine(path, "templates");
-            if (!Directory.Exists(templatePath))
-            {
-                throw new DirectoryNotFoundException(templatePath, new Exception("缺口图片存放路径未找到。"));
-            }
-
-            string[] files = Directory.GetFiles(backgroundPath, "*.jpg");
+            string[] files = Directory.GetFiles(path, "*.jpg");
             foreach (string file in files)
             {
                 mBackgrounds.Add(Image.Load<Rgba32>(file));
-            }
-
-            string[] dirs = Directory.GetDirectories(templatePath);
-            foreach (string dir in dirs)
-            {
-                string holeFile = System.IO.Path.Combine(dir, "hole.png");
-                string sliderFile = System.IO.Path.Combine(dir, "slider.png");
-                if (File.Exists(holeFile) && File.Exists(sliderFile))
-                { 
-                    mGapTemplates.Add(new GapTemplate(holeFile, sliderFile));
-                }
             }
         }
 
@@ -147,12 +165,12 @@ namespace CodeM.Common.Tools.Captcha.Implements
 
             SlidingCaptchaOption sco = (SlidingCaptchaOption)option;
 
-            if (string.IsNullOrWhiteSpace(sco.Resource))
+            if (string.IsNullOrWhiteSpace(sco.BackgroundDir))
             {
-                throw new ArgumentNullException("Resource不能为空。");
+                throw new ArgumentNullException("参数BackgroundDir不能为空。");
             }
 
-            LoadResources(sco.Resource);
+            LoadBackgrounds(sco.BackgroundDir);
 
             mResultError = sco.ResultError;
 
