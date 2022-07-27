@@ -97,21 +97,42 @@ namespace CodeM.Common.Tools.Captcha.Implements
         {
             if (mBackgrounds.Count == 0)
             {
-                throw new Exception("");
+                throw new Exception("没有找到任何背景文件。");
             }
 
             int index = mRandom.Next(mBackgrounds.Count);
-            return mBackgrounds[index];
+            return mBackgrounds[index].Clone();
         }
 
-        private GapTemplate GetRandomGagTemplate()
+        private GapTemplate GetRandomGagTemplate(CaptchaData data = null)
         {
             if (mGapTemplates.Count == 0)
             {
-                throw new Exception("");
+                throw new Exception("没有找到任何缺口模板资源。");
             }
 
             int index = mRandom.Next(mGapTemplates.Count);
+
+            if (data != null)
+            {
+                if (!(data is SlidingCaptchaData))
+                {
+                    throw new ArgumentException("此处需要SlidingCaptchaData类型的参数。");
+                }
+
+                SlidingCaptchaData scd = (SlidingCaptchaData)data;
+                if (scd.GapTemplate != null &&
+                    scd.GapTemplate >= 0 &&
+                    scd.GapTemplate < mGapTemplates.Count)
+                {
+                    index = scd.GapTemplate.Value;
+                }
+                else
+                {
+                    throw new ArgumentException(string.Concat("GapTemplate只能取值0-", mGapTemplates.Count - 1, "。"));
+                }
+            }
+            
             return mGapTemplates[index];
         }
 
@@ -179,8 +200,8 @@ namespace CodeM.Common.Tools.Captcha.Implements
 
         public CaptchaResult Generate(CaptchaData data = null)
         {
-            Image<Rgba32> backgroundImage = GetRandomBackground();
-            GapTemplate gapTemplate = GetRandomGagTemplate();
+            using Image<Rgba32> backgroundImage = GetRandomBackground();
+            GapTemplate gapTemplate = GetRandomGagTemplate(data);
 
             // 凹槽位置
             int randomX = mRandom.Next(gapTemplate.HoleImage.Width + 5, backgroundImage.Width - gapTemplate.HoleImage.Width - 10);
@@ -194,11 +215,11 @@ namespace CodeM.Common.Tools.Captcha.Implements
                 }
 
                 SlidingCaptchaData scd = (SlidingCaptchaData)data;
-                randomX = scd.GapX ?? scd.GapX.Value;
-                randomY = scd.GapY ?? scd.GapY.Value;
+                randomX = scd.GapX ?? randomX;
+                randomY = scd.GapY ?? randomY;
             }
 
-            float percent = (float)Math.Round((decimal)randomX / (decimal)backgroundImage.Width);
+            float percent = (float)Math.Round((decimal)randomX / (decimal)backgroundImage.Width, 2);
 
             StringBuilder sbResult = new StringBuilder();
             sbResult.Append(backgroundImage.Width);
