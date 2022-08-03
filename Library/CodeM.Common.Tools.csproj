@@ -8,15 +8,17 @@
     <AssemblyName>CodeM.Common.Tools</AssemblyName>
     <RootNamespace>CodeM.Common.Tools</RootNamespace>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Version>1.6.9</Version>
+    <Version>2.0.0</Version>
     <AssemblyVersion></AssemblyVersion>
     <FileVersion></FileVersion>
     <Authors>softwaiter</Authors>
     <Description>.netcore常用工具集合库（Json、Xml、正则表达式常用判断、加解密、Http请求、日期时间，数据类型、动态对象、验证码生成、发送邮件、阿里云短信等，持续收集中。。。）</Description>
-    <PackageProjectUrl>https://github.com/softwaiter/netcoreTools</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/softwaiter/netcoreTools</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/softwaiter/Xmtool</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/softwaiter/Xmtool</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>JSON;Regex;XML;Crypto;Hash;Http;DateTime;SendMail;SendSms;Captcha</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
@@ -34,12 +36,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Captcha\Slider_Templates\1\hole.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Captcha\Slider_Templates\1\slider.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Captcha\Slider_Templates\1\hole.png" />
+    <EmbeddedResource Include="Captcha\Slider_Templates\1\slider.png" />
     <EmbeddedResource Include="Captcha\Slider_Templates\2\hole.png" />
     <EmbeddedResource Include="Captcha\Slider_Templates\2\slider.png" />
     <EmbeddedResource Include="Captcha\Slider_Templates\3\hole.png" />
@@ -55,7 +53,6 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-    <None Include="DynamicObjectExt.cs" />
   </ItemGroup>
 
   <ItemGroup>
