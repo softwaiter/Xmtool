@@ -4,13 +4,13 @@ using System.IO;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace UnitTest
+namespace Test
 {
-    public class UnitTest8
+    public class CaptchaTest
     {
         private ITestOutputHelper output;
 
-        public UnitTest8(ITestOutputHelper output)
+        public CaptchaTest(ITestOutputHelper output)
         {
             this.output = output;
         }
@@ -44,7 +44,7 @@ namespace UnitTest
         [Fact]
         public void Test4()
         {
-            string resourcePath = Path.Combine(Environment.CurrentDirectory, "slider_backgrounds");
+            string resourcePath = Path.Combine(Environment.CurrentDirectory, "resources\\slider_backgrounds");
             CaptchaResult result = Xmtool.Captcha(CaptchaKind.Sliding).Config(new SlidingCaptchaOption(resourcePath)).Generate();
             
             string[] items = result.DisplayData.Split("|");
@@ -68,7 +68,7 @@ namespace UnitTest
         [Fact]
         public void Test5()
         {
-            string resourcePath = Path.Combine(Environment.CurrentDirectory, "slider_backgrounds");
+            string resourcePath = Path.Combine(Environment.CurrentDirectory, "resources\\slider_backgrounds");
             CaptchaResult result = Xmtool.Captcha(CaptchaKind.Sliding).Config(new SlidingCaptchaOption(resourcePath))
                 .Generate(new SlidingCaptchaData(0, 0));
 

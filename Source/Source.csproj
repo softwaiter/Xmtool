@@ -5,7 +5,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <ApplicationIcon />
     <StartupObject />
-    <AssemblyName>CodeM.Common.Tools</AssemblyName>
+    <AssemblyName>Xmtool</AssemblyName>
     <RootNamespace>CodeM.Common.Tools</RootNamespace>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <Version>2.0.0</Version>

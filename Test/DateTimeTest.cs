@@ -3,13 +3,13 @@ using System;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace UnitTest
+namespace Test
 {
-    public class UnitTest5
+    public class DateTimeTest
     {
         private ITestOutputHelper output;
 
-        public UnitTest5(ITestOutputHelper output)
+        public DateTimeTest(ITestOutputHelper output)
         {
             this.output = output;
         }

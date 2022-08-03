@@ -121,15 +121,17 @@ namespace CodeM.Common.Tools.Captcha.Implements
                 }
 
                 SlidingCaptchaData scd = (SlidingCaptchaData)data;
-                if (scd.GapTemplate != null &&
-                    scd.GapTemplate >= 0 &&
-                    scd.GapTemplate < mGapTemplates.Count)
+                if (scd.GapTemplate != null)
                 {
-                    index = scd.GapTemplate.Value;
-                }
-                else
-                {
-                    throw new ArgumentException(string.Concat("GapTemplate只能取值0-", mGapTemplates.Count - 1, "。"));
+                    if (scd.GapTemplate >= 0 &&
+                        scd.GapTemplate < mGapTemplates.Count)
+                    {
+                        index = scd.GapTemplate.Value;
+                    }
+                    else
+                    {
+                        throw new ArgumentException(string.Concat("GapTemplate只能取值0-", mGapTemplates.Count - 1, "。"));
+                    }
                 }
             }
             

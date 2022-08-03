@@ -2,13 +2,13 @@
 using Xunit;
 using Xunit.Abstractions;
 
-namespace UnitTest
+namespace Test
 {
-    public class UnitTest9
+    public class SmsTest
     {
         private ITestOutputHelper output;
 
-        public UnitTest9(ITestOutputHelper output)
+        public SmsTest(ITestOutputHelper output)
         {
             this.output = output;
         }

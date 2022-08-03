@@ -2,13 +2,13 @@
 using Xunit;
 using Xunit.Abstractions;
 
-namespace UnitTest
+namespace Test
 {
-    public class UnitTest3
+    public class RegexTest
     {
         private ITestOutputHelper output;
 
-        public UnitTest3(ITestOutputHelper output)
+        public RegexTest(ITestOutputHelper output)
         {
             this.output = output;
         }

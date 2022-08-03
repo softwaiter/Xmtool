@@ -6,13 +6,13 @@ using System.Net;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace UnitTest
+namespace Test
 {
-    public class UnitTest4
+    public class WebTest
     {
         private ITestOutputHelper output;
 
-        public UnitTest4(ITestOutputHelper output)
+        public WebTest(ITestOutputHelper output)
         {
             this.output = output;
         }
@@ -65,6 +65,38 @@ namespace UnitTest
             rep = Xmtool.Web.Client().GetJson("http://www.baidu.com");
             Assert.Equal(HttpStatusCode.OK, rep.StatusCode);
             Assert.Contains("<!DOCTYPE html>", rep.Content);
+        }
+
+        [Fact]
+        public void ScriptTagTest()
+        {
+            string str = "<script>alert(123);</script><div>hello world.</div>";
+            string str2 = Xmtool.Web.Security().Xss(str);
+            Assert.DoesNotContain("script", str2);
+        }
+
+        [Fact]
+        public void OnClickTest()
+        {
+            string str = "<div onclick=\"javascript:alert(123);\">hello world.</div>";
+            string str2 = Xmtool.Web.Security().Xss(str);
+            Assert.DoesNotContain("alert", str2);
+        }
+
+        [Fact]
+        public void ImageSrcTest()
+        {
+            string str = "<div>hello world.<br/><img src=\"javascript:alert(123);\"></div>";
+            string str2 = Xmtool.Web.Security().Xss(str);
+            Assert.DoesNotContain("alert", str2);
+        }
+
+        [Fact]
+        public void IframeSrcTest()
+        {
+            string str = "<div>hello world.<br/></div><iframe src=\"http://www.baidu.com\"/>";
+            string str2 = Xmtool.Web.Security().Xss(str);
+            Assert.DoesNotContain("iframe", str2);
         }
     }
 }

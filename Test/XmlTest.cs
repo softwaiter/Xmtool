@@ -1,19 +1,77 @@
 ﻿using CodeM.Common.Tools;
 using CodeM.Common.Tools.Json;
 using CodeM.Common.Tools.Xml;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace UnitTest
+namespace Test
 {
-    public class UnitTest7
+    public class XmlTest
     {
         private ITestOutputHelper output;
 
-        public UnitTest7(ITestOutputHelper output)
+        public XmlTest(ITestOutputHelper output)
         {
             this.output = output;
+        }
+
+        [Fact]
+        public void XmlInterate()
+        {
+            string aaaArg = string.Empty;
+
+            string path = Path.Combine(Environment.CurrentDirectory, "resources\\ioc.xml");
+            bool isObj = false;
+            Xmtool.Xml().Iterate(path, (XmlNodeInfo node) =>
+            {
+                if (!node.IsEndNode)
+                {
+                    if (node.Path == "/objects/object")
+                    {
+                        isObj = node.GetAttribute("id") == "aaa";
+                    }
+                    else if (node.Path == "/objects/object/constructor-arg/@text")
+                    {
+                        if (isObj)
+                        {
+                            aaaArg = node.Text;
+                        }
+                    }
+
+                    output.WriteLine(node.FullPath);
+                }
+                return true;
+            });
+
+            Assert.Equal("\"wangxm\"", aaaArg);
+        }
+
+        [Fact]
+        public void XmlIterateFromString()
+        {
+            int age = 0;
+
+            string xml = @"<xml>
+                <name>张三</name>
+                <age>18</age>
+                <gender>男</gender>
+            </xml>";
+            Xmtool.Xml().IterateFromString(xml, (XmlNodeInfo node) =>
+            {
+                if (!node.IsEndNode)
+                {
+                    if (node.Path == "/xml/age/@text")
+                    {
+                        age = int.Parse(node.Text);
+                    }
+                }
+                return true;
+            });
+
+            Assert.Equal(18, age);
         }
 
         [Fact]
