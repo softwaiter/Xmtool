@@ -6,7 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 
-namespace CodeM.Common.Tools.Json
+namespace CodeM.Common.Tools.DynamicObject
 {
 
     [Serializable]

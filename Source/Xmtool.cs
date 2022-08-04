@@ -1,4 +1,5 @@
 ﻿using CodeM.Common.Tools.Captcha;
+using CodeM.Common.Tools.DynamicObject;
 using CodeM.Common.Tools.Json;
 using CodeM.Common.Tools.Sms;
 using CodeM.Common.Tools.Web;
@@ -8,6 +9,11 @@ namespace CodeM.Common.Tools
 {
     public class Xmtool
     {
+        public static DynamicObjectExt DynamicObject()
+        {
+            return new DynamicObjectExt();
+        }
+
         public static JsonTool Json
         {
             get

@@ -1,5 +1,4 @@
 ﻿using CodeM.Common.Tools;
-using CodeM.Common.Tools.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -98,70 +97,6 @@ namespace Test
 
             object addr = configObj.GetValueByPath("User.Address");
             Assert.Null(addr);
-        }
-
-        [Fact]
-        public void TestDynamicObjectExtKeys()
-        {
-            dynamic obj = new DynamicObjectExt();
-            obj.Id = "001";
-            obj.Name = "wangxm";
-            Assert.Equal(2, obj.Keys.Count);
-        }
-
-        [Fact]
-        public void TestDynamicObjectExtIndexerProperty()
-        {
-            dynamic obj = new DynamicObjectExt();
-            obj.Id = "001";
-            obj.Name = "wangxm";
-            Assert.Equal("wangxm", obj["Name"]);
-            Assert.Null(obj["Age"]);
-        }
-
-        [Fact]
-        public void TestDynamicObjectExtSerialize()
-        {
-            JsonSerializerOptions options = new JsonSerializerOptions
-            {
-                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
-            };
-
-            dynamic data = new DynamicObjectExt();
-            data.Name = "wangxm";
-            data.Age = 18;
-            string json = JsonSerializer.Serialize<dynamic>(new
-            {
-                data
-            }, options);
-
-            Assert.Contains("Name", json);
-        }
-
-        [Fact]
-        public void TestDynamicObjectArray()
-        {
-            dynamic data = new DynamicObjectExt();
-            data.Children = new string[2];
-            data.Children[0] = "张三";
-            data.Children[1] = "李四";
-
-            string jsonStr = data.ToString();
-            Assert.Equal("{\"Children\":[\"张三\",\"李四\"]}", jsonStr);
-        }
-
-        [Fact]
-        public void TestDynamicObjectList()
-        {
-            dynamic data = new DynamicObjectExt();
-            data.Children = new List<string>();
-            data.Children.Add("张三");
-            data.Children.Add("李四");
-
-            Assert.Equal(2, data.Children.Count);
-
-            string jsonStr = data.ToString();
-            Assert.Equal("{\"Children\":[\"张三\",\"李四\"]}", jsonStr);
         }
     }
 }

@@ -2,7 +2,7 @@
 using System.Dynamic;
 using System.Linq.Expressions;
 
-namespace CodeM.Common.Tools.Json
+namespace CodeM.Common.Tools.DynamicObject
 {
     [Serializable]
     internal class DynamicObjectExtMetaObject : DynamicMetaObject

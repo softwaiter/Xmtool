@@ -704,6 +704,26 @@ namespace Test
         }
 
         /// <summary>
+        /// 判断1.78是否为2位小数，应为True
+        /// </summary>
+        [Fact]
+        public void DecimalTest10()
+        {
+            bool ret = Xmtool.Regex().IsDecimal("1.78", 2);
+            Assert.True(ret);
+        }
+
+        /// <summary>
+        /// 判断1.7是否为2位小数，应为False
+        /// </summary>
+        [Fact]
+        public void DecimalTest11()
+        {
+            bool ret = Xmtool.Regex().IsDecimal("1.7", 2);
+            Assert.False(ret);
+        }
+
+        /// <summary>
         /// 判断“Hello”是否为英文， 应为True
         /// </summary>
         [Fact]

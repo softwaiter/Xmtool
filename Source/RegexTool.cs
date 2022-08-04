@@ -209,6 +209,21 @@ namespace CodeM.Common.Tools
         {
             return reDecimal.IsMatch(value);
         }
+
+        /// <summary>
+        /// 是否小数，并且精度未指定位数
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="precision"></param>
+        /// <returns></returns>
+        public bool IsDecimal(string value, int precision)
+        {
+            if (IsDecimal(value))
+            {
+                return value.Length - value.LastIndexOf(".") - 1 == precision;
+            }
+            return false;
+        }
         #endregion
     }
 }

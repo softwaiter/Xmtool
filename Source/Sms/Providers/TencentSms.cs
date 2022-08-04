@@ -37,7 +37,7 @@ namespace CodeM.Common.Tools.Sms.Providers
 
         private object GenPostBody(string signName, string templateCode, string templateParam, params string[] phoneNums)
         {
-            dynamic result = new Json.DynamicObjectExt();
+            dynamic result = Xmtool.DynamicObject();
             result.SmsSdkAppId = mAppId;
             result.SignName = signName;
             result.TemplateId = templateCode;

@@ -144,13 +144,13 @@ namespace Test
         [Fact]
         public void JsonToXML()
         {
-            dynamic obj = new DynamicObjectExt();
+            dynamic obj = Xmtool.DynamicObject();
             obj.Name = "wangxm";
             obj.Age = 18;
-            obj.Dog = new DynamicObjectExt();
+            obj.Dog = Xmtool.DynamicObject();
             obj.Dog.Name = "Tom";
             obj.Dog.Kind = "中华田园犬";
-            obj.Dog.Toys = new DynamicObjectExt();
+            obj.Dog.Toys = Xmtool.DynamicObject();
             obj.Dog.Toys.One = "玩具一";
             obj.Dog.Toys.Two = "玩具二";
             string xml = obj.ToXMLString();
@@ -166,13 +166,13 @@ namespace Test
         [Fact]
         public void JsonToXML2()
         {
-            dynamic obj = new DynamicObjectExt();
+            dynamic obj = Xmtool.DynamicObject();
             obj.Name = "wangxm";
             obj.Age = 18;
-            obj.Dog = new DynamicObjectExt();
+            obj.Dog = Xmtool.DynamicObject();
             obj.Dog.Name = "Tom";
             obj.Dog.Kind = "中华田园犬";
-            obj.Dog.Toys = new DynamicObjectExt();
+            obj.Dog.Toys = Xmtool.DynamicObject();
             obj.Dog.Toys.One = "玩具一";
             obj.Dog.Toys.Two = "玩具二";
             obj.Dog.Value = "Hello World!";
