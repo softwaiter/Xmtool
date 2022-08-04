@@ -47,7 +47,7 @@ Xmtool为了方便调用，将所有功能统一封装集成到静态类Xmtool�
 ```c#
 public string GetSmsCode()
 {
-	string code = Xmtool.Random().RandomCaptcha(4, true);
+    string code = Xmtool.Random().RandomCaptcha(4, true);
     return code;
 }
 ```
