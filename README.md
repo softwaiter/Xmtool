@@ -69,8 +69,7 @@ public bool IsMobile(string str)
 
 ## :pencil:文档
 
-- [日期时间](docs/datetime.md)
-
+- [日期时间](https://github.com/softwaiter/Xmtool/blob/master/docs/datetime.md)
 - [正则表达式](docs/regex.md)
 - [加密解密](docs/crypto.md)
 - [散列算法](docs/hash.md)
