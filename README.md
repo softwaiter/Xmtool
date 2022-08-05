@@ -1,7 +1,11 @@
-# Xmtool（持续集成中...）
-
-### <span style="color:#666">一个简单易用的.NetCore工具类库。</span>
-
+<div align="center">
+<article style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+    <p align="center"><img width="256" src="http://res.dayuan.tech/images/xmtool.png" /></p>
+    <p>
+        一个简单易用的.NetCore工具类库（持续集成中...）
+    </p>
+</article>
+</div>
 
 
 ##  :beginner: 简介
