@@ -12,7 +12,7 @@
     <AssemblyVersion></AssemblyVersion>
     <FileVersion></FileVersion>
     <Authors>softwaiter</Authors>
-    <Description>.netcore常用工具集合库（Json、Xml、正则表达式常用判断、加解密、Http请求、日期时间，数据类型、动态对象、验证码生成、发送邮件、阿里云短信等，持续收集中。。。）</Description>
+    <Description>.NetCore常用方法工具类库（正则表达式常用判断、日期时间常用方法、XML快速遍历、动态扩展对象、图片验证码生成、阿里/腾讯短信发送、发送邮件、Json配置文件解析、加密解密等等）</Description>
     <PackageProjectUrl>https://github.com/softwaiter/Xmtool</PackageProjectUrl>
     <RepositoryUrl>https://github.com/softwaiter/Xmtool</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
