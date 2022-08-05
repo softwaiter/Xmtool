@@ -19,6 +19,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>JSON;Regex;XML;Crypto;Hash;Http;DateTime;SendMail;SendSms;Captcha</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>xmtool.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -64,6 +65,13 @@
 
   <ItemGroup>
     <Folder Include="docs\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="xmtool.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
