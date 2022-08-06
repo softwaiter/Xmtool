@@ -69,19 +69,19 @@ public bool IsMobile(string str)
 
 ## :pencil:文档
 
-- [日期时间](https://github.com/softwaiter/Xmtool/blob/master/Source/docs/datetime.md)
-- [正则表达式](docs/regex.md)
-- [加密解密](docs/crypto.md)
-- [散列算法](docs/hash.md)
-- [随机值](docs/random.md)
-- [发送邮件](docs/sendmail.md)
-- [发送短信](docs/sendsms.md)
-- [类型判断](docs/types.md)
-- [XML读取](docs/xml.md)
-- [Web操作](docs/web.md)
-- [图形验证码](docs/captcha.md)
-- [扩展动态对象](docs/dynamicobj.md)
-- [JSON配置文件](docs/json.md)
+- [日期时间](0201)
+- [正则表达式](0202)
+- [加密解密](0203)
+- [散列算法](0204)
+- [随机值](0205)
+- [发送邮件](0206)
+- [发送短信](0207)
+- [类型判断](0208)
+- [XML读取](0209)
+- [Web操作](0210)
+- [图形验证码](0211)
+- [扩展动态对象](0212)
+- [JSON配置文件](0213)
 
 
 
