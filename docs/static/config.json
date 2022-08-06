@@ -6,7 +6,7 @@
     {
       "id": "01",
       "name": "Xmtool是什么？",
-      "src": "/static/what.md"
+      "src": "static/what.md"
     },
     {
         "id": "02",
@@ -15,67 +15,67 @@
         {
             "id": "0201",
             "name": "日期时间",
-            "src": "/static/datetime.md"
+            "src": "static/datetime.md"
         },
         {
             "id": "0202",
             "name": "正则表达式",
-            "src": "/static/regex.md"
+            "src": "static/regex.md"
         },
         {
             "id": "0203",
             "name": "加密解密",
-            "src": "/static/crypto.md"
+            "src": "static/crypto.md"
         },
         {
             "id": "0204",
             "name": "散列算法",
-            "src": "/static/hash.md"
+            "src": "static/hash.md"
         },
         {
             "id": "0205",
             "name": "随机值",
-            "src": "/static/random.md"
+            "src": "static/random.md"
         },
         {
             "id": "0206",
             "name": "发送邮件",
-            "src": "/static/sendmail.md"
+            "src": "static/sendmail.md"
         },
         {
             "id": "0207",
             "name": "发送短信",
-            "src": "/static/sendsms.md"
+            "src": "static/sendsms.md"
         },
         {
             "id": "0208",
             "name": "类型判断",
-            "src": "/static/types.md"
+            "src": "static/types.md"
         },
         {
             "id": "0209",
             "name": "XML读取",
-            "src": "/static/xml.md"
+            "src": "static/xml.md"
         },
         {
             "id": "0210",
             "name": "Web操作",
-            "src": "/static/web.md"
+            "src": "static/web.md"
         },
         {
             "id": "0211",
             "name": "图形验证码",
-            "src": "/static/captcha.md"
+            "src": "static/captcha.md"
         },
         {
             "id": "0212",
             "name": "扩展动态对象",
-            "src": "/static/dynamicobj.md"
+            "src": "static/dynamicobj.md"
         },
         {
             "id": "0213",
             "name": "JSON配置文件",
-            "src": "/static/json.md"
+            "src": "static/json.md"
         }
       ]
     }
