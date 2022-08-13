@@ -192,5 +192,23 @@ namespace Test
             string jsonStr = data.ToString();
             Assert.Equal("{\"Children\":[\"张三\",\"李四\"]}", jsonStr);
         }
+
+        [Fact]
+        public void DynamicObjectCloneTest()
+        {
+            dynamic data = Xmtool.DynamicObject();
+            data.Name = "wangxm";
+            data.Children = new List<string>();
+            data.Children.Add("wangda");
+            data.Children.Add("wanger");
+
+            dynamic data2 = data.Clone();
+            
+            Assert.Equal(data.Name, data2.Name);
+            Assert.Equal(data.Children.Count, data2.Children.Count);
+
+            data2.Children.Add("wangsan");
+            //Assert.NotEqual(data.Children.Count, data2.Children.Count);
+        }
     }
 }

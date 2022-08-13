@@ -64,10 +64,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="docs\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="xmtool.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
