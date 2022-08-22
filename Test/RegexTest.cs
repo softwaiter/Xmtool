@@ -857,9 +857,19 @@ namespace Test
         /// 判断“Abc123”是否为数字或英文，应为True
         /// </summary>
         [Fact]
-        public void MixCharTest1()
+        public void EnglishOrNumberTest1()
         {
-            bool ret = Xmtool.Regex().IsMixChar("Abc123");
+            bool ret = Xmtool.Regex().IsEnglishOrNumber("Abc123");
+            Assert.True(ret);
+        }
+
+        /// <summary>
+        /// 判断“A1b2c3”是否为数字或英文，应为True
+        /// </summary>
+        [Fact]
+        public void EnglishOrNumberTest2()
+        {
+            bool ret = Xmtool.Regex().IsEnglishOrNumber("A1b2c3");
             Assert.True(ret);
         }
 
@@ -867,9 +877,9 @@ namespace Test
         /// 判断“Abc”是否为数字或英文，应为True
         /// </summary>
         [Fact]
-        public void MixCharTest2()
+        public void EnglishOrNumberTest3()
         {
-            bool ret = Xmtool.Regex().IsMixChar("Abc");
+            bool ret = Xmtool.Regex().IsEnglishOrNumber("Abc");
             Assert.True(ret);
         }
 
@@ -877,9 +887,9 @@ namespace Test
         /// 判断“123”是否为数字或英文，应为True
         /// </summary>
         [Fact]
-        public void MixCharTest3()
+        public void EnglishOrNumberTest4()
         {
-            bool ret = Xmtool.Regex().IsMixChar("123");
+            bool ret = Xmtool.Regex().IsEnglishOrNumber("123");
             Assert.True(ret);
         }
 
@@ -887,9 +897,9 @@ namespace Test
         /// 判断“中国Abc123”是否为数字或英文，应为False
         /// </summary>
         [Fact]
-        public void MixCharTest4()
+        public void EnglishOrNumberTest5()
         {
-            bool ret = Xmtool.Regex().IsMixChar("中国Abc123");
+            bool ret = Xmtool.Regex().IsEnglishOrNumber("中国Abc123");
             Assert.False(ret);
         }
 
@@ -897,9 +907,99 @@ namespace Test
         /// 判断空是否为数字或英文，应为False
         /// </summary>
         [Fact]
-        public void MixCharTest5()
+        public void EnglishOrNumberTest6()
         {
-            bool ret = Xmtool.Regex().IsMixChar("");
+            bool ret = Xmtool.Regex().IsEnglishOrNumber("");
+            Assert.False(ret);
+        }
+
+        /// <summary>
+        /// 判断“一二三Abc”是否为中文或英文，应为True
+        /// </summary>
+        [Fact]
+        public void ChineseOrEnglishTest1()
+        {
+            bool ret = Xmtool.Regex().IsChineseOrEnglish("一二三Abc");
+            Assert.True(ret);
+        }
+
+        /// <summary>
+        /// 判断“一A二b三c”是否为中文或英文，应为True
+        /// </summary>
+        [Fact]
+        public void ChineseOrEnglishTest2()
+        {
+            bool ret = Xmtool.Regex().IsChineseOrEnglish("一A二b三c");
+            Assert.True(ret);
+        }
+
+        /// <summary>
+        /// 判断“一二三”是否为中文或英文，应为True
+        /// </summary>
+        [Fact]
+        public void ChineseOrEnglishTest3()
+        {
+            bool ret = Xmtool.Regex().IsChineseOrEnglish("一二三");
+            Assert.True(ret);
+        }
+
+        /// <summary>
+        /// 判断“Abc”是否为中文或英文，应为True
+        /// </summary>
+        [Fact]
+        public void ChineseOrEnglishTest4()
+        {
+            bool ret = Xmtool.Regex().IsChineseOrEnglish("Abc");
+            Assert.True(ret);
+        }
+
+        /// <summary>
+        /// 判断“一二三Abc123”是否为中文或英文，False
+        /// </summary>
+        [Fact]
+        public void ChineseOrEnglishTest5()
+        {
+            bool ret = Xmtool.Regex().IsChineseOrEnglish("一二三Abc123");
+            Assert.False(ret);
+        }
+
+        /// <summary>
+        /// 判断“一二三123”是否为中文或英文，False
+        /// </summary>
+        [Fact]
+        public void ChineseOrEnglishTest6()
+        {
+            bool ret = Xmtool.Regex().IsChineseOrEnglish("一二三123");
+            Assert.False(ret);
+        }
+
+        /// <summary>
+        /// 判断“Abc123”是否为中文或英文，False
+        /// </summary>
+        [Fact]
+        public void ChineseOrEnglishTest7()
+        {
+            bool ret = Xmtool.Regex().IsChineseOrEnglish("Abc123");
+            Assert.False(ret);
+        }
+
+        /// <summary>
+        /// 判断“一二三Abc@”是否为中文或英文，应为False
+        /// </summary>
+        [Fact]
+        public void ChineseOrEnglishTest8()
+        {
+            bool ret = Xmtool.Regex().IsChineseOrEnglish("一二三Abc@");
+            Assert.False(ret);
+        }
+
+        /// <summary>
+        /// 判断“”是否为中文或英文，应为False
+        /// </summary>
+        [Fact]
+        public void ChineseOrEnglishTest9()
+        {
+            bool ret = Xmtool.Regex().IsChineseOrEnglish("");
             Assert.False(ret);
         }
 
@@ -907,9 +1007,28 @@ namespace Test
         /// 判断“一二三Abc123”是否为中文、数字或英文，应为True
         /// </summary>
         [Fact]
-        public void MixChar2Test1()
+        public void ChineseOrEnglishOrNumberTest1()
         {
-            bool ret = Xmtool.Regex().IsMixChar2("一二三Abc123");
+            bool ret = Xmtool.Regex().IsChineseOrEnglishOrNumber("一二三Abc123");
+            Assert.True(ret);
+        }
+        /// <summary>
+        /// 判断“一A1二b2三c3”是否为中文、数字或英文，应为True
+        /// </summary>
+        [Fact]
+        public void ChineseOrEnglishOrNumberTest2()
+        {
+            bool ret = Xmtool.Regex().IsChineseOrEnglishOrNumber("一A1二b2三c3");
+            Assert.True(ret);
+        }
+
+        /// <summary>
+        /// 判断“一二三Abc”是否为中文、数字或英文，应为True
+        /// </summary>
+        [Fact]
+        public void ChineseOrEnglishOrNumberTest3()
+        {
+            bool ret = Xmtool.Regex().IsChineseOrEnglishOrNumber("一二三Abc");
             Assert.True(ret);
         }
 
@@ -917,9 +1036,19 @@ namespace Test
         /// 判断“Abc123”是否为中文、数字或英文，应为True
         /// </summary>
         [Fact]
-        public void MixChar2Test2()
+        public void ChineseOrEnglishOrNumberTest4()
         {
-            bool ret = Xmtool.Regex().IsMixChar2("Abc123");
+            bool ret = Xmtool.Regex().IsChineseOrEnglishOrNumber("Abc123");
+            Assert.True(ret);
+        }
+
+        /// <summary>
+        /// 判断“一二三123”是否为中文、数字或英文，应为True
+        /// </summary>
+        [Fact]
+        public void ChineseOrEnglishOrNumberTest5()
+        {
+            bool ret = Xmtool.Regex().IsChineseOrEnglishOrNumber("一二三123");
             Assert.True(ret);
         }
 
@@ -927,9 +1056,9 @@ namespace Test
         /// 判断“Abc”是否为中文、数字或英文，应为True
         /// </summary>
         [Fact]
-        public void MixChar2Test3()
+        public void ChineseOrEnglishOrNumberTest6()
         {
-            bool ret = Xmtool.Regex().IsMixChar2("Abc");
+            bool ret = Xmtool.Regex().IsChineseOrEnglishOrNumber("Abc");
             Assert.True(ret);
         }
 
@@ -937,9 +1066,9 @@ namespace Test
         /// 判断“123”是否为中文、数字或英文，应为True
         /// </summary>
         [Fact]
-        public void MixChar2Test4()
+        public void ChineseOrEnglishOrNumberTest7()
         {
-            bool ret = Xmtool.Regex().IsMixChar2("123");
+            bool ret = Xmtool.Regex().IsChineseOrEnglishOrNumber("123");
             Assert.True(ret);
         }
 
@@ -947,9 +1076,9 @@ namespace Test
         /// 判断“一二三Abc123~”是否为数字或英文，应为False
         /// </summary>
         [Fact]
-        public void MixChar2Test5()
+        public void ChineseOrEnglishOrNumberTest8()
         {
-            bool ret = Xmtool.Regex().IsMixChar("一二三Abc123~");
+            bool ret = Xmtool.Regex().IsChineseOrEnglishOrNumber("一二三Abc123~");
             Assert.False(ret);
         }
 
@@ -957,11 +1086,400 @@ namespace Test
         /// 判断空是否为数字或英文，应为False
         /// </summary>
         [Fact]
-        public void MixChar2Test6()
+        public void ChineseOrEnglishOrNumberTest9()
         {
-            bool ret = Xmtool.Regex().IsMixChar2("");
+            bool ret = Xmtool.Regex().IsChineseOrEnglishOrNumber("");
             Assert.False(ret);
         }
 
+        /// <summary>
+        /// 判断“一二三Abc”是否同时包含中文和英文，且不包含其他字符，应为True
+        /// </summary>
+        [Fact]
+        public void ChineseAndEnglishTest1()
+        {
+            bool ret = Xmtool.Regex().IsChineseAndEnglish("一二三Abc");
+            Assert.True(ret);
+        }
+
+        /// <summary>
+        /// 判断“Abc一二三”是否同时包含中文和英文，且不包含其他字符，应为True
+        /// </summary>
+        [Fact]
+        public void ChineseAndEnglishTest2()
+        {
+            bool ret = Xmtool.Regex().IsChineseAndEnglish("Abc一二三");
+            Assert.True(ret);
+        }
+
+        /// <summary>
+        /// 判断“A一b二c三”是否同时包含中文和英文，且不包含其他字符，应为True
+        /// </summary>
+        [Fact]
+        public void ChineseAndEnglishTest3()
+        {
+            bool ret = Xmtool.Regex().IsChineseAndEnglish("A一b二c三");
+            Assert.True(ret);
+        }
+
+        /// <summary>
+        /// 判断“一二三Abc123”是否同时包含中文和英文，且不包含其他字符，应为False
+        /// </summary>
+        [Fact]
+        public void ChineseAndEnglishTest4()
+        {
+            bool ret = Xmtool.Regex().IsChineseAndEnglish("一二三Abc123");
+            Assert.False(ret);
+        }
+
+        /// <summary>
+        /// 判断“一二三123”是否同时包含中文和英文，且不包含其他字符，应为False
+        /// </summary>
+        [Fact]
+        public void ChineseAndEnglishTest5()
+        {
+            bool ret = Xmtool.Regex().IsChineseAndEnglish("一二三123");
+            Assert.False(ret);
+        }
+
+        /// <summary>
+        /// 判断“Abc123”是否同时包含中文和英文，且不包含其他字符，应为False
+        /// </summary>
+        [Fact]
+        public void ChineseAndEnglishTest6()
+        {
+            bool ret = Xmtool.Regex().IsChineseAndEnglish("Abc123");
+            Assert.False(ret);
+        }
+
+        /// <summary>
+        /// 判断“一二三”是否同时包含中文和英文，且不包含其他字符，应为False
+        /// </summary>
+        [Fact]
+        public void ChineseAndEnglishTest7()
+        {
+            bool ret = Xmtool.Regex().IsChineseAndEnglish("一二三");
+            Assert.False(ret);
+        }
+
+        /// <summary>
+        /// 判断“Abc”是否同时包含中文和英文，且不包含其他字符，应为False
+        /// </summary>
+        [Fact]
+        public void ChineseAndEnglishTest8()
+        {
+            bool ret = Xmtool.Regex().IsChineseAndEnglish("Abc");
+            Assert.False(ret);
+        }
+
+        /// <summary>
+        /// 判断“123”是否同时包含中文和英文，且不包含其他字符，应为False
+        /// </summary>
+        [Fact]
+        public void ChineseAndEnglishTest9()
+        {
+            bool ret = Xmtool.Regex().IsChineseAndEnglish("123");
+            Assert.False(ret);
+        }
+
+        /// <summary>
+        /// 判断“”是否同时包含中文和英文，且不包含其他字符，应为False
+        /// </summary>
+        [Fact]
+        public void ChineseAndEnglishTest10()
+        {
+            bool ret = Xmtool.Regex().IsChineseAndEnglish("");
+            Assert.False(ret);
+        }
+
+        /// <summary>
+        /// 判断“Abc123”是否同时包含英文和数字，且不包含其他字符，应为True
+        /// </summary>
+        [Fact]
+        public void EnglishAndNumberTest1()
+        {
+            bool ret = Xmtool.Regex().IsEnglishAndNumber("Abc123");
+            Assert.True(ret);
+        }
+
+        /// <summary>
+        /// 判断“123Abc”是否同时包含英文和数字，且不包含其他字符，应为True
+        /// </summary>
+        [Fact]
+        public void EnglishAndNumberTest2()
+        {
+            bool ret = Xmtool.Regex().IsEnglishAndNumber("123Abc");
+            Assert.True(ret);
+        }
+
+        /// <summary>
+        /// 判断“A1b2c3”是否同时包含英文和数字，且不包含其他字符，应为True
+        /// </summary>
+        [Fact]
+        public void EnglishAndNumberTest3()
+        {
+            bool ret = Xmtool.Regex().IsEnglishAndNumber("A1b2c3");
+            Assert.True(ret);
+        }
+
+        /// <summary>
+        /// 判断“Abc”是否同时包含英文和数字，且不包含其他字符，应为False
+        /// </summary>
+        [Fact]
+        public void EnglishAndNumberTest4()
+        {
+            bool ret = Xmtool.Regex().IsEnglishAndNumber("Abc");
+            Assert.False(ret);
+        }
+
+        /// <summary>
+        /// 判断“123”是否同时包含英文和数字，且不包含其他字符，应为False
+        /// </summary>
+        [Fact]
+        public void EnglishAndNumberTest5()
+        {
+            bool ret = Xmtool.Regex().IsEnglishAndNumber("123");
+            Assert.False(ret);
+        }
+
+        /// <summary>
+        /// 判断“Abc123一二三”是否同时包含英文和数字，且不包含其他字符，应为False
+        /// </summary>
+        [Fact]
+        public void EnglishAndNumberTest6()
+        {
+            bool ret = Xmtool.Regex().IsEnglishAndNumber("Abc123一二三");
+            Assert.False(ret);
+        }
+
+        /// <summary>
+        /// 判断“一二三Abc123”是否同时包含英文和数字，且不包含其他字符，应为False
+        /// </summary>
+        [Fact]
+        public void EnglishAndNumberTest7()
+        {
+            bool ret = Xmtool.Regex().IsEnglishAndNumber("一二三Abc123");
+            Assert.False(ret);
+        }
+
+        /// <summary>
+        /// 判断“一二三Abc”是否同时包含英文和数字，且不包含其他字符，应为False
+        /// </summary>
+        [Fact]
+        public void EnglishAndNumberTest8()
+        {
+            bool ret = Xmtool.Regex().IsEnglishAndNumber("一二三Abc");
+            Assert.False(ret);
+        }
+
+        /// <summary>
+        /// 判断“123一二三”是否同时包含英文和数字，且不包含其他字符，应为False
+        /// </summary>
+        [Fact]
+        public void EnglishAndNumberTest9()
+        {
+            bool ret = Xmtool.Regex().IsEnglishAndNumber("123一二三");
+            Assert.False(ret);
+        }
+
+        /// <summary>
+        /// 判断“”是否同时包含英文和数字，且不包含其他字符，应为False
+        /// </summary>
+        [Fact]
+        public void EnglishAndNumberTest10()
+        {
+            bool ret = Xmtool.Regex().IsEnglishAndNumber("");
+            Assert.False(ret);
+        }
+
+        /// <summary>
+        /// 判断“一二三Abc123”是否同时包含中文、英文和数字，且不包含其他字符，应为True
+        /// </summary>
+        [Fact]
+        public void ChineseAndEnglishAndNumberTest1()
+        {
+            bool bRet = Xmtool.Regex().IsChineseAndEnglishAndNumber("一二三Abc123");
+            Assert.True(bRet);
+        }
+
+        /// <summary>
+        /// 判断“一二三123Abc”是否同时包含中文、英文和数字，且不包含其他字符，应为True
+        /// </summary>
+        [Fact]
+        public void ChineseAndEnglishAndNumberTest2()
+        {
+            bool bRet = Xmtool.Regex().IsChineseAndEnglishAndNumber("一二三123Abc");
+            Assert.True(bRet);
+        }
+
+        /// <summary>
+        /// 判断“Abc123一二三”是否同时包含中文、英文和数字，且不包含其他字符，应为True
+        /// </summary>
+        [Fact]
+        public void ChineseAndEnglishAndNumberTest3()
+        {
+            bool bRet = Xmtool.Regex().IsChineseAndEnglishAndNumber("Abc123一二三");
+            Assert.True(bRet);
+        }
+
+        /// <summary>
+        /// 判断“一A1二b2三c3”是否同时包含中文、英文和数字，且不包含其他字符，应为True
+        /// </summary>
+        [Fact]
+        public void ChineseAndEnglishAndNumberTest4()
+        {
+            bool bRet = Xmtool.Regex().IsChineseAndEnglishAndNumber("一A1二b2三c3");
+            Assert.True(bRet);
+        }
+
+        /// <summary>
+        /// 判断“一二三”是否同时包含中文、英文和数字，且不包含其他字符，应为False
+        /// </summary>
+        [Fact]
+        public void ChineseAndEnglishAndNumberTest5()
+        {
+            bool bRet = Xmtool.Regex().IsChineseAndEnglishAndNumber("一二三");
+            Assert.False(bRet);
+        }
+
+        /// <summary>
+        /// 判断“Abc”是否同时包含中文、英文和数字，且不包含其他字符，应为False
+        /// </summary>
+        [Fact]
+        public void ChineseAndEnglishAndNumberTest6()
+        {
+            bool bRet = Xmtool.Regex().IsChineseAndEnglishAndNumber("Abc");
+            Assert.False(bRet);
+        }
+
+        /// <summary>
+        /// 判断“123”是否同时包含中文、英文和数字，且不包含其他字符，应为False
+        /// </summary>
+        [Fact]
+        public void ChineseAndEnglishAndNumberTest7()
+        {
+            bool bRet = Xmtool.Regex().IsChineseAndEnglishAndNumber("123");
+            Assert.False(bRet);
+        }
+
+        /// <summary>
+        /// 判断“一二三Abc”是否同时包含中文、英文和数字，且不包含其他字符，应为False
+        /// </summary>
+        [Fact]
+        public void ChineseAndEnglishAndNumberTest8()
+        {
+            bool bRet = Xmtool.Regex().IsChineseAndEnglishAndNumber("一二三Abc");
+            Assert.False(bRet);
+        }
+
+        /// <summary>
+        /// 判断“一二三123”是否同时包含中文、英文和数字，且不包含其他字符，应为False
+        /// </summary>
+        [Fact]
+        public void ChineseAndEnglishAndNumberTest9()
+        {
+            bool bRet = Xmtool.Regex().IsChineseAndEnglishAndNumber("一二三123");
+            Assert.False(bRet);
+        }
+
+        /// <summary>
+        /// 判断“Abc123”是否同时包含中文、英文和数字，且不包含其他字符，应为False
+        /// </summary>
+        [Fact]
+        public void ChineseAndEnglishAndNumberTest10()
+        {
+            bool bRet = Xmtool.Regex().IsChineseAndEnglishAndNumber("Abc123");
+            Assert.False(bRet);
+        }
+
+        /// <summary>
+        /// 判断“123一二三”是否同时包含中文、英文和数字，且不包含其他字符，应为False
+        /// </summary>
+        [Fact]
+        public void ChineseAndEnglishAndNumberTest11()
+        {
+            bool bRet = Xmtool.Regex().IsChineseAndEnglishAndNumber("123一二三");
+            Assert.False(bRet);
+        }
+
+        /// <summary>
+        /// 判断“一二三Abc123@”是否同时包含中文、英文和数字，且不包含其他字符，应为False
+        /// </summary>
+        [Fact]
+        public void ChineseAndEnglishAndNumberTest12()
+        {
+            bool bRet = Xmtool.Regex().IsChineseAndEnglishAndNumber("一二三Abc123@");
+            Assert.False(bRet);
+        }
+
+        /// <summary>
+        /// 判断“”是否同时包含中文、英文和数字，且不包含其他字符，应为False
+        /// </summary>
+        [Fact]
+        public void ChineseAndEnglishAndNumberTest13()
+        {
+            bool bRet = Xmtool.Regex().IsChineseAndEnglishAndNumber("");
+            Assert.False(bRet);
+        }
+
+        /// <summary>
+        /// 判断“wangxm”是否符合账户常规格式要求（英文、数字、下划线，且以英文开头），应为True
+        /// </summary>
+        [Fact]
+        public void AccountTest1()
+        {
+            bool bRet = Xmtool.Regex().IsAccount("wangxm");
+            Assert.True(bRet);
+        }
+
+        /// <summary>
+        /// 判断“wangxm888”是否符合账户常规格式要求（英文、数字、下划线，且以英文开头），应为True
+        /// </summary>
+        [Fact]
+        public void AccountTest2()
+        {
+            bool bRet = Xmtool.Regex().IsAccount("wangxm888");
+            Assert.True(bRet);
+        }
+
+        /// <summary>
+        /// 判断“w888”是否符合账户常规格式要求（英文、数字、下划线，且以英文开头），应为True
+        /// </summary>
+        [Fact]
+        public void AccountTest3()
+        {
+            bool bRet = Xmtool.Regex().IsAccount("w888");
+            Assert.True(bRet);
+        }
+
+        /// <summary>
+        /// 判断“888”是否符合账户常规格式要求（英文、数字、下划线，且以英文开头），应为False
+        /// </summary>
+        [Fact]
+        public void AccountTest4()
+        {
+            bool bRet = Xmtool.Regex().IsAccount("888");
+            Assert.False(bRet);
+        }
+
+        /// <summary>
+        /// 判断“8wangxm”是否符合账户常规格式要求（英文、数字、下划线，且以英文开头），应为False
+        /// </summary>
+        [Fact]
+        public void AccountTest5()
+        {
+            bool bRet = Xmtool.Regex().IsAccount("8wangxm");
+            Assert.False(bRet);
+        }
+
+        /// <summary>
+        /// 判断“”是否符合账户常规格式要求（英文、数字、下划线，且以英文开头），应为False
+        /// </summary>
+        [Fact]
+        public void AccountTest6()
+        {
+            bool bRet = Xmtool.Regex().IsAccount("");
+            Assert.False(bRet);
+        }
     }
 }

@@ -90,8 +90,16 @@ namespace CodeM.Common.Tools
         private Regex reLowercaseEnglish = new Regex("^[a-z]+$");
         private Regex reCapitalEnglish = new Regex("^[A-Z]+$");
         private Regex reChinese = new Regex("^[一-龥]+$");
-        private Regex reMixChar = new Regex("^[A-Za-z0-9]+$");
-        private Regex reMixChar2 = new Regex("^(([一-龥])|[A-Za-z0-9])+$");
+
+        private Regex reChineseOrEnglish = new Regex("^[一-龥A-Za-z]+$");
+        private Regex reEnglishOrNumber = new Regex("^[A-Za-z0-9]+$");
+        private Regex reChineseOrEnglishOrNumber = new Regex("^[一-龥A-Za-z0-9]+$");
+
+        private Regex reChineseAndEnglish = new Regex("^(([一-龥]+[A-Za-z]+)|([A-Za-z]+[一-龥]+))+$");
+        private Regex reEnglishAndNumber = new Regex("^(([0-9]+[A-Za-z]+)|([A-Za-z]+[0-9]+))+$");
+        private Regex reChineseAndEnglishAndNumber = new Regex("^(([一-龥]+[A-Za-z]+[0-9]+)|([一-龥]+[0-9]+[A-Za-z]+)|([A-Za-z]+[一-龥]+[0-9]+)|([A-Za-z]+[0-9]+[一-龥]+)|([0-9]+[A-Za-z]+[一-龥]+)|([0-9]+[一-龥]+[A-Za-z]+))+$");
+
+        private Regex reAccount = new Regex("^[A-Za-z][\\w]+$");
 
         /// <summary>
         /// 是否英文字符
@@ -134,23 +142,71 @@ namespace CodeM.Common.Tools
         }
 
         /// <summary>
+        /// 是否只包含中文或英文
+        /// </summary>
+        /// <returns></returns>
+        public bool IsChineseOrEnglish(string value)
+        {
+            return reChineseOrEnglish.IsMatch(value);
+        }
+
+        /// <summary>
+        /// 是否同时包含中文和英文，且不包含除此之外的其他字符
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public bool IsChineseAndEnglish(string value)
+        {
+            return reChineseAndEnglish.IsMatch(value);
+        }
+
+        /// <summary>
         /// 是否只包含数字或英文
         /// </summary>
         /// <returns></returns>
-        public bool IsMixChar(string value)
+        public bool IsEnglishOrNumber(string value)
         {
-            return reMixChar.IsMatch(value);
+            return reEnglishOrNumber.IsMatch(value);
+        }
+
+        /// <summary>
+        /// 是否同时包含英文和数字，且不包含除此之外的其他字符
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public bool IsEnglishAndNumber(string value)
+        {
+            return reEnglishAndNumber.IsMatch(value);
         }
 
         /// <summary>
         /// 是否只包含中文、数字或英文
         /// </summary>
         /// <returns></returns>
-        public bool IsMixChar2(string value)
+        public bool IsChineseOrEnglishOrNumber(string value)
         { 
-            return reMixChar2.IsMatch(value);
+            return reChineseOrEnglishOrNumber.IsMatch(value);
         }
 
+        /// <summary>
+        /// 是否同时包含中文、英文和数字，且不包含除此之外的其他字符
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public bool IsChineseAndEnglishAndNumber(string value)
+        {
+            return reChineseAndEnglishAndNumber.IsMatch(value);
+        }
+
+        /// <summary>
+        /// 是否符合常规账户名格式（英文、数字、下划线，必须以英文开头）
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public bool IsAccount(string value)
+        {
+            return reAccount.IsMatch(value);
+        }
         #endregion
 
         #region 数字相关
