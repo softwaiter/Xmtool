@@ -19,25 +19,25 @@ Xmtool是一个基于.NetCore的常用功能集成工具类库，目的是做成
 ##### Package Manager
 
 ```shell
-Install-Package Xmtool -Version 2.0.1
+Install-Package Xmtool -Version 2.0.2
 ```
 
 ##### .NET CLI
 
 ```shell
-dotnet add package Xmtool --version 2.0.1
+dotnet add package Xmtool --version 2.0.2
 ```
 
 ##### PackageReference
 
 ```xml
-<PackageReference Include="Xmtool" Version="2.0.1" />
+<PackageReference Include="Xmtool" Version="2.0.2" />
 ```
 
 ##### Paket CLI
 
 ```shell
-paket add Xmtool --version 2.0.1
+paket add Xmtool --version 2.0.2
 ```
 
 

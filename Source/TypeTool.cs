@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace CodeM.Common.Tools
 {
@@ -36,6 +38,22 @@ namespace CodeM.Common.Tools
         {
             Type _typ = obj.GetType();
             return _typ.IsGenericType && _typ.GetGenericTypeDefinition() == typeof(List<>);
+        }
+
+        public IList CloneList(IList list, bool includeContent = true)
+        {
+            Type geneType = typeof(List<>);
+            Type implType = geneType.MakeGenericType(list.GetType().GetGenericArguments());
+            ConstructorInfo ci = implType.GetConstructor(new Type[] { });
+            IList cloneObj = ci.Invoke(new Object[] { }) as IList;
+            if (includeContent)
+            {
+                foreach (object item in list)
+                {
+                    cloneObj.Add(item);
+                }
+            }
+            return cloneObj;
         }
     }
 }
