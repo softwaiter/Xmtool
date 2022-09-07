@@ -21,7 +21,7 @@ namespace CodeM.Common.Tools
         private static Regex reEmail = new Regex("^[\\w-]+(\\.[\\w-]+)*@[\\w-]+(\\.[\\w-]+)+$");
         private static Regex reUrl = new Regex("^[a-zA-z]+://(\\w+(-\\w+)*)(\\.(\\w+(-\\w+)*))*(\\?\\S*)?$");
         private static Regex reIP = new Regex("^((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(\\.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}$");
-        private static Regex reIDCard = new Regex("^d{6}(18|19|20)d{2}(0d|11|12)([0-2]d|30|31)d{3}(d|X|x)$");
+        private static Regex reIDCard = new Regex("^\\d{6}(18|19|20)\\d{2}(0\\d|11|12)([0-2]\\d|30|31)\\d{3}(\\d|X|x)$");
 
         /// <summary>
         /// 是否手机号码
@@ -267,7 +267,7 @@ namespace CodeM.Common.Tools
         }
 
         /// <summary>
-        /// 是否小数，并且精度未指定位数
+        /// 是否小数，并且精度为指定位数
         /// </summary>
         /// <param name="value"></param>
         /// <param name="precision"></param>

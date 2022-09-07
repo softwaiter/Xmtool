@@ -344,6 +344,26 @@ namespace Test
         }
 
         /// <summary>
+        /// 判断IPv6地址fe80::4d49:74ef:ec95:f312是否为有效IP，应为False
+        /// </summary>
+        [Fact]
+        public void IPTest7()
+        {
+            bool ret = Xmtool.Regex().IsIP("fe80::4d49:74ef:ec95:f312");
+            Assert.False(ret);
+        }
+
+        /// <summary>
+        /// 判断空字符串是否为有效IP，应为False
+        /// </summary>
+        [Fact]
+        public void IPTest8()
+        {
+            bool ret = Xmtool.Regex().IsIP("");
+            Assert.False(ret);
+        }
+
+        /// <summary>
         /// 判断0是否为数值，应为True
         /// </summary>
         [Fact]
@@ -394,20 +414,40 @@ namespace Test
         }
 
         /// <summary>
-        /// 判断abc最小值是否为数值，应为True
+        /// 判断1.23是否为数值，应为True
         /// </summary>
         [Fact]
         public void NumberTest6()
+        {
+            bool ret = Xmtool.Regex().IsNumber("1.23");
+            Assert.True(ret);
+        }
+
+        /// <summary>
+        /// 判断-1.23是否为数值，应为True
+        /// </summary>
+        [Fact]
+        public void NumberTest7()
+        {
+            bool ret = Xmtool.Regex().IsNumber("-1.23");
+            Assert.True(ret);
+        }
+
+        /// <summary>
+        /// 判断abc是否为数值，应为False
+        /// </summary>
+        [Fact]
+        public void NumberTest8()
         {
             bool ret = Xmtool.Regex().IsNumber("abc");
             Assert.False(ret);
         }
 
         /// <summary>
-        /// 判断空最小值是否为数值，应为True
+        /// 判断空字符串是否为数值，应为False
         /// </summary>
         [Fact]
-        public void NumberTest7()
+        public void NumberTest9()
         {
             bool ret = Xmtool.Regex().IsNumber("");
             Assert.False(ret);
