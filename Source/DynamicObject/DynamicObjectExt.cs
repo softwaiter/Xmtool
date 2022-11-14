@@ -263,7 +263,7 @@ namespace CodeM.Common.Tools.DynamicObject
                 Type _typ = value.GetType();
                 if (_typ == typeof(string))
                 {
-                    sbResult.Append(string.Concat("\"", value, "\""));
+                    sbResult.Append(string.Concat("\"", value.Replace("\"", "\\\""), "\""));
                 }
                 else if (_typ.IsArray)
                 {

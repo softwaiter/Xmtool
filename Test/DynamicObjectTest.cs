@@ -208,7 +208,25 @@ namespace Test
             Assert.Equal(data.Children.Count, data2.Children.Count);
 
             data2.Children.Add("wangsan");
+            //暂不支持深度拷贝
             //Assert.NotEqual(data.Children.Count, data2.Children.Count);
+        }
+
+        [Fact]
+        public void QuotesTest()
+        {
+            dynamic data = Xmtool.DynamicObject();
+            data.Name = "wangxm";
+            data.Age = 18;
+            data.Desc = "\"wangxm\" is a man.";
+            
+            string json = data.ToString();
+            Assert.Contains("\\\"", json);
+
+            dynamic data2 = Xmtool.Json.ConfigParser().Parse(json);
+            Assert.Equal("wangxm", data2.Name);
+            Assert.Equal(18, data2.Age);
+            Assert.Equal("\"wangxm\" is a man.", data2.Desc);
         }
     }
 }
