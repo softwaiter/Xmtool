@@ -69,19 +69,19 @@ public bool IsMobile(string str)
 
 ## :pencil:文档
 
-- [日期时间](https://softwaiter.github.io/Xmtool/#/0201)
-- [正则表达式](https://softwaiter.github.io/Xmtool/#/0202)
-- [加密解密](https://softwaiter.github.io/Xmtool/#/0203)
-- [散列算法](https://softwaiter.github.io/Xmtool/#/0204)
-- [随机值](https://softwaiter.github.io/Xmtool/#/0205)
-- [发送邮件](https://softwaiter.github.io/Xmtool/#/0206)
-- [发送短信](https://softwaiter.github.io/Xmtool/#/0207)
-- [类型判断](https://softwaiter.github.io/Xmtool/#/0208)
-- [XML读取](https://softwaiter.github.io/Xmtool/#/0209)
-- [Web操作](https://softwaiter.github.io/Xmtool/#/0210)
-- [图形验证码](https://softwaiter.github.io/Xmtool/#/0211)
-- [扩展动态对象](https://softwaiter.github.io/Xmtool/#/0212)
-- [JSON配置文件](https://softwaiter.github.io/Xmtool/#/0213)
+- [日期时间](https://softwaiter.github.io/Xmtool/?item=0201)
+- [正则表达式](https://softwaiter.github.io/Xmtool/?item=0202)
+- [加密解密](https://softwaiter.github.io/Xmtool/?item=0203)
+- [散列算法](https://softwaiter.github.io/Xmtool/?item=0204)
+- [随机值](https://softwaiter.github.io/Xmtool/?item=0205)
+- [发送邮件](https://softwaiter.github.io/Xmtool/?item=0206)
+- [发送短信](https://softwaiter.github.io/Xmtool/?item=0207)
+- [类型判断](https://softwaiter.github.io/Xmtool/?item=0208)
+- [XML读取](https://softwaiter.github.io/Xmtool/?item=0209)
+- [Web操作](https://softwaiter.github.io/Xmtool/?item=0210)
+- [图形验证码](https://softwaiter.github.io/Xmtool/?item=0211)
+- [扩展动态对象](https://softwaiter.github.io/Xmtool/?item=0212)
+- [JSON配置文件](https://softwaiter.github.io/Xmtool/?item=0213)
 
 
 
