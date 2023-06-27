@@ -284,6 +284,56 @@ namespace Test
         }
 
         /// <summary>
+        /// 判断带端口的链接http://www.baidu.com:5000是否为有效网址，应为True。
+        /// </summary>
+        [Fact]
+        public void UrlTest8()
+        {
+            bool ret = Xmtool.Regex().IsUrl("http://www.baidu.com:5000");
+            Assert.True(ret);
+        }
+
+        /// <summary>
+        /// 判断http://127.0.0.1是否为有效网址，应为True。
+        /// </summary>
+        [Fact]
+        public void UrlTest9()
+        {
+            bool ret = Xmtool.Regex().IsUrl("http://127.0.0.1");
+            Assert.True(ret);
+        }
+
+        /// <summary>
+        /// 判断http://127.0.0.1:5000是否为有效网址，应为True。
+        /// </summary>
+        [Fact]
+        public void UrlTest10()
+        {
+            bool ret = Xmtool.Regex().IsUrl("http://127.0.0.1:5000");
+            Assert.True(ret);
+        }
+
+        /// <summary>
+        /// 判断http://localhost是否为有效网址，应为True。
+        /// </summary>
+        [Fact]
+        public void UrlTest11()
+        {
+            bool ret = Xmtool.Regex().IsUrl("http://localhost");
+            Assert.True(ret);
+        }
+
+        /// <summary>
+        /// 判断http://localhost:5000是否为有效网址，应为True。
+        /// </summary>
+        [Fact]
+        public void UrlTest12()
+        {
+            bool ret = Xmtool.Regex().IsUrl("http://localhost:5000");
+            Assert.True(ret);
+        }
+
+        /// <summary>
         /// 判断192.168.1.1是否有效IP，应为True
         /// </summary>
         [Fact]
