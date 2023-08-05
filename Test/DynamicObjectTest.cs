@@ -228,5 +228,49 @@ namespace Test
             Assert.Equal(18, data2.Age);
             Assert.Equal("\"wangxm\" is a man.", data2.Desc);
         }
+
+        [Fact]
+        public void ObjectToXML()
+        {
+            dynamic obj = Xmtool.DynamicObject();
+            obj.Name = "wangxm";
+            obj.Age = 18;
+            obj.Dog = Xmtool.DynamicObject();
+            obj.Dog.Name = "Tom";
+            obj.Dog.Kind = "中华田园犬";
+            obj.Dog.Toys = Xmtool.DynamicObject();
+            obj.Dog.Toys.One = "玩具一";
+            obj.Dog.Toys.Two = "玩具二";
+            string xml = obj.ToXMLString();
+            Assert.NotNull(xml);
+            Assert.Contains("<Name>wangxm</Name>", xml);
+            Assert.Contains("<Dog Name=\"Tom\"", xml);
+            Assert.Contains("<Dog Name=\"Tom\" Kind=\"中华田园犬\">", xml);
+            Assert.Contains("<Dog Name=\"Tom\" Kind=\"中华田园犬\"><Toys", xml);
+            Assert.Contains("<Dog Name=\"Tom\" Kind=\"中华田园犬\"><Toys One=\"玩具一\"", xml);
+            Assert.Contains("<Dog Name=\"Tom\" Kind=\"中华田园犬\"><Toys One=\"玩具一\" Two=\"玩具二\">", xml);
+        }
+
+        [Fact]
+        public void ObjectToXML2()
+        {
+            dynamic obj = Xmtool.DynamicObject();
+            obj.Name = "wangxm";
+            obj.Age = 18;
+            obj.Dog = Xmtool.DynamicObject();
+            obj.Dog.Name = "Tom";
+            obj.Dog.Kind = "中华田园犬";
+            obj.Dog.Toys = Xmtool.DynamicObject();
+            obj.Dog.Toys.One = "玩具一";
+            obj.Dog.Toys.Two = "玩具二";
+            obj.Dog.Value = "Hello World!";
+            string xml = obj.ToXMLString();
+            Assert.NotNull(xml);
+            Assert.Contains("<Name>wangxm</Name>", xml);
+            Assert.Contains("<Dog Name=\"Tom\"", xml);
+            Assert.Contains("<Dog Name=\"Tom\" Kind=\"中华田园犬\">", xml);
+            Assert.DoesNotContain("<Dog Name=\"Tom\" Kind=\"中华田园犬\"><Toys", xml);
+            Assert.Contains("<Dog Name=\"Tom\" Kind=\"中华田园犬\">Hello World!</Dog>", xml);
+        }
     }
 }
