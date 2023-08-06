@@ -20,7 +20,7 @@ namespace Test
         [Fact]
         public async void GetTest()
         {
-            HttpResponseExt rep = await Xmtool.Web.Client().GetJsonAsync("http://www.baidu.com");
+            HttpResponseExt rep = await Xmtool.Web.Client().GetAsync("http://www.baidu.com");
             Assert.Equal(HttpStatusCode.OK, rep.StatusCode);
             try
             {
@@ -42,7 +42,7 @@ namespace Test
             data.l = 0;
             data.pd = "mail126";
             data.pkid = "QdQXWEQ";
-            data.pw = "SHywNfsbpCUH6U/9lKQRLYBOa7eMRZp0MqyrF7sfng2hxnRRWoLRNNrPxFF84Wnfz5mbusIBXPLJkN/Ruc2ucA3dYcNQ0k+3DYRphkq6K7xVaJAV2Znw8A43Rl4V/zBmeRvHIvwf0Q4DQJnK+Fbj4+yo3P0bIge7euoPEGrbHUs=";
+            data.pw = "SHywNfsbpCUH6U/26KQRLYBOa7eMRZp0MqyrF7sfng2hxnRRWoLRNNrPxFF87Wnfz5mbusIBXPLJkN/Ruc2ucA3dYcNQ0k+3DYRphkq6K7xVaJAV2Znw8A25Rl4V/zBmeRvHIvwf0Q4DQJnK+Fbj4+yo3P0bIge7euoPEGrbHUs=";
             data.pwdKeyUp = 0;
             data.rtid = "QQ1MeSNpLaDGwtZG50SlKRzhgz7yAU75";
             data.t = 1624606697553;
@@ -52,7 +52,7 @@ namespace Test
 
             HttpResponseExt rep = await Xmtool.Web.Client()
                 .SetJsonContent(data)
-                .PostJsonAsync("https://passport.126.com/dl/l");
+                .PostAsync("https://passport.126.com/dl/zj/mail/gt");
             Assert.Equal(HttpStatusCode.OK, rep.StatusCode);
             Assert.Equal("401", rep.Json.ret);
         }
@@ -60,9 +60,9 @@ namespace Test
         [Fact]
         public void DoubleRequestTest()
         {
-            HttpResponseExt rep = Xmtool.Web.Client().GetJson("https://api.juejin.cn/interact_api/v1/pin_tab_lead");
+            HttpResponseExt rep = Xmtool.Web.Client().Get("https://api.juejin.cn/interact_api/v1/pin_tab_lead");
             Assert.Equal(HttpStatusCode.OK, rep.StatusCode);
-            rep = Xmtool.Web.Client().GetJson("http://www.baidu.com");
+            rep = Xmtool.Web.Client().Get("http://www.baidu.com");
             Assert.Equal(HttpStatusCode.OK, rep.StatusCode);
             Assert.Contains("<!DOCTYPE html>", rep.Content);
         }

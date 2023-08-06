@@ -139,6 +139,13 @@ namespace CodeM.Common.Tools.Web
             return this;
         }
 
+        public HttpClientExt SetContent(string content)
+        {
+            InitRequest();
+            mRequest.Content = new StringContent(content, Encoding.UTF8);
+            return this;
+        }
+
         public HttpClientExt SetJsonContent(string content)
         {
             InitRequest();
@@ -178,88 +185,88 @@ namespace CodeM.Common.Tools.Web
             return new HttpResponseExt(resp.StatusCode, content);
         }
 
-        public async Task<HttpResponseExt> GetJsonAsync(string requestUri)
+        public async Task<HttpResponseExt> GetAsync(string requestUri)
         {
             InitRequest();
             mRequest.Method = HttpMethod.Get;
             return await SendJsonAsync(requestUri);
         }
 
-        public HttpResponseExt GetJson(string requestUri)
+        public HttpResponseExt Get(string requestUri)
         {
-            return GetJsonAsync(requestUri).GetAwaiter().GetResult();
+            return GetAsync(requestUri).GetAwaiter().GetResult();
         }
 
-        public async Task<HttpResponseExt> PostJsonAsync(string requestUri)
+        public async Task<HttpResponseExt> PostAsync(string requestUri)
         {
             InitRequest();
             mRequest.Method = HttpMethod.Post;
             return await SendJsonAsync(requestUri);
         }
 
-        public HttpResponseExt PostJson(string requestUri)
+        public HttpResponseExt Post(string requestUri)
         {
-            return PostJsonAsync(requestUri).GetAwaiter().GetResult();
+            return PostAsync(requestUri).GetAwaiter().GetResult();
         }
 
-        public async Task<HttpResponseExt> PutJsonAsync(string requestUri)
+        public async Task<HttpResponseExt> PutAsync(string requestUri)
         {
             InitRequest();
             mRequest.Method = HttpMethod.Put;
             return await SendJsonAsync(requestUri);
         }
 
-        public HttpResponseExt PutJson(string requestUri)
+        public HttpResponseExt Put(string requestUri)
         {
-            return PutJsonAsync(requestUri).GetAwaiter().GetResult();
+            return PutAsync(requestUri).GetAwaiter().GetResult();
         }
 
-        public async Task<HttpResponseExt> DeleteJsonAsync(string requestUri)
+        public async Task<HttpResponseExt> DeleteAsync(string requestUri)
         {
             InitRequest();
             mRequest.Method = HttpMethod.Delete;
             return await SendJsonAsync(requestUri);
         }
 
-        public HttpResponseExt DeleteJson(string requestUri)
+        public HttpResponseExt Delete(string requestUri)
         {
-            return DeleteJsonAsync(requestUri).GetAwaiter().GetResult();
+            return DeleteAsync(requestUri).GetAwaiter().GetResult();
         }
 
-        public async Task<HttpResponseExt> PatchJsonAsync(string requestUri)
+        public async Task<HttpResponseExt> PatchAsync(string requestUri)
         {
             InitRequest();
             mRequest.Method = HttpMethod.Patch;
             return await SendJsonAsync(requestUri);
         }
 
-        public HttpResponseExt PatchJson(string requestUri)
+        public HttpResponseExt Patch(string requestUri)
         {
-            return PatchJsonAsync(requestUri).GetAwaiter().GetResult();
+            return PatchAsync(requestUri).GetAwaiter().GetResult();
         }
 
-        public async Task<HttpResponseExt> HeadJsonAsync(string requestUri)
+        public async Task<HttpResponseExt> HeadAsync(string requestUri)
         {
             InitRequest();
             mRequest.Method = HttpMethod.Head;
             return await SendJsonAsync(requestUri);
         }
 
-        public HttpResponseExt HeadJson(string requestUri)
+        public HttpResponseExt Head(string requestUri)
         {
-            return HeadJsonAsync(requestUri).GetAwaiter().GetResult();
+            return HeadAsync(requestUri).GetAwaiter().GetResult();
         }
 
-        public async Task<HttpResponseExt> OptionsJsonAsync(string requestUri)
+        public async Task<HttpResponseExt> OptionsAsync(string requestUri)
         {
             InitRequest();
             mRequest.Method = HttpMethod.Options;
             return await SendJsonAsync(requestUri);
         }
 
-        public HttpResponseExt OptionsJson(string requestUri)
+        public HttpResponseExt Options(string requestUri)
         {
-            return OptionsJsonAsync(requestUri).GetAwaiter().GetResult();
+            return OptionsAsync(requestUri).GetAwaiter().GetResult();
         }
     }
 }

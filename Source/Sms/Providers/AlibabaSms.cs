@@ -134,7 +134,7 @@ namespace CodeM.Common.Tools.Sms.Providers
         {
             string _queryParams = GenQueryParams(mSignName, mTemplateCode, templateParam, phoneNums);
             string url = GenRquestUri(_queryParams);
-            HttpResponseExt res = WebTool.New().Client().GetJson(url);
+            HttpResponseExt res = WebTool.New().Client().Get(url);
             return res.Json.Code == "OK";
         }
 
@@ -142,7 +142,7 @@ namespace CodeM.Common.Tools.Sms.Providers
         {
             string _queryParams = GenQueryParams(signName, templateCode, templateParam, phoneNums);
             string url = GenRquestUri(_queryParams);
-            HttpResponseExt res = WebTool.New().Client().GetJson(url);
+            HttpResponseExt res = WebTool.New().Client().Get(url);
             return res.Json.Code == "OK";
         }
 
@@ -150,7 +150,7 @@ namespace CodeM.Common.Tools.Sms.Providers
         {
             string _queryParams = GenQueryParams(mSignName, mTemplateCode, phoneNum, templateParams);
             string url = GenRquestUri(_queryParams);
-            HttpResponseExt res = await WebTool.New().Client().GetJsonAsync(url);
+            HttpResponseExt res = await WebTool.New().Client().GetAsync(url);
             return res.Json.Code == "OK";
         }
 
@@ -158,7 +158,7 @@ namespace CodeM.Common.Tools.Sms.Providers
         {
             string _queryParams = GenQueryParams(signName, templateCode, phoneNum, templateParams);
             string url = GenRquestUri(_queryParams);
-            HttpResponseExt res = await WebTool.New().Client().GetJsonAsync(url);
+            HttpResponseExt res = await WebTool.New().Client().GetAsync(url);
             return res.Json.Code == "OK";
         }
     }

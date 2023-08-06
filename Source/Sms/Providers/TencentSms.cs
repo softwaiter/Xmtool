@@ -136,28 +136,28 @@ namespace CodeM.Common.Tools.Sms.Providers
         public bool Send(string templateParam, string[] phoneNums)
         {
             HttpClientExt client = GenHttpClient(mSignName, mTemplateCode, templateParam, phoneNums);
-            HttpResponseExt res = client.PostJson(sUrl);
+            HttpResponseExt res = client.Post(sUrl);
             return ParseResult(res);
         }
 
         public bool Send2(string signName, string templateCode, string templateParam, params string[] phoneNums)
         {
             HttpClientExt client = GenHttpClient(signName, templateCode, templateParam, phoneNums);
-            HttpResponseExt res = client.PostJson(sUrl);
+            HttpResponseExt res = client.Post(sUrl);
             return ParseResult(res);
         }
 
         public async Task<bool> SendAsync(string templateParam, params string[] phoneNums)
         {
             HttpClientExt client = GenHttpClient(mSignName, mTemplateCode, templateParam, phoneNums);
-            HttpResponseExt res = await client.PostJsonAsync(sUrl);
+            HttpResponseExt res = await client.PostAsync(sUrl);
             return ParseResult(res);
         }
 
         public async Task<bool> Send2Async(string signName, string templateCode, string templateParam, params string[] phoneNums)
         {
             HttpClientExt client = GenHttpClient(signName, templateCode, templateParam, phoneNums);
-            HttpResponseExt res = await client.PostJsonAsync(sUrl);
+            HttpResponseExt res = await client.PostAsync(sUrl);
             return ParseResult(res);
         }
     }
