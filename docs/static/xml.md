@@ -24,9 +24,9 @@ XmlTool xml = Xmtool.Xml();
 
 
 
-#### <a id="#iterate">1. Iterate</a>
+#### <a id="iterate">1. Iterate</a>
 
-##### public void Iterate(string file, <a id="xml-nodeinfo-getter">XmlNodeInfoGetter</a> callback = null)
+##### public void Iterate(string file, [XmlNodeInfoGetter](#xml-nodeinfo-getter) callback = null)
 
 ###### 说明：从指定文件加载Xml内容并进行遍历，用户通过回调函数获取遍历信息
 
@@ -34,7 +34,7 @@ XmlTool xml = Xmtool.Xml();
 
 **file**: Xml文件全路径。
 
-**callback**：<a id="xml-nodeinfo-getter">XmlNodeInfoGetter</a>类型回调函数，用于Xml节点和属性的读取。
+**callback**：[XmlNodeInfoGetter](#xml-nodeinfo-getter)类型回调函数，用于Xml节点和属性的读取。
 
 ```xml
 <!--c:\demo.xml-->
@@ -73,9 +73,9 @@ ReadXml("c:\demo.xml");
 Console.WriteLine(mTomContent)
 ```
 
-#### <a id="#iterate-from-string">2. IterateFromString</a>
+#### <a id="iterate-from-string">2. IterateFromString</a>
 
-##### public void Iterate(string content, <a id="xml-nodeinfo-getter">XmlNodeInfoGetter</a> callback = null)
+##### public void Iterate(string content, [XmlNodeInfoGetter](#xml-nodeinfo-getter) callback = null)
 
 ###### 说明：从指定字符串加载Xml内容并进行遍历，用户通过回调函数获取遍历信息
 
@@ -83,7 +83,7 @@ Console.WriteLine(mTomContent)
 
 **content**: Xml格式的字符串内容。
 
-**callback**：<a id="xml-nodeinfo-getter">XmlNodeInfoGetter</a>类型回调函数，用于Xml节点和属性的读取。
+**callback**：[XmlNodeInfoGetter](#xml-nodeinfo-getter)类型回调函数，用于Xml节点和属性的读取。
 
 ```c#
 string xmlData = @"<xml>
@@ -107,7 +107,7 @@ xml.IterateFromString(xmlData, (XmlNodeInfo node) =>
 })
 ```
 
-#### <a id="#deserialize">3. Deserialize</a>
+#### <a id="deserialize">3. Deserialize</a>
 
 ##### public dynamic Deserialize(string file, bool includeRoot = false)
 
@@ -133,7 +133,7 @@ dynamic person = xml.Deserialize("c:\demo.xml", false);
 Console.WriteLine("张三的年龄为：" + person.name.Value);
 ```
 
-#### <a id="#deserialize">4. DeserializeFromString</a>
+#### <a id="deserialize-from-string">4. DeserializeFromString</a>
 
 ##### public dynamic DeserializeFromString(string xml, bool includeRoot = false)
 
@@ -157,19 +157,7 @@ Console.WriteLine("张三的年龄为：" + person.person.age);
 
 
 
-
-
-## 附件说明
-
-#### <a id="#deserialize-from-string">4. DeserializeFromString</a>
-
-
-
 ## 附加说明
-
-#### [XmlNodeInfoGetter回调函数](#xml-nodeinfo-getter)
-
-##### public delegate bool XmlNodeInfoGetter(XmlNodeInfo nodeInfo);
 
 #### <a id="xml-nodeinfo-getter">XmlNodeInfoGetter回调函数</a>
 
