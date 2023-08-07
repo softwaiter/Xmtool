@@ -406,7 +406,28 @@ namespace CodeM.Common.Tools.Xml
                     if (node.IsNode)
                     {
                         DynamicObjectExt newObj = new DynamicObjectExt();
-                        p.TrySetValue(node.LocalName, newObj);
+                        if (!p.Has(node.LocalName))
+                        {
+                            p.TrySetValue(node.LocalName, newObj);
+                        }
+                        else
+                        {
+                            if (p.TryGetValue(node.LocalName, out dynamic value))
+                            {
+                                if (TypeTool.New().IsList(value))
+                                {
+                                    value.Add(newObj);
+                                }
+                                else
+                                { 
+                                    List<dynamic> list = new List<dynamic>();
+                                    list.Add(value);
+                                    list.Add(newObj);
+                                    p.TrySetValue(node.LocalName, list);
+                                }
+                            }
+                        }
+
                         s.Push(newObj);
 
                         for (int i = 0; i < node.AttributeCount; i++)

@@ -140,5 +140,19 @@ namespace Test
             Assert.Equal("张三", obj.name.Value);
             Assert.Equal("aaa", obj.test.hello.id);
         }
+
+        [Fact]
+        public void XmlSerialize2()
+        {
+            string xml = @"<xml>
+                <person name='张三' age='18' />
+                <person name='李四' age='21' />
+            </xml>";
+            dynamic obj = Xmtool.Xml().DeserializeFromString(xml);
+            Assert.NotNull(obj);
+            Assert.True(obj.person.Count == 2);
+            Assert.True(obj.person[0].name == "张三");
+            Assert.True(obj.person[1].name == "李四");
+        }
     }
 }
