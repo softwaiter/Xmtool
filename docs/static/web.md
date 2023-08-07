@@ -404,7 +404,7 @@ Console.Writeline(str2);	// 输出<div>hello world.</div>
 
 ### <a id="dynamicobjectext">一、DynamicObjectExt对象</a>
 
-###### 说明：DynamicObjectExt动态对象是Xmtool工具库中最具特色的一项功能；通过该对象可以无需事先定义就能像使用实体类一样进行数据对象的赋值和操作；且比系统自带的dynamic对象更加灵活友好。如果你熟悉Javascript的话，它就像Javascript中的变量一样可以任意使用；更加详细的说明请参考[《DynamicObjectExt详细说明》](/?item=0212)。
+###### 说明：DynamicObjectExt动态对象是Xmtool工具库中最具特色的一项功能；通过该对象可以无需事先定义就能像使用实体类一样进行数据对象的赋值和操作；且比系统自带的dynamic对象更加灵活友好。如果你熟悉Javascript的话，它就像Javascript中的变量一样可以任意使用；更加详细的说明请参考[《DynamicObjectExt详细说明》](./?item=0212)。
 
 
 
