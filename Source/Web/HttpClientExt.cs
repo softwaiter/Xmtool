@@ -1,21 +1,127 @@
-﻿using CodeM.Common.Tools.Json;
+﻿using CodeM.Common.Tools.DynamicObject;
+using CodeM.Common.Tools.Json;
 using CodeM.Common.Tools.Xml;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CodeM.Common.Tools.Web
 {
+    public class HttpResponseHeadersExt
+    {
+        HttpResponseHeaders mSource;
+        Dictionary<string, IEnumerable<string>> mData;
+
+        internal HttpResponseHeadersExt(HttpResponseHeaders headers)
+        {
+            if (headers == null)
+                throw new ArgumentNullException(nameof(headers));
+
+            mSource = headers;
+        }
+
+        private void Prepare()
+        {
+            if (mData == null)
+            {
+                lock (this)
+                {
+                    if (mData == null)
+                    {
+                        mData = new Dictionary<string, IEnumerable<string>>();
+
+                        IEnumerator<KeyValuePair<string, IEnumerable<string>>> e = mSource.GetEnumerator();
+                        while (e.MoveNext())
+                        {
+                            mData.Add(e.Current.Key, e.Current.Value);
+                        }
+                    }
+                }
+            }
+        }
+
+        public string this[string key]
+        {
+            get
+            {
+                Prepare();
+                if (mData.TryGetValue(key, out var value))
+                {
+                    return string.Join(",", value);
+                }
+                return null;
+            }
+        }
+
+        public string this[int index]
+        {
+            get
+            {
+                Prepare();
+                if (index >= 0 && index < mData.Keys.Count)
+                {
+                    string[] keys = new string[mData.Keys.Count];
+                    mData.Keys.CopyTo(keys, 0);
+                    string key = keys[index];
+                    if (mData.TryGetValue(key, out var value))
+                    {
+                        return string.Join(",", value);
+                    }
+                }
+                return null;
+            }
+        }
+
+        public bool ContainsKey(string key)
+        {
+            Prepare();
+            return mData.ContainsKey(key);
+        }
+
+        public string Get(string key, string defaultValue)
+        {
+            Prepare();
+            if (ContainsKey(key))
+            {
+                return this[key];
+            }
+            return defaultValue;
+        }
+
+        public string Get(int index, string defaultValue)
+        {
+            Prepare();
+            if (index >= 0 && index < mData.Keys.Count)
+            {
+                return this[index];
+            }
+            return defaultValue;
+        }
+
+        public int Count
+        {
+            get
+            {
+                Prepare();
+                return mData.Count;
+            }
+        }
+    }
+
     public class HttpResponseExt
     {
         private HttpStatusCode mStatusCode;
+        private HttpResponseHeadersExt mHeaders;
         private string mContent;
 
-        public HttpResponseExt(HttpStatusCode statusCode, string content)
+        internal HttpResponseExt(HttpStatusCode statusCode, HttpResponseHeaders headers, string content)
         {
             mStatusCode = statusCode;
+            mHeaders = new HttpResponseHeadersExt(headers);
             mContent = content;
         }
 
@@ -24,6 +130,14 @@ namespace CodeM.Common.Tools.Web
             get
             {
                 return mStatusCode;
+            }
+        }
+
+        public HttpResponseHeadersExt Headers
+        {
+            get
+            {
+                return mHeaders;
             }
         }
 
@@ -153,10 +267,20 @@ namespace CodeM.Common.Tools.Web
             return this;
         }
 
-        public HttpClientExt SetJsonContent(dynamic obj)
+        public HttpClientExt SetJsonContent(DynamicObjectExt obj)
         {
             InitRequest();
             mRequest.Content = new StringContent(obj.ToString(), Encoding.UTF8, "application/json");
+            return this;
+        }
+
+        public HttpClientExt Clear()
+        {
+            if (mRequest != null)
+            {
+                mRequest.Headers.Clear();
+                mRequest.Content = null;
+            }
             return this;
         }
 
@@ -182,7 +306,7 @@ namespace CodeM.Common.Tools.Web
             {
                 content = await resp.Content.ReadAsStringAsync();
             }
-            return new HttpResponseExt(resp.StatusCode, content);
+            return new HttpResponseExt(resp.StatusCode, resp.Headers, content);
         }
 
         public async Task<HttpResponseExt> GetAsync(string requestUri)

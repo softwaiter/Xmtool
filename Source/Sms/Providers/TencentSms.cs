@@ -1,4 +1,5 @@
-﻿using CodeM.Common.Tools.Web;
+﻿using CodeM.Common.Tools.DynamicObject;
+using CodeM.Common.Tools.Web;
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
@@ -35,7 +36,7 @@ namespace CodeM.Common.Tools.Sms.Providers
             return this;
         }
 
-        private object GenPostBody(string signName, string templateCode, string templateParam, params string[] phoneNums)
+        private DynamicObjectExt GenPostBody(string signName, string templateCode, string templateParam, params string[] phoneNums)
         {
             dynamic result = Xmtool.DynamicObject();
             result.SmsSdkAppId = mAppId;
@@ -96,7 +97,7 @@ namespace CodeM.Common.Tools.Sms.Providers
 
         private HttpClientExt GenHttpClient(string signName, string templateCode, string templateParam, params string[] phoneNums)
         {
-            object _postBody = GenPostBody(signName, templateCode, templateParam, phoneNums);
+            DynamicObjectExt _postBody = GenPostBody(signName, templateCode, templateParam, phoneNums);
             long timestamp = DateTimeTool.New().GetUtcTimestamp10();
             string authorization = GenAuthorization(_postBody, timestamp);
             return WebTool.New().Client()
