@@ -111,7 +111,7 @@ xml.IterateFromString(xmlData, (XmlNodeInfo node) =>
 
 ##### public dynamic Deserialize(string file, bool includeRoot = false)
 
-###### 说明：从指定文件加载Xml内容并进行解析，将解析内容反序列化为动态对象；暂不支持包含同层级同名称节点的Xml内容反序列化。
+###### 说明：从指定文件加载Xml内容并进行解析，将解析内容反序列化为动态对象。
 
 ###### 参数：
 
@@ -133,11 +133,29 @@ dynamic person = xml.Deserialize("c:\demo.xml", false);
 Console.WriteLine("张三的年龄为：" + person.name.Value);
 ```
 
+对于同名节点的处理，系统会将其转换为数组形式。
+
+```xml
+<!--c:\demo2.xml-->
+<xml>
+    <person name="张三" age="18" />
+    <person name="李四" age="21" />
+</xml>
+```
+
+```c#
+XmlTool xml = Xmtool.Xml();
+dynamic result = xml.Deserialize("c:\demo2.xml", false);
+Console.WriteLine("张三的年龄为：" + result.person[0].name);
+```
+
+
+
 #### <a id="deserialize-from-string">4. DeserializeFromString</a>
 
 ##### public dynamic DeserializeFromString(string xml, bool includeRoot = false)
 
-###### 说明：从字符串内容加载Xml并进行解析，将解析内容反序列化为动态对象；暂不支持包含同层级同名称节点的Xml内容反序列化。
+###### 说明：从字符串内容加载Xml并进行解析，将解析内容反序列化为动态对象。
 
 ###### 参数：
 
