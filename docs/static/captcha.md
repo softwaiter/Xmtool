@@ -1,0 +1,198 @@
+# 图形验证码
+
+图形验证码是为了抵御恶意攻击出现的一种设计；例如用户登录、修改密码等场景。在本类库中，将图形验证码的逻辑进行了抽象封装，能够通过同一套方法使用不同类型的图形验证码；让增加图形验证码逻辑变得更方便友好，且切换不同类型的图形验证码更简易。
+
+使用时，需要先获取图形验证码类库对象：
+
+```c#
+ICaptcha captcha = Xmtool.Captcha(CaptchaKind.Character);	// 字符验证码
+// 或者
+ICaptcha captcha = Xmtool.Captcha(CaptchaKind.Sliding);	// 滑块验证码
+```
+
+ICaptcha接口提供了配置、生成和校验 3 个方法，通过这 3 个方法可以很方便的将图形验证码能力嵌入到自己的软件功能中。
+
+[Config方法](#config)
+
+[Generate方法](#generate)
+
+[Validate方法](#validate)
+
+[Type属性](#type)
+
+
+
+#### <a id="config">1. Config方法</a>
+
+##### public ICaptcha Config(CaptchaOption option);
+
+###### 说明：配置图形验证码生成规则，根据图形验证码不同的类型，需传入不同的参数配置类。
+
+###### 参数：
+
+**option**：生成参数配置；字符验证码使用[CharacterCaptchaOption](#charactercaptchaoption)配置类，滑块验证码使用[SlidingCaptchaOption](#slidingcaptchaoption)配置类。
+
+```c#
+ICaptcha captcha = Xmtool.Captcha(CaptchaKind.Character);
+
+CharacterCaptchaOption option = new CharacterCaptchaOption();
+option.BackColor = Color.Blue;
+option.BorderColor = Color.DarkBlue;
+captcha.Config(option);
+
+// TODO
+```
+
+
+
+#### <a id="generate">2. Generate方法</a>
+
+##### public [CaptchaResult](#captcharesult) Generate(CaptchaData data = null);
+
+###### 说明：根据参数配置生成图形验证码图片及相关数据。
+
+###### 参数：
+
+**data**：生成数据设定，默认不设置将随机生成；字符验证码使用[CharacterCaptchaData](#charactercaptchadata)类，滑块验证码使用[SlidingCaptchaData](#slidingcaptchadata)类。
+
+###### 返回：
+
+将返回生成的图片数据（Base64格式）和相关校验性数据。
+
+```c#
+ICaptcha captcha = Xmtool.Captcha(CaptchaKind.Character);
+CharacterCaptchaData data = new CharacterCaptchaData();
+data.Code = "1234";
+CaptchaResult result = captcha.Generate(data);
+// TODO
+```
+
+
+
+#### <a id="validate">3. Validate方法</a>
+
+##### public bool Validate(object source, object input);
+
+###### 说明：将用户输入信息和生成数据进行对比，判断图形验证码输入或操作是否正确。
+
+```c#
+ICaptcha captcha = Xmtool.Captcha(CaptchaKind.Character);
+CaptchaResult result = captcha.Generate();
+bool ok = captcha.Validate(result.ValidationData, "用户输入数据");
+if (ok)
+{
+    // TODO
+}
+```
+
+
+
+#### 4. Type属性
+
+###### 说明：返回当前实例的验证码类型，CaptchaKind.Character（字符验证码）或CaptchaKind.Sliding（滑块验证码）。
+
+
+
+## 附加说明
+
+### 一、CharacterCaptchaOption类
+
+###### 该类用于为字符图形验证码设置生成过程的一些配置信息。
+
+#### 1. Length属性
+
+###### 说明：设置字符验证码的个数，默认6个字符。
+
+
+
+#### 2. OnlyNumber属性
+
+###### 说明：生成的字符验证码是否只包含数字，默认为true；否则包含数字和英文字母。
+
+
+
+#### 3. Width属性
+
+###### 说明：设置字符验证码整体图片的宽度，默认300。
+
+
+
+#### 4. Height属性
+
+###### 说明：设置字符验证码整体图片的高度，默认120。
+
+
+
+#### 5. BackColor属性
+
+###### 说明：设置字符验证码整体图片的背景颜色，默认白色。
+
+
+
+#### 6. Bordercolor属性
+
+###### 说明：设置字符验证码整体图片的边框颜色，默认浅灰。
+
+
+
+### 二、SlidingCaptchaOption类
+
+###### 该类用于为滑块验证码设置生成过程的一些配置信息。
+
+#### 1. BackgroundDir属性
+
+###### 说明：设置滑块验证码背景图片的存放目录。
+
+
+
+#### 2. ResultError属性
+
+###### 说明：设置滑块验证码校验时允许的位置偏差百分比，默认0.02。
+
+
+
+### 三、CharacterCaptchaData类
+
+###### 该类用于设置生成字符验证码内容的指定。
+
+#### 1. Code属性
+
+###### 说明：字符验证码默认随机生成字符内容，通过该属性可以指定生成内容。
+
+
+
+### 四、SlidingCaptchaData类
+
+###### 该类用于设置生成滑块验证码的规格信息。
+
+#### 1. GapX属性
+
+###### 说明：滑块凹槽生成的横向坐标位置，默认随机生成。
+
+
+
+#### 2. GapY属性
+
+###### 说明：滑块凹槽生成的纵向坐标位置，默认随机生成。
+
+
+
+#### 3. GapTemplate属性
+
+###### 说明：滑块凹槽的形状，支持0-4五种形状，默认随机选择。
+
+
+
+### 五、CaptchaResult类
+
+###### 该类用于返回图形验证码生成的具体内容。
+
+#### 1. ValidationData属性
+
+###### 说明：用于图形验证码进行校验的数据。字符验证码是字符验证码生成的字符内容；滑块验证码是凹槽横向坐标和图片整体宽度的百分数。该数据即是使用Validate方法时的souce参数。
+
+
+
+#### 2. DisplayData属性
+
+###### 说明：图形验证码生成图片数据，以Base64图片格式返回，可以直接复制到浏览器地址栏查看。字符验证码直接返回图片数据内容；滑块验证码返回包括图片的宽度、高度、背景图片数据内容、滑块图片的宽度、高度、滑块图片的数据内容，中间使用“|”分隔。
