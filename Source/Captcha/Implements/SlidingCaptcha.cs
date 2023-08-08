@@ -228,8 +228,23 @@ namespace CodeM.Common.Tools.Captcha.Implements
             sbResult.Append("|");
             sbResult.Append(backgroundImage.Height);
 
-            // 生成背景
+            // 生成带凹槽背景
             backgroundImage.Mutate(x => x.DrawImage(gapTemplate.HoleImage, new Point(randomX, randomY), 1));
+
+            // 增加迷惑性凹槽
+            int randomY2;
+            if (randomY > 1.5 * gapTemplate.HoleImage.Height)
+            {
+                randomY2 = (randomY - gapTemplate.HoleImage.Height) -
+                    mRandom.Next(5, Math.Max(5, randomY - 2 * gapTemplate.HoleImage.Height));
+            }
+            else
+            {
+                randomY2 = (randomY + gapTemplate.HoleImage.Height) +
+                    mRandom.Next(5, Math.Max(5, backgroundImage.Height - randomY - 2 * gapTemplate.HoleImage.Height - 5));
+            }
+            backgroundImage.Mutate(x => x.DrawImage(gapTemplate.HoleImage, new Point(randomX, randomY2), 1));
+
             sbResult.Append("|");
             sbResult.Append(backgroundImage.ToBase64String(SixLabors.ImageSharp.Formats.Png.PngFormat.Instance));
 
