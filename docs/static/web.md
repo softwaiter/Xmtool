@@ -163,7 +163,7 @@ client.SetJsonContnent("{\"Author\": \"softwaiter\"}");
 
 #### <a id="setjsoncontent2">8. SetJsonContent方法二</a>
 
-##### public HttpClientExt SetJsonContent([DynamicObjectExt](dynamicobjectext) obj)
+##### public HttpClientExt SetJsonContent([DynamicObjectExt](#dynamicobjectext) obj)
 
 ###### 说明：通过动态对象为下一次请求设置JSON格式的提交内容。
 
