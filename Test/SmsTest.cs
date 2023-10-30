@@ -16,9 +16,9 @@ namespace Test
         [Fact]
         public void Test()
         {
-            Xmtool.Sms(SmsProvider.Alibaba).Config("accessKeyId（替换成自己的）", "accessKeySecret（替换成自己的）",
+            ISmsProvider sms = Xmtool.Sms(SmsProvider.Alibaba).Config("accessKeyId（替换成自己的）", "accessKeySecret（替换成自己的）",
                 "阿里云短信签名（替换成自己的）", "模板编码（替换成自己的）");
-            bool ret = Xmtool.Sms(SmsProvider.Alibaba).Send("参数（替换成自己的，如：{\"code\":\"1234\"}）", "136********");
+            bool ret = sms.Send("参数（替换成自己的，如：{\"code\":\"1234\"}）", "136********");
             Assert.True(ret);
         }
 
