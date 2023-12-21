@@ -82,6 +82,7 @@ public bool IsMobile(string str)
 - [图形验证码](https://softwaiter.github.io/Xmtool/?item=0211)
 - [扩展动态对象](https://softwaiter.github.io/Xmtool/?item=0212)
 - [JSON配置文件](https://softwaiter.github.io/Xmtool/?item=0213)
+- [图片处理](https://softwaiter.github.io/Xmtool/?item=0214)
 
 
 

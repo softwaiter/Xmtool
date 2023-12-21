@@ -77,6 +77,11 @@
             "id": "0213",
             "name": "JSON配置文件",
             "src": "static/json.md"
+        },
+        {
+            "id": "0214",
+            "name": "图片处理",
+            "src": "static/image.md"
         }
       ]
     }
