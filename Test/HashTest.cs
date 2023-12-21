@@ -1,7 +1,4 @@
 using CodeM.Common.Tools;
-using CodeM.Common.Tools.Xml;
-using System;
-using System.IO;
 using Xunit;
 using Xunit.Abstractions;
 

@@ -79,5 +79,10 @@ namespace CodeM.Common.Tools
         {
             return SmsTool.New(provider);
         }
+
+        public static ImageTool Image()
+        {
+            return ImageTool.New();
+        }
     }
 }
