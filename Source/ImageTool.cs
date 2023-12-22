@@ -66,13 +66,17 @@ namespace CodeM.Common.Tools
         public string ToBase64(string file)
         {
             Image image = Image.FromFile(file);
-            return ToBase64(image);
+            string data = ToBase64(image);
+            image.Dispose();
+            return data;
         }
 
         public string ToBase64(Stream stream)
         {
             Image image = Image.FromStream(stream);
-            return ToBase64(image);
+            string data = ToBase64(image);
+            image.Dispose();
+            return data;
         }
 
         public string ToBase64(Image image)
