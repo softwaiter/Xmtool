@@ -278,6 +278,10 @@ namespace CodeM.Common.Tools.DynamicObject
                 {
                     sbResult.Append(value.ToString().ToLower());
                 }
+                else if (_typ == typeof(DateTime))
+                {
+                    sbResult.Append(string.Concat("\"", value.ToString("s"), "\""));
+                }
                 else
                 {
                     sbResult.Append(value.ToString());

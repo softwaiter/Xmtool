@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 
 namespace CodeM.Common.Tools.Json
 {
@@ -56,6 +57,7 @@ namespace CodeM.Common.Tools.Json
             return result;
         }
 
+        private static Regex reDateTime = new Regex("^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$");
         private void BindConfigObject(DynamicObjectExt configObj, JsonElement element, string key = null)
         {
             if (configObj == null)
@@ -138,7 +140,15 @@ namespace CodeM.Common.Tools.Json
                 case JsonValueKind.String:
                     if (!string.IsNullOrWhiteSpace(key))
                     {
-                        configObj.TrySetValue(key, element.GetString());
+                        string value = element.GetString();
+                        if (reDateTime.IsMatch(value))
+                        {
+                            configObj.TrySetValue(key, DateTime.Parse(value));
+                        }
+                        else
+                        {
+                            configObj.TrySetValue(key, value);
+                        }
                     }
                     break;
                 case JsonValueKind.Number:

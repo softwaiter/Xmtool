@@ -21,9 +21,21 @@ namespace CodeM.Common.Tools
             return (long)ts.TotalSeconds;
         }
 
+        public long GetUtcTimestamp10(DateTime datetime)
+        {
+            TimeSpan ts = datetime.ToUniversalTime() - new DateTime(1970, 1, 1, 0, 0, 0);
+            return (long)ts.TotalSeconds;
+        }
+
         public long GetUtcTimestamp13()
         {
             TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0);
+            return (long)ts.TotalMilliseconds;
+        }
+
+        public long GetUtcTimestamp13(DateTime datetime)
+        {
+            TimeSpan ts = datetime.ToUniversalTime() - new DateTime(1970, 1, 1, 0, 0, 0);
             return (long)ts.TotalMilliseconds;
         }
 
