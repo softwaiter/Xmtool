@@ -172,7 +172,7 @@ namespace CodeM.Common.Tools
             Send(subject, body, bodyEncoding, false, from, fromName, to, replyTo, cc, bcc, attachments);
         }
 
-        public void Send(string subject, string body, string from, string to, params string[] attachments)
+        public void SimpleSend(string subject, string body, string from, string to, params string[] attachments)
         {
             Send(subject, body, null, from, null, to, null, null, null, attachments);
         }
@@ -184,7 +184,7 @@ namespace CodeM.Common.Tools
             Send(subject, body, bodyEncoding, true, from, fromName, to, replyTo, cc, bcc, attachments);
         }
 
-        public void SendHtml(string subject, string body, string from, string to, params string[] attachments)
+        public void SimpleSendHtml(string subject, string body, string from, string to, params string[] attachments)
         {
             SendHtml(subject, body, null, from, null, to, null, null, null, attachments);
         }
@@ -205,7 +205,7 @@ namespace CodeM.Common.Tools
             await SendAsync(subject, body, bodyEncoding, false, from, fromName, to, replyTo, cc, bcc, attachments);
         }
 
-        public async Task SendAsync(string subject, string body, string from, string to, params string[] attachments)
+        public async Task SimpleSendAsync(string subject, string body, string from, string to, params string[] attachments)
         {
             await SendAsync(subject, body, null, from, null, to, null, null, null, attachments);
         }
@@ -217,7 +217,7 @@ namespace CodeM.Common.Tools
             await SendAsync(subject, body, bodyEncoding, true, from, fromName, to, replyTo, cc, bcc, attachments);
         }
 
-        public async Task SendHtmlAsync(string subject, string body, string from, string to, params string[] attachments)
+        public async Task SimpleSendHtmlAsync(string subject, string body, string from, string to, params string[] attachments)
         {
             await SendHtmlAsync(subject, body, null, from, null, to, null, null, null, attachments);
         }

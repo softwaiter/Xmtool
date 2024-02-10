@@ -40,11 +40,11 @@ mail.Send("邮件标题", "邮件内容", "utf-8(内容编码格式)", "收件�
 
 #### <a id="send-simple">3. 发送普通邮件-简化版</a>
 
-###### public void Send(string subject, string body, string from, string to, params string[] attachments)
+###### public void SimpleSend(string subject, string body, string from, string to, params string[] attachments)
 
 ```c#
 MailTool mail = Xmtool.Mail("smtp.126.com", 25, "test", "test@123");
-mail.Send("邮件标题", "邮件内容", "收件人看到的发件人邮箱地址", "收件人邮箱地址", "附件文件地址");
+mail.SimpleSend("邮件标题", "邮件内容", "收件人看到的发件人邮箱地址", "收件人邮箱地址", "附件文件地址");
 ```
 
 #### <a id="sendhtml-all">4. 发送网页邮件-完全版</a>
@@ -60,7 +60,7 @@ mail.Send("邮件标题", "网页源码内容", "utf-8(内容编码格式)", "�
 
 #### <a id="sendhtml-simple">5. 发送网页邮件-简化版</a>
 
-###### public void SendHtml(string subject, string body, string from, string to, params string[] attachments)
+###### public void SimpleSendHtml(string subject, string body, string from, string to, params string[] attachments)
 
 ```c#
 MailTool mail = Xmtool.Mail("smtp.126.com", 25, "test", "test@123");
