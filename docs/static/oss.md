@@ -98,7 +98,7 @@ string url = oss.SetContentType("image/png")
 ```c#
 IOssProvider oss = Xmtool.Oss(OssProvider.Qiniu);
 oss.Config("替换成自己的AppKey", "替换成自己的AppSecret", "替换成自己的域名地址");
-oss.UseHttps();
+oss.SetUseHttps(true);
 // TODO
 ```
 
