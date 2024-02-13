@@ -1,6 +1,7 @@
 ﻿using CodeM.Common.Tools.Captcha;
 using CodeM.Common.Tools.DynamicObject;
 using CodeM.Common.Tools.Json;
+using CodeM.Common.Tools.Oss;
 using CodeM.Common.Tools.Sms;
 using CodeM.Common.Tools.Web;
 using CodeM.Common.Tools.Xml;
@@ -78,6 +79,11 @@ namespace CodeM.Common.Tools
         public static ISmsProvider Sms(SmsProvider provider)
         {
             return SmsTool.New(provider);
+        }
+
+        public static IOssProvider Oss(OssProvider provider)
+        {
+            return OssTool.New(provider);
         }
 
         public static ImageTool Image()

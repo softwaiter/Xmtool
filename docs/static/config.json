@@ -82,6 +82,11 @@
             "id": "0214",
             "name": "图片处理",
             "src": "static/image.md"
+        },
+        {
+            "id": "0215",
+            "name": "OSS文件上传",
+            "src": "static/oss.md"
         }
       ]
     }
