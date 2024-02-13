@@ -19,25 +19,25 @@ Xmtool是一个基于.NetCore的常用功能集成工具类库，目的是做成
 ##### Package Manager
 
 ```shell
-Install-Package Xmtool -Version 2.1.2
+Install-Package Xmtool -Version 2.2.0
 ```
 
 ##### .NET CLI
 
 ```shell
-dotnet add package Xmtool --version 2.1.2
+dotnet add package Xmtool --version 2.2.0
 ```
 
 ##### PackageReference
 
 ```xml
-<PackageReference Include="Xmtool" Version="2.1.2" />
+<PackageReference Include="Xmtool" Version="2.2.0" />
 ```
 
 ##### Paket CLI
 
 ```shell
-paket add Xmtool --version 2.1.2
+paket add Xmtool --version 2.2.0
 ```
 
 
@@ -83,6 +83,7 @@ public bool IsMobile(string str)
 - [扩展动态对象](https://softwaiter.github.io/Xmtool/?item=0212)
 - [JSON配置文件](https://softwaiter.github.io/Xmtool/?item=0213)
 - [图片处理](https://softwaiter.github.io/Xmtool/?item=0214)
+- [OSS文件上传](https://softwaiter.github.io/Xmtool/?item=0215)
 
 
 
