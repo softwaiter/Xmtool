@@ -253,10 +253,10 @@ namespace CodeM.Common.Tools.Web
             return this;
         }
 
-        public HttpClientExt SetContent(string content)
+        public HttpClientExt SetContent(string content, string mediaType = "text/plain")
         {
             InitRequest();
-            mRequest.Content = new StringContent(content, Encoding.UTF8);
+            mRequest.Content = new StringContent(content, Encoding.UTF8, mediaType);
             return this;
         }
 
@@ -284,7 +284,7 @@ namespace CodeM.Common.Tools.Web
             return this;
         }
 
-        private async Task<HttpResponseExt> SendJsonAsync(string requestUri)
+        private async Task<HttpResponseExt> SendAsync(string requestUri)
         {
             InitRequest();
             if (mClient.BaseAddress == null)
@@ -313,7 +313,7 @@ namespace CodeM.Common.Tools.Web
         {
             InitRequest();
             mRequest.Method = HttpMethod.Get;
-            return await SendJsonAsync(requestUri);
+            return await SendAsync(requestUri);
         }
 
         public HttpResponseExt Get(string requestUri)
@@ -325,7 +325,7 @@ namespace CodeM.Common.Tools.Web
         {
             InitRequest();
             mRequest.Method = HttpMethod.Post;
-            return await SendJsonAsync(requestUri);
+            return await SendAsync(requestUri);
         }
 
         public HttpResponseExt Post(string requestUri)
@@ -337,7 +337,7 @@ namespace CodeM.Common.Tools.Web
         {
             InitRequest();
             mRequest.Method = HttpMethod.Put;
-            return await SendJsonAsync(requestUri);
+            return await SendAsync(requestUri);
         }
 
         public HttpResponseExt Put(string requestUri)
@@ -349,7 +349,7 @@ namespace CodeM.Common.Tools.Web
         {
             InitRequest();
             mRequest.Method = HttpMethod.Delete;
-            return await SendJsonAsync(requestUri);
+            return await SendAsync(requestUri);
         }
 
         public HttpResponseExt Delete(string requestUri)
@@ -361,7 +361,7 @@ namespace CodeM.Common.Tools.Web
         {
             InitRequest();
             mRequest.Method = HttpMethod.Patch;
-            return await SendJsonAsync(requestUri);
+            return await SendAsync(requestUri);
         }
 
         public HttpResponseExt Patch(string requestUri)
@@ -373,7 +373,7 @@ namespace CodeM.Common.Tools.Web
         {
             InitRequest();
             mRequest.Method = HttpMethod.Head;
-            return await SendJsonAsync(requestUri);
+            return await SendAsync(requestUri);
         }
 
         public HttpResponseExt Head(string requestUri)
@@ -385,7 +385,7 @@ namespace CodeM.Common.Tools.Web
         {
             InitRequest();
             mRequest.Method = HttpMethod.Options;
-            return await SendJsonAsync(requestUri);
+            return await SendAsync(requestUri);
         }
 
         public HttpResponseExt Options(string requestUri)
