@@ -31,6 +31,8 @@ namespace CodeM.Common.Tools.Oss.Providers
             mProxyDomain = args[3]; // 源站域名
             mRegion = args[4];  // COS地域
 
+            mConfigured = true;
+
             return this;
         }
 

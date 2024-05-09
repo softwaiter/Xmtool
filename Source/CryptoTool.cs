@@ -34,7 +34,7 @@ namespace CodeM.Common.Tools
         {
             byte[] bytes = Encoding.GetEncoding(encoding).GetBytes(aesKey);
 
-            using (SHA256Managed sha256 = new SHA256Managed()) {
+            using (SHA256 sha256 = SHA256.Create()) {
                 sha256.ComputeHash(bytes);
                 key = sha256.Hash;
                 sha256.Clear();
@@ -57,7 +57,7 @@ namespace CodeM.Common.Tools
 
             byte[] target;
 
-            using (AesManaged aes = new AesManaged()) 
+            using (Aes aes = Aes.Create()) 
             {
                 aes.Key = _key;
                 aes.IV = _iv;
@@ -86,7 +86,7 @@ namespace CodeM.Common.Tools
             GenerateAESKeyIV(key, out _key, out _iv, encoding);
 
             byte[] target;
-            using (AesManaged aes = new AesManaged())
+            using (Aes aes = Aes.Create())
             {
                 aes.Key = _key;
                 aes.IV = _iv;

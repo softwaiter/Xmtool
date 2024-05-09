@@ -8,7 +8,7 @@ namespace CodeM.Common.Tools.Oss.Providers
 {
     public class QiniuOss : IOssProvider
     {
-        private bool mConfigured;
+        private bool mConfigured = false;
 
         private string mAppKey;
         private string mSecretKey;

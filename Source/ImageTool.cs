@@ -1,6 +1,5 @@
-﻿using System;
-using System.Drawing;
-using System.Drawing.Imaging;
+﻿using SkiaSharp;
+using System;
 using System.IO;
 
 namespace CodeM.Common.Tools
@@ -18,7 +17,35 @@ namespace CodeM.Common.Tools
             return sImageTool;
         }
 
-        public Image Resize(string originFile, int height, int width, bool keepRatio, bool getCenter)
+        public SKImage Cropping(string originFile, SKRect cropRegion, int width, int height)
+        {
+            using (FileStream fs = new FileStream(originFile, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                return Cropping(fs, cropRegion, width, height);
+            }
+        }
+
+        public SKImage Cropping(Stream stream, SKRect cropRegion, int width, int height)
+        {
+            using (SKImage image = SKImage.FromEncodedData(stream))
+            {
+                return Cropping(image, cropRegion, width, height);
+            }
+        }
+
+        public SKImage Cropping(SKImage image, SKRect cropRegion, int width, int height)
+        {
+            using (SKBitmap bmp = new SKBitmap(width, height))
+            {
+                SKRect target = new SKRect(0, 0, width, height);
+
+                SKCanvas canvas = new SKCanvas(bmp);
+                canvas.DrawImage(image, cropRegion, target);
+                return SKImage.FromBitmap(bmp);
+            }
+        }
+
+        public SKImage Resize(string originFile, int height, int width, bool keepRatio, bool getCenter)
         {
             using (FileStream fs = new FileStream(originFile, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
@@ -26,72 +53,88 @@ namespace CodeM.Common.Tools
             }
         }
 
-        public Image Resize(Stream stream, int height, int width, bool keepRatio, bool getCenter)
+        public SKImage Resize(Stream stream, int height, int width, bool keepRatio, bool getCenter)
         {
-            int destWidth = width;
-            int destHeight = height;
-            Image fullsizeImage = Image.FromStream(stream);
-
-            if (keepRatio || getCenter)
+            using (SKImage image = SKImage.FromEncodedData(stream))
             {
-                double scaleRatio = (double)fullsizeImage.Width / (double)destWidth;
+                return Resize(image, height, width, keepRatio, getCenter);
+            }
+        }
+
+        public SKImage Resize(SKImage image, int height, int width, bool keepRatio, bool getCenter)
+        {
+            int sourceX = 0;
+            int sourceY = 0;
+            int sourceWidth = image.Width;
+            int sourceHeight = image.Height;
+
+            int targetX = 0;
+            int targetY = 0;
+            int targetWidth = width;
+            int targetHeight = height;
+
+            if (keepRatio)
+            {
+                double widthRatio = (double)targetWidth / (double)sourceWidth;
+                double heightRatio = (double)targetHeight / (double)sourceHeight;
+
+                if (widthRatio < heightRatio)
+                {
+                    targetHeight = (int)(sourceHeight * widthRatio);
+                }
+                else if (heightRatio < widthRatio)
+                {
+                    targetWidth = (int)(sourceWidth * heightRatio);
+                }
+
                 if (getCenter)
                 {
-                    int bmpY = (int)((fullsizeImage.Height - (destHeight * scaleRatio)) / 2);
-                    Rectangle section = new Rectangle(new Point(0, bmpY), new Size(fullsizeImage.Width, (int)(height * scaleRatio)));
-                    Bitmap bmp = new Bitmap(fullsizeImage);
-                    fullsizeImage.Dispose();
-
-                    using (Bitmap bmp2 = new Bitmap(section.Width, section.Height))
+                    if (targetHeight < height)
                     {
-                        Graphics cutImg = Graphics.FromImage(bmp2);
-                        cutImg.DrawImage(bmp, 0, 0, section, GraphicsUnit.Pixel);
-
-                        fullsizeImage = bmp2;
-                        bmp.Dispose();
-                        cutImg.Dispose();
-
-                        return fullsizeImage.GetThumbnailImage(destWidth, destHeight, null, IntPtr.Zero);
+                        targetY = (height - targetHeight) / 2;
                     }
-                }
-                else
-                {
-                    destHeight = (int)(fullsizeImage.Height / scaleRatio);
+                    else if (targetWidth < width)
+                    {
+                        targetX = (width - targetWidth) / 2;
+                    }
                 }
             }
 
-            return fullsizeImage.GetThumbnailImage(destWidth, destHeight, null, IntPtr.Zero);
+            using (SKBitmap bmp = new SKBitmap(width, height))
+            {
+                SKRect source = new SKRect(sourceX, sourceY, sourceX + sourceWidth, sourceY + sourceHeight);
+                SKRect target = new SKRect(targetX, targetY, targetX + targetWidth, targetY + targetHeight);
+                SKCanvas canvas = new SKCanvas(bmp);
+                canvas.DrawImage(image, source, target);
+                return SKImage.FromBitmap(bmp);
+            }
         }
 
         public string ToBase64(string file)
         {
-            Image image = Image.FromFile(file);
-            string data = ToBase64(image);
-            image.Dispose();
-            return data;
+            using (SKImage image = SKImage.FromEncodedData(SKData.Create(file)))
+            {
+                string data = ToBase64(image);
+                return data;
+            }
+        }
+
+        public string ToBase64(SKImage image)
+        {
+            using (Stream stream = new MemoryStream())
+            {
+                image.EncodedData.SaveTo(stream);
+                return ToBase64(stream);
+            }
         }
 
         public string ToBase64(Stream stream)
         {
-            Image image = Image.FromStream(stream);
-            string data = ToBase64(image);
-            image.Dispose();
-            return data;
-        }
+            byte[] buff = new byte[stream.Length];
+            stream.Position = 0;
+            stream.Read(buff, 0, buff.Length);
 
-        public string ToBase64(Image image)
-        {
-            using (Stream destStream = new MemoryStream())
-            {
-                image.Save(destStream, ImageFormat.Png);
-
-                byte[] buff = new byte[destStream.Length];
-                destStream.Position = 0;
-                destStream.Read(buff, 0, buff.Length);
-                destStream.Close();
-
-                return Convert.ToBase64String(buff);
-            }
+            return Convert.ToBase64String(buff);
         }
     }
 }
