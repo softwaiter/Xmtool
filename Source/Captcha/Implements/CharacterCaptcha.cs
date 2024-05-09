@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Text;
@@ -45,101 +46,128 @@ namespace CodeM.Common.Tools.Captcha.Implements
                 validationData = RandomTool.New().RandomCaptcha(mOption.Length, mOption.OnlyNumber);
             }
 
-            string displayData = string.Empty;
-            //using (MemoryStream stream = new MemoryStream())
-            //{
-            //    Bitmap bmp = new Bitmap(mOption.Width, mOption.Height);
+            SKBitmap bmp = new SKBitmap(mOption.Width, mOption.Height);
 
-            //    Graphics g = Graphics.FromImage(bmp);
-            //    g.SmoothingMode = SmoothingMode.AntiAlias;
-            //    g.CompositingQuality = CompositingQuality.HighQuality;
-            //    g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
+            SKCanvas canvas = new SKCanvas(bmp);
+                
+            canvas.Clear(new SKColor(mOption.BackColor.R, mOption.BackColor.G, mOption.BackColor.B, mOption.BackColor.A));
 
-            //    g.Clear(mOption.BackColor);
-            //    Pen penBorder = new Pen(mOption.BorderColor, 1);
-            //    g.DrawRectangle(penBorder, 0, 0, mOption.Width - 1, mOption.Height - 1);
+            SKPaint borderPaint = new SKPaint();
+            borderPaint.IsAntialias = true;
+            borderPaint.Color = new SKColor(mOption.BorderColor.R, mOption.BorderColor.G, mOption.BorderColor.B, mOption.BorderColor.A);
+            borderPaint.IsStroke = true;
+            borderPaint.StrokeWidth = 1;
+            canvas.DrawRect(new SKRect(0, 0, mOption.Width - 1, mOption.Height - 1), borderPaint);
 
-            //    float fontSize = mOption.Height / 2.9f;
-            //    Font font = new Font(SystemFonts.DefaultFont.FontFamily,
-            //        fontSize, FontStyle.Bold | FontStyle.Italic);
-            //    SizeF charSize = g.MeasureString("G", font);
-            //    int charWidth = mOption.Width / validationData.Length;
-            //    int charHeight = (int)Math.Ceiling(charSize.Height);
+            float fontSize = mOption.Height / 2.9f;
+            SKFont font = new SKFont(SKTypeface.FromFamilyName(SKTypeface.Default.FamilyName,
+                SKFontStyleWeight.Bold, SKFontStyleWidth.Normal, SKFontStyleSlant.Italic));
+            font.LinearMetrics = true;
+            font.Edging = SKFontEdging.Antialias;
+            font.Hinting = SKFontHinting.Full;
+            font.Size = fontSize;
 
-            //    float offsetX = 0;
-            //    Random r = new Random();
-            //    for (int i = 0; i < validationData.Length; i++)
-            //    {
-            //        float x = r.Next((int)offsetX, (int)Math.Max((i + 1) * charWidth - charSize.Width, 0));
-            //        float y = r.Next(0, mOption.Height - charHeight);
+            SKPaint solidPaint = new SKPaint(font);
+            solidPaint.Color = new SKColor(Color.Gray.R, Color.Gray.G, Color.Gray.B, Color.Gray.A);
 
-            //        int r1 = r.Next(0, 255);
-            //        int g1 = r.Next(0, 255);
-            //        int b1 = r.Next(0, 255);
-            //        Color color1 = Color.FromArgb(r1, g1, b1);
-            //        int r2 = r.Next(0, 255);
-            //        int g2 = r.Next(0, 255);
-            //        int b2 = r.Next(0, 255);
-            //        Color color2 = Color.FromArgb(r2, g2, b2);
-            //        Brush brush = new LinearGradientBrush(new PointF(x, y),
-            //            new PointF(x, y + font.Height), color1, color2);
+            int cellWidth = mOption.Width / validationData.Length;
+            int charWidth = (int)solidPaint.MeasureText("8");
+            int charHeight = (int)Math.Floor(font.Metrics.CapHeight);
 
-            //        for (int j = 0; j < 20; j++)
-            //        {
-            //            int x3 = r.Next(0, mOption.Width);
-            //            int y3 = r.Next(0, mOption.Height);
-            //            int radius = r.Next(0, 10);
-            //            g.FillEllipse(brush, x3, y3, radius, radius);
+            float offsetX = 0;
+            Random r = new Random();
+            for (int i = 0; i < validationData.Length; i++)
+            {
+                float x = r.Next((int)offsetX, (int)Math.Max((i + 1) * cellWidth - charWidth, 0));
+                float y = r.Next(charHeight, mOption.Height - charHeight);
 
-            //            int x4 = r.Next(0, mOption.Width);
-            //            int y4 = r.Next(0, mOption.Height);
-            //            int radius2 = r.Next(0, 10);
-            //            g.FillRectangle(brush, x4, y4, radius2, radius2);
+                byte r1 = (byte)r.Next(0, 255);
+                byte g1 = (byte)r.Next(0, 255);
+                byte b1 = (byte)r.Next(0, 255);
+                SKColor color1 = new SKColor(r1, g1, b1, 255);
+                byte r2 = (byte)r.Next(0, 255);
+                byte g2 = (byte)r.Next(0, 255);
+                byte b2 = (byte)r.Next(0, 255);
+                SKColor color2 = new SKColor(r2, g2, b2, 255);
 
-            //            int x5 = r.Next(0, mOption.Width);
-            //            int y5 = r.Next(0, mOption.Height);
-            //            int radius3 = r.Next(1, 10);
-            //            g.FillPolygon(brush, new Point[] { new Point(x5, y5), new Point(x5 - radius3 / 2, y5 + radius3), new Point(x5 + radius3 / 2, y5 + radius3) });
-            //        }
+                SKPaint gradientPaint = new SKPaint();
+                gradientPaint.IsAntialias = true;
+                gradientPaint.Shader = SKShader.CreateLinearGradient(new SKPoint(x, y),
+                    new SKPoint(x, y + font.Metrics.CapHeight),
+                    [color1, color2],
+                    SKShaderTileMode.Mirror);
 
-            //        g.DrawString("" + validationData[i], font, new SolidBrush(Color.Gray), x, y);
-            //        g.DrawString("" + validationData[i], font, brush, x - 1, y - 1);
+                for (int j = 0; j < 20; j++)
+                {
+                    int x3 = r.Next(0, mOption.Width);
+                    int y3 = r.Next(0, mOption.Height);
+                    int radiusX = r.Next(0, 10);
+                    int radiusY = r.Next(0, 10);
+                    canvas.DrawOval(new SKRect(x3, y3, x3 + radiusX, y3 + radiusY), gradientPaint);
 
-            //        for (int k = 0; k < 3; k++)
-            //        {
-            //            int x11 = r.Next(0, mOption.Width);
-            //            int y11 = r.Next(0, mOption.Height);
-            //            int x12 = r.Next(0, mOption.Width);
-            //            int y12 = r.Next(0, mOption.Height);
-            //            int width = r.Next(0, 2);
-            //            g.DrawLine(new Pen(color1, width), x11, y11, x12, y12);
+                    int x4 = r.Next(0, mOption.Width);
+                    int y4 = r.Next(0, mOption.Height);
+                    int radius2 = r.Next(0, 10);
+                    canvas.DrawRect(new SKRect(x4, y4, x4 + radius2, y4 + radius2), gradientPaint);
 
-            //            int x21 = r.Next(0, mOption.Width);
-            //            int y21 = r.Next(0, mOption.Height);
-            //            int x22 = r.Next(0, mOption.Width);
-            //            int y22 = r.Next(0, mOption.Height);
-            //            int width2 = r.Next(0, 2);
-            //            g.DrawLine(new Pen(color2, width2), x21, y21, x22, y22);
-            //        }
+                    int x5 = r.Next(0, mOption.Width);
+                    int y5 = r.Next(0, mOption.Height);
+                    int radius3 = r.Next(1, 10);
+                    float startAngle = r.Next(0, 360);
+                    float sweepAngle = r.Next(0, 360);
+                    canvas.DrawArc(new SKRect(x5, y5, x5 + radius3, y5 + radius3), startAngle, sweepAngle, true, gradientPaint);
+                }
 
-            //        offsetX = x + charSize.Width;
-            //    }
+                canvas.DrawText("" + validationData[i], x, y, font, solidPaint);
+                canvas.DrawText("" + validationData[i], x - 1, y - 1, font, gradientPaint);
 
-            //    bmp.Save(stream, ImageFormat.Png);
+                for (int k = 0; k < 3; k++)
+                {
+                    int x11 = r.Next(0, mOption.Width);
+                    int y11 = r.Next(0, mOption.Height);
+                    int x12 = r.Next(0, mOption.Width);
+                    int y12 = r.Next(0, mOption.Height);
+                    int width = r.Next(0, 2);
 
-            //    g.Dispose();
-            //    bmp.Dispose();
+                    SKPaint line1Paint = new SKPaint();
+                    line1Paint.IsAntialias = true;
+                    line1Paint.Color = color1;
+                    line1Paint.IsStroke = true;
+                    line1Paint.StrokeWidth = width;
+                    canvas.DrawLine(new SKPoint(x11, y11), new SKPoint(x12, y12), line1Paint);
 
-            //    StringBuilder sbData = new StringBuilder();
-            //    sbData.Append("data:image/png;base64,");
-            //    byte[] pngBytes = stream.ToArray();
-            //    string pngData = Convert.ToBase64String(pngBytes);
-            //    sbData.Append(pngData);
+                    int x21 = r.Next(0, mOption.Width);
+                    int y21 = r.Next(0, mOption.Height);
+                    int x22 = r.Next(0, mOption.Width);
+                    int y22 = r.Next(0, mOption.Height);
+                    int width2 = r.Next(0, 2);
 
-            //    displayData = sbData.ToString();
-            //}
+                    SKPaint line2Paint = new SKPaint();
+                    line2Paint.IsAntialias = true;
+                    line2Paint.Color = color2;
+                    line2Paint.IsStroke = true;
+                    line2Paint.StrokeWidth = width2;
+                    canvas.DrawLine(new SKPoint(x21, y21), new SKPoint(x22, y22), line2Paint);
+                }
 
-            return new CaptchaResult(validationData, displayData);
+                offsetX = x + charWidth;
+            }
+
+            Stream stream = bmp.Encode(SKEncodedImageFormat.Png, 100).AsStream();
+            canvas.Dispose();
+            bmp.Dispose();
+
+            StringBuilder sbData = new StringBuilder();
+            sbData.Append("data:image/png;base64,");
+
+            byte[] pngBytes = new byte[stream.Length];
+            stream.Read(pngBytes, 0, pngBytes.Length);
+            stream.Dispose();
+
+            string pngData = Convert.ToBase64String(pngBytes);
+            sbData.Append(pngData);
+
+            return new CaptchaResult(validationData, sbData.ToString());
         }
 
         public bool Validate(object source, object input)
