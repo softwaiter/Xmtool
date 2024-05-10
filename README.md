@@ -2,7 +2,7 @@
 <article style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
     <p align="center"><img width="256" src="http://res.dayuan.tech/images/xmtool.png" /></p>
     <p>
-        一个简单易用的.NetCore工具类库（持续集成中...）
+        一个简单易用的.Net工具类库（持续集成中...）
     </p>
 </article>
 </div>
@@ -10,34 +10,37 @@
 
 ##  :beginner: 简介
 
-Xmtool是一个基于.NetCore的常用功能集成工具类库，目的是做成一个像Java语言中的Hutool类似的工具库，将和具体业务逻辑无关的常用功能进行抽象和封装，集成到一个类库中，方便使用维护，提升开发效率。
+Xmtool是一个基于.Net的常用功能集成工具类库，目的是做成一个像Java语言中的Hutool类似的工具库，将和具体业务逻辑无关的常用功能进行抽象和封装，集成到一个类库中，方便使用维护，提升开发效率。
 
 
+## :rocket: 版本
+**.NetCore3.1**：3.0.0之前的版本全部基于.netcore3.1开发。
+**.Net8.0**：从3.0.0开始之后的版本，全部基于.net8开发。
 
 ## :package:安装
 
 ##### Package Manager
 
 ```shell
-Install-Package Xmtool -Version 2.2.1
+Install-Package Xmtool -Version 3.0.0
 ```
 
 ##### .NET CLI
 
 ```shell
-dotnet add package Xmtool --version 2.2.1
+dotnet add package Xmtool --version 3.0.0
 ```
 
 ##### PackageReference
 
 ```xml
-<PackageReference Include="Xmtool" Version="2.2.1" />
+<PackageReference Include="Xmtool" Version="3.0.0" />
 ```
 
 ##### Paket CLI
 
 ```shell
-paket add Xmtool --version 2.2.1
+paket add Xmtool --version 3.0.0
 ```
 
 
