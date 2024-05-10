@@ -28,6 +28,16 @@ namespace Test
         [Fact]
         public void Test2()
         {
+            CharacterCaptchaOption option = new CharacterCaptchaOption();
+            option.Length = 6;
+            CaptchaResult result = Xmtool.Captcha(CaptchaKind.Character).Config(option).Generate();
+            Assert.Equal(6, result.ValidationData.Length);
+            Assert.StartsWith("data:image/png;base64,", result.DisplayData);
+        }
+
+        [Fact]
+        public void Test3()
+        {
             CaptchaResult result = Xmtool.Captcha(CaptchaKind.Character).Generate(new CharacterCaptchaData("666666"));
             Assert.Equal(6, result.ValidationData.Length);
             Assert.Equal("666666", result.ValidationData);
@@ -35,14 +45,16 @@ namespace Test
         }
 
         [Fact]
-        public void Test3()
+        public void Test4()
         {
-            bool result = Xmtool.Captcha(CaptchaKind.Character).Validate("1234", "1234");
-            Assert.True(result);
+            CaptchaResult result = Xmtool.Captcha(CaptchaKind.Character).Generate(new CharacterCaptchaData("1234"));
+            Assert.Equal(4, result.ValidationData.Length);
+            bool isvalid = Xmtool.Captcha(CaptchaKind.Character).Validate("1234", result.ValidationData);
+            Assert.True(isvalid);
         }
 
         [Fact]
-        public void Test4()
+        public void Test5()
         {
             string resourcePath = Path.Combine(Environment.CurrentDirectory, "resources\\slider_backgrounds");
             CaptchaResult result = Xmtool.Captcha(CaptchaKind.Sliding).Config(new SlidingCaptchaOption(resourcePath)).Generate();
@@ -66,7 +78,7 @@ namespace Test
         }
 
         [Fact]
-        public void Test5()
+        public void Test6()
         {
             string resourcePath = Path.Combine(Environment.CurrentDirectory, "resources\\slider_backgrounds");
             CaptchaResult result = Xmtool.Captcha(CaptchaKind.Sliding).Config(new SlidingCaptchaOption(resourcePath))
@@ -76,7 +88,7 @@ namespace Test
         }
 
         [Fact]
-        public void Test6()
+        public void Test7()
         {
             bool result = Xmtool.Captcha(CaptchaKind.Sliding).Validate(0.5f, 0.48f);
             Assert.True(result);

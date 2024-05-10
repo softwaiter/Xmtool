@@ -63,18 +63,18 @@ namespace CodeM.Common.Tools.Captcha.Implements
             SKFont font = new SKFont(SKTypeface.FromFamilyName(SKTypeface.Default.FamilyName,
                 SKFontStyleWeight.Bold, SKFontStyleWidth.Normal, SKFontStyleSlant.Italic));
             font.LinearMetrics = true;
-            font.Edging = SKFontEdging.Antialias;
+            font.Edging = SKFontEdging.SubpixelAntialias;
             font.Hinting = SKFontHinting.Full;
             font.Size = fontSize;
 
             SKPaint solidPaint = new SKPaint(font);
             solidPaint.Color = new SKColor(Color.Gray.R, Color.Gray.G, Color.Gray.B, Color.Gray.A);
 
-            int cellWidth = mOption.Width / validationData.Length;
+            int cellWidth = (mOption.Width - 20) / validationData.Length;
             int charWidth = (int)solidPaint.MeasureText("8");
-            int charHeight = (int)Math.Floor(font.Metrics.CapHeight);
+            int charHeight = (int)Math.Ceiling(font.Metrics.CapHeight) + 5;
 
-            float offsetX = 0;
+            float offsetX = 10;
             Random r = new Random();
             for (int i = 0; i < validationData.Length; i++)
             {
@@ -93,11 +93,11 @@ namespace CodeM.Common.Tools.Captcha.Implements
                 SKPaint gradientPaint = new SKPaint();
                 gradientPaint.IsAntialias = true;
                 gradientPaint.Shader = SKShader.CreateLinearGradient(new SKPoint(x, y),
-                    new SKPoint(x, y + font.Metrics.CapHeight),
+                    new SKPoint(x, y + charHeight),
                     [color1, color2],
                     SKShaderTileMode.Mirror);
 
-                for (int j = 0; j < 20; j++)
+                for (int j = 0; j < mOption.ShapeNoise; j++)
                 {
                     int x3 = r.Next(0, mOption.Width);
                     int y3 = r.Next(0, mOption.Height);
@@ -121,7 +121,7 @@ namespace CodeM.Common.Tools.Captcha.Implements
                 canvas.DrawText("" + validationData[i], x, y, font, solidPaint);
                 canvas.DrawText("" + validationData[i], x - 1, y - 1, font, gradientPaint);
 
-                for (int k = 0; k < 3; k++)
+                for (int k = 0; k < mOption.LineNoise; k++)
                 {
                     int x11 = r.Next(0, mOption.Width);
                     int y11 = r.Next(0, mOption.Height);
