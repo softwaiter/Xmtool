@@ -123,7 +123,7 @@ namespace CodeM.Common.Tools
         {
             using (Stream stream = new MemoryStream())
             {
-                image.EncodedData.SaveTo(stream);
+                image.Encode().SaveTo(stream);
                 return ToBase64(stream);
             }
         }
