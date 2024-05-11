@@ -8,12 +8,12 @@
     <AssemblyName>Xmtool</AssemblyName>
     <RootNamespace>CodeM.Common.Tools</RootNamespace>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Version>2.2.1</Version>
+    <Version>3.0.0</Version>
     <AssemblyVersion></AssemblyVersion>
     <FileVersion></FileVersion>
     <Authors>softwaiter</Authors>
-	<Title>一个仿Hutool的.NetCore工具类库</Title>
-    <Description>.NetCore常用方法工具类库（正则表达式常用判断、日期时间常用方法、XML快速遍历、动态扩展对象、图片验证码生成、阿里/腾讯短信发送、发送邮件、Json配置文件解析、加密解密等等）</Description>
+	<Title>一个仿Hutool的.Net工具类库</Title>
+    <Description>.Net常用方法工具类库（正则表达式常用判断、日期时间常用方法、XML快速遍历、动态扩展对象、图片验证码生成、阿里/腾讯短信发送、发送邮件、Json配置文件解析、加密解密等等）</Description>
     <PackageProjectUrl>https://github.com/softwaiter/Xmtool</PackageProjectUrl>
     <RepositoryUrl>https://github.com/softwaiter/Xmtool</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
