@@ -28,6 +28,9 @@ namespace CodeM.Common.Tools.Oss.Providers
             mSecretKey = args[1];   // SecretKey
             mProxyDomain = args[2]; // 源站域名
             mEndPoint = args[3];    // 访问域名
+
+            mConfigured = true;
+
             return this;
         }
 

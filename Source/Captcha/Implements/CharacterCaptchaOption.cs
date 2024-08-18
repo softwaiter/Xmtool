@@ -30,5 +30,9 @@ namespace CodeM.Common.Tools
         public Color BackColor { get; set; } = Color.White;
 
         public Color BorderColor { get; set; } = Color.LightGray;
+
+        public int ShapeNoise { get; set; } = 10;
+
+        public int LineNoise { get; set; } = 3;
     }
 }
